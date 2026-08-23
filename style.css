@@ -231,11 +231,40 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .shop-card-special .creator-avatar:hover { z-index: 10 !important; transform: translateY(-8px) rotate(0deg) !important; }
 .shop-card-special .creator-avatar:nth-child(1):hover { border-color: #F8E08E; box-shadow: 0 8px 20px rgba(248, 224, 142, 0.45); }
 .shop-card-special .creator-avatar:nth-child(2):hover { border-color: #D1C1FA; box-shadow: 0 8px 20px rgba(209, 193, 250, 0.45); }
-.dynamic-creator-title { color: var(--hover-gray); margin-left: 0.35rem; position: absolute; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; opacity: 0; transition: opacity 0.3s ease; }
-.shop-card-special:has(.creator-avatar:hover) .dynamic-creator-title { opacity: 1; }
-.creator-name { display: none; opacity: 0; transition: opacity 0.3s ease; white-space: nowrap; }
+/* UPGRADED: Dynamic Title Alignment & Smooth Animation */
+.dynamic-creator-title { 
+    color: var(--hover-gray); 
+    margin-left: 0.35rem; 
+    position: absolute; 
+    pointer-events: none; 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.8rem; 
+    font-weight: 500; 
+    opacity: 0; 
+    /* Dropped down exactly 0.15rem for perfect optical centering, tucked slightly left for the slide-in */
+    transform: translateY(0.15rem) translateX(-0.35rem); 
+    /* Premium hardware-accelerated Apple-style glide */
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); 
+    will-change: transform, opacity;
+}
+
+.shop-card-special:has(.creator-avatar:hover) .dynamic-creator-title { 
+    opacity: 1; 
+    /* Glides smoothly out to its resting place */
+    transform: translateY(0.15rem) translateX(0); 
+}
+
+.creator-name { 
+    display: none; 
+    opacity: 0; 
+    white-space: nowrap; 
+}
+
 .shop-card-special:has(.creator-avatar:nth-child(1):hover) .creator-1,
-.shop-card-special:has(.creator-avatar:nth-child(2):hover) .creator-2 { display: inline-block; opacity: 1; }
+.shop-card-special:has(.creator-avatar:nth-child(2):hover) .creator-2 { 
+    display: inline-block; 
+    opacity: 1; 
+}
 
 /* Library Mini Manga Stack */
 .library-card-special { position: relative; overflow: hidden; }
