@@ -194,7 +194,7 @@
 
             <div class="detail-top">
                 <div class="detail-cover-wrapper">
-                    <img id="det-cover" src="" class="detail-cover" alt="Volume Cover">
+                    <img id="det-cover" src="" class="detail-cover" alt="Volume Cover" draggable="false" oncontextmenu="return false;">
                 </div>
                 <div class="detail-info">
                     <h2 id="det-title" class="detail-title">Series Title</h2>
@@ -372,7 +372,7 @@
 
                     card.innerHTML = `
                         <div class="cover-wrapper">
-                            <img src="${coverUrl}" class="book-cover" alt="Cover">
+                            <img src="${coverUrl}" class="book-cover" alt="Cover" draggable="false" oncontextmenu="return false;">
                         </div>
                         <div class="card-text">
                             <h3 class="series-title">${series.seriesName}</h3>
@@ -480,7 +480,7 @@
                 const miniCover = vol.covers[0] || 'assets/placeholder.png';
                 mini.innerHTML = `
                     <div class="mini-cover-wrapper">
-                        <img src="${miniCover}" alt="Vol ${vol.volumeNumber}">
+                        <img src="${miniCover}" alt="Vol ${vol.volumeNumber}" draggable="false" oncontextmenu="return false;">
                     </div>
                     <span class="mini-vol-num">${vol.volumeNumber}</span>
                 `;
