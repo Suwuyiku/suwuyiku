@@ -593,17 +593,19 @@ body.is-searching .library-header p { opacity: 0.3; }
     opacity: 1; 
 }
 
-/* The New Miniature Gray Box Engine */
+/* The Exact Kodansha Miniature Gray Box Engine */
 .mini-cover-wrapper {
     background-color: #EBEBEB;
-    padding: 0.4rem;
+    padding: 8%; /* Kodansha's exact relative padding */
     width: 100%;
-    aspect-ratio: 1 / 1.45;
+    aspect-ratio: 200 / 273; /* Kodansha's exact aspect ratio */
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid transparent;
     transition: border-color 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .mini-volume:hover .mini-cover-wrapper { 
@@ -619,15 +621,9 @@ body.is-searching .library-header p { opacity: 0.3; }
 .mini-cover-wrapper img { 
     width: 100%; 
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain; /* Prevents the image from distorting */
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); 
     pointer-events: none;
-}
-
-.mini-vol-num { 
-    font-size: 0.85rem; 
-    font-weight: 800; 
-    color: #000000; 
 }
 
 /* =========================================
