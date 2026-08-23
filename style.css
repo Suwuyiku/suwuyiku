@@ -132,7 +132,9 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     z-index: 10;
 }
 
-/* The Image */
+/* ====================================================
+   THE IMAGE 
+   ==================================================== */
 .about-anchor-mark { 
     position: relative;
     z-index: 5; 
@@ -145,54 +147,62 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     border: 0.12rem solid var(--bg-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     transform: rotate(5deg); 
-    /* Ultra-smooth 0.8s exit glide to protect the matrix */
+    
+    /* FAST EXIT: Triggers only when your mouse completely leaves the bento grid */
+    transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease; 
+}
+
+/* Card Hover: Logo glows, rotates, and switches to SLOW animations */
+.about-card-special:hover .about-anchor-mark { 
+    opacity: 1; 
+    filter: grayscale(0%); 
+    transform: rotate(-3deg); 
+    /* SLOW EXIT: Triggers if you leave the logo but stay inside the grid */
     transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
                 filter 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
                 transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
 }
 
-/* 1. Card Hover: Logo glows and rotates */
-.about-card-special:hover .about-anchor-mark { 
-    opacity: 1; 
-    filter: grayscale(0%); 
-    transform: rotate(-3deg); 
-}
-
-/* The Hidden Text */
+/* ====================================================
+   THE HIDDEN TEXT 
+   ==================================================== */
 .about-logo-text {
     position: absolute;
     left: 0; 
     z-index: 4; 
     font-family: 'Inter', sans-serif;
-    font-size: 1.15rem; /* Bigger, premium size */
-    font-weight: 800; /* Bold architecture weight */
+    font-size: 1.15rem; 
+    font-weight: 800; 
     letter-spacing: -0.02em;
-    color: var(--kodansha-black); /* Deep black */
+    color: var(--kodansha-black); 
     opacity: 0; 
     pointer-events: none; 
-    transform: translateX(0); /* Hidden squarely behind the logo */
+    transform: translateX(0); 
     
-    /* THE GHOST HITBOX: Creates a massive invisible interaction zone */
+    /* The Ghost Hitbox for easy interaction */
     padding: 2rem 2rem 2rem 3rem; 
     margin: -2rem -2rem -2rem -3rem; 
-    
-    /* The Exit Animation: Smooth and deliberate */
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
-                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
-    transition-delay: 0s; 
     white-space: nowrap; 
+    
+    /* FAST EXIT: Triggers only when your mouse completely leaves the bento grid */
+    transition: opacity 0.2s ease, transform 0.25s ease; 
+    transition-delay: 0s; 
 }
 
-/* 3. The 2.5-SECOND FUSE: Text slides out */
+/* Card Hover for Text: Switches to SLOW animations while inside the grid */
+.about-card-special:hover .about-logo-text {
+    /* SLOW EXIT: Zips back beautifully if you drop off the logo but stay in the grid */
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0s; 
+}
+
+/* The 2.5-SECOND FUSE: Text slides out */
 .about-logo-wrapper:hover .about-logo-text {
     opacity: 1; 
-    pointer-events: auto; /* Activates the massive ghost hitbox */
-    transform: translateX(3.7rem); /* 0.2rem gap exactly */
-    
-    /* The Entrance Animation */
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
-                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
-    transition-delay: 2.5s; 
+    pointer-events: auto; 
+    transform: translateX(3.7rem); 
+    transition-delay: 2.5s; /* The entrance fuse */
 }
 
 /* Fragments Dual-Live Monitor */
