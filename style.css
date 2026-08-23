@@ -71,25 +71,24 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .footer-bottom-links a { color: #777777; text-decoration: none; transition: color 0.2s ease; }
 .footer-bottom-links a:hover { color: var(--bg-color); }
 
-/* ADD IT RIGHT HERE */
 /* Footer Social Icons */
 .footer-social-icons {
     display: flex;
     gap: 16px;
-    margin-top: 24px;
+    margin-top: 4rem; /* Increased from 24px to push them down into the void */
 }
+
 .footer-social-icons a {
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease; /* Stripped the transform transition */
 }
+
 .footer-social-icons a:hover {
-    opacity: 0.6;
-    transform: translateY(-2px);
+    opacity: 0.6; /* Keeps the clean fade, no stupid bouncing */
 }
-/* END OF NEW CODE */
 
 .hamburger-btn, .mobile-sidebar, .sidebar-overlay { display: none; } 
 .no-scroll { overflow: hidden; }
