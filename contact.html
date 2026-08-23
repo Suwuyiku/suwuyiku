@@ -213,10 +213,23 @@
         </div>
     </footer>
 
+    <!-- Email Fallback Modal -->
+    <div id="email-modal-overlay" class="modal-overlay">
+        <div class="email-modal">
+            <button class="close-modal-btn" aria-label="Close Modal">&times;</button>
+            <h3 class="modal-title">Email Client Triggered</h3>
+            <p class="modal-text">We have attempted to open your default email client. If it is not set up properly, we sincerely apologize for the inconvenience. You can copy the address directly below:</p>
+            <div class="modal-copy-box">
+                <span id="modal-email-text">email@example.com</span>
+                <button id="modal-copy-btn" class="btn-copy">COPY</button>
+            </div>
+        </div>
+    </div>
     
-    <!-- Interaction Script for Mobile Sidebar -->
+    <!-- Interaction Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // --- Mobile Sidebar Engine ---
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -232,6 +245,53 @@
                 hamburger.addEventListener('click', toggleMenu);
                 closeBtn.addEventListener('click', toggleMenu);
                 overlay.addEventListener('click', toggleMenu);
+            }
+
+            // --- Email Fallback Modal Engine ---
+            const connectBtns = document.querySelectorAll('.btn-connect');
+            const modalOverlay = document.getElementById('email-modal-overlay');
+            const closeModalBtn = document.querySelector('.close-modal-btn');
+            const emailText = document.getElementById('modal-email-text');
+            const copyBtn = document.getElementById('modal-copy-btn');
+
+            if (connectBtns.length > 0 && modalOverlay) {
+                connectBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        // We DO NOT prevent default because we still want the mailto: to fire!
+                        
+                        // Extract the raw email address from the href
+                        const href = btn.getAttribute('href');
+                        if(href && href.startsWith('mailto:')) {
+                            const email = href.replace('mailto:', '');
+                            emailText.textContent = email;
+                            
+                            // Reset copy button text and show modal
+                            copyBtn.textContent = 'COPY';
+                            modalOverlay.classList.add('active');
+                        }
+                    });
+                });
+
+                const closeModal = () => {
+                    modalOverlay.classList.remove('active');
+                };
+
+                closeModalBtn.addEventListener('click', closeModal);
+                modalOverlay.addEventListener('click', (e) => {
+                    if (e.target === modalOverlay) closeModal(); // Close if clicking outside the white box
+                });
+
+                // Copy to Clipboard logic
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(emailText.textContent).then(() => {
+                        copyBtn.textContent = 'COPIED!';
+                        setTimeout(() => {
+                            copyBtn.textContent = 'COPY';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
             }
         });
     </script>
