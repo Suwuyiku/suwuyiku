@@ -803,7 +803,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     .bento-card { padding: 1.5rem; }
     .dynamic-book-title, .dynamic-creator-title { display: none !important; }
 
-    /* Neutralize Sticky Hovers on Touch Screens */
+    /* Neutralize Sticky Hovers on Touch Screens */ 
     .library-card-special .mini-manga:nth-child(n):hover,
     .shop-card-special .creator-avatar:nth-child(n):hover,
     .manga-book:nth-child(n):hover { transform: none !important; z-index: auto !important; border-color: transparent !important; }
