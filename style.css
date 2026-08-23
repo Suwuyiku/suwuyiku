@@ -792,7 +792,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.15); /* Drastically lightened the dark overlay */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -809,14 +809,14 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
 
 .email-modal {
     background: var(--bg-color);
-    border: 0.125rem solid var(--kodansha-black);
+    border: 1px solid var(--kodansha-black); /* Thinned out the thick border */
     padding: 2.5rem;
     width: 90%;
     max-width: 28rem;
     position: relative;
     transform: translateY(20px);
     transition: transform 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .modal-overlay.active .email-modal {
@@ -841,9 +841,9 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
 }
 
 .modal-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--kodansha-black);
     letter-spacing: -0.02em;
 }
@@ -859,7 +859,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 0.125rem solid var(--border-color);
+    border: 1px solid var(--border-color);
     padding: 0.5rem 0.5rem 0.5rem 1rem;
     border-radius: 4px;
     background: #FAFAFA;
@@ -872,22 +872,23 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     letter-spacing: 0.02em;
 }
 
-.btn-copy {
-    background: var(--kodansha-black);
-    color: var(--bg-color);
-    border: 0.125rem solid var(--kodansha-black);
-    padding: 0.4rem 1rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+/* New Icon Button Styles */
+.btn-copy-icon {
+    background: transparent;
+    color: var(--kodansha-black);
+    border: none;
+    padding: 0.4rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease;
+    border-radius: 4px;
 }
 
-.btn-copy:hover {
-    background: var(--bg-color);
-    color: var(--kodansha-black);
+.btn-copy-icon:hover {
+    background: #EAEAEA;
+    transform: scale(1.05);
 }
 
 
