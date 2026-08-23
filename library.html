@@ -479,7 +479,9 @@
                 
                 const miniCover = vol.covers[0] || 'assets/placeholder.png';
                 mini.innerHTML = `
-                    <img src="${miniCover}" alt="Vol ${vol.volumeNumber}">
+                    <div class="mini-cover-wrapper">
+                        <img src="${miniCover}" alt="Vol ${vol.volumeNumber}">
+                    </div>
                     <span class="mini-vol-num">${vol.volumeNumber}</span>
                 `;
                 miniShelf.appendChild(mini);
