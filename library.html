@@ -409,32 +409,46 @@
             document.getElementById('det-category').textContent = activeVol.category || "-";
             document.getElementById('det-publisher').textContent = activeVol.publisher || "-";
             document.getElementById('det-date').textContent = activeVol.dateAcquired || "-";
-
-            // --- BULLETPROOF PUBLISHER LOGO SYSTEM ---
+            
+// --- BULLETPROOF PUBLISHER LOGO SYSTEM ---
             const linkBtn = document.getElementById('det-link');
             
             if (activeVol.purchaseLink || activeVol.publisher) {
-                linkBtn.style.display = 'inline-flex';
+                linkBtn.style.display = 'inline-block';
                 linkBtn.href = activeVol.purchaseLink || "#"; 
                 
-                // HEAVILY SANITIZED: Forces string format, lowercases, and trims hidden spaces
+                // Strips the button class and adds perfect spacing
+                linkBtn.className = ''; 
+                linkBtn.style.marginTop = '1.5rem';
+                
+                // Heavily sanitized for flawless matching
                 const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
                 let logoUrl = "";
                 
-                // Matches the publisher name flawlessly
+                // The Expanded Publisher Database
                 if (pName.includes("viz")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Viz_Media_logo.svg/512px-Viz_Media_logo.svg.png";
                 else if (pName.includes("kodansha") || pName.includes("vertical")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kodansha_logo.svg/512px-Kodansha_logo.svg.png";
-                else if (pName.includes("yen press")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yen_Press_logo.svg/512px-Yen_Press_logo.svg.png";
-                else if (pName.includes("seven seas")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Seven_Seas_Entertainment_logo.svg/512px-Seven_Seas_Entertainment_logo.svg.png";
+                else if (pName.includes("yen press") || pName.includes("jy")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yen_Press_logo.svg/512px-Yen_Press_logo.svg.png";
+                else if (pName.includes("seven seas") || pName.includes("ghost ship")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Seven_Seas_Entertainment_logo.svg/512px-Seven_Seas_Entertainment_logo.svg.png";
                 else if (pName.includes("dark horse")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Dark_Horse_Comics_logo.svg/512px-Dark_Horse_Comics_logo.svg.png";
                 else if (pName.includes("square enix")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Square_Enix_logo.svg/512px-Square_Enix_logo.svg.png";
                 else if (pName.includes("shueisha")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Shueisha_logo.svg/512px-Shueisha_logo.svg.png";
+                else if (pName.includes("kadokawa")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/KADOKAWA_logo_2013.svg/512px-KADOKAWA_logo_2013.svg.png";
+                else if (pName.includes("tokyopop")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Tokyopop_logo.svg/512px-Tokyopop_logo.svg.png";
+                else if (pName.includes("shogakukan")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Shogakukan_logo.svg/512px-Shogakukan_logo.svg.png";
+                else if (pName.includes("hakusensha")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Hakusensha_logo.svg/512px-Hakusensha_logo.svg.png";
+                else if (pName.includes("marvel")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Marvel_Studios_2016_logo.svg/512px-Marvel_Studios_2016_logo.svg.png";
+                else if (pName.includes("dc comics") || pName === "dc") logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/DC_Comics_logo.svg/512px-DC_Comics_logo.svg.png";
+                else if (pName.includes("image comics")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Image_Comics_logo.svg/512px-Image_Comics_logo.svg.png";
+                else if (pName.includes("scholastic")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scholastic_logo.svg/512px-Scholastic_logo.svg.png";
+                else if (pName.includes("penguin") || pName.includes("random house")) logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Penguin_Random_House.svg/512px-Penguin_Random_House.svg.png";
 
                 if (logoUrl) {
-                    // Inline styles force the image to render perfectly, ignoring cached CSS
-                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <img src="${logoUrl}" alt="${activeVol.publisher}" style="height: 1.25rem; width: auto; object-fit: contain; display: block; margin-left: auto;">`;
+                    // Full color original branding. Added a subtle scale effect on hover for interaction.
+                    linkBtn.innerHTML = `<img src="${logoUrl}" alt="${activeVol.publisher}" style="height: 2.2rem; width: auto; object-fit: contain; display: block; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">`;
                 } else {
-                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <span>${activeVol.publisher ? activeVol.publisher.toUpperCase() : "VISIT ↗"}</span>`;
+                    // Fallback for unknown publishers: Clean underlined text, no bulky button
+                    linkBtn.innerHTML = `<span style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; color: #000; border-bottom: 2px solid #000; padding-bottom: 2px;">${activeVol.publisher ? activeVol.publisher.toUpperCase() : "OFFICIAL SITE ↗"}</span>`;
                 }
             } else {
                 linkBtn.style.display = 'none';
