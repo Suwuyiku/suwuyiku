@@ -12,420 +12,10 @@
     <link rel="stylesheet" href="style.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <!-- 1. UNIFIED NAVIGATION -->
-    <nav class="top-nav">
-        <div class="nav-left">
-            <a href="/" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a>
-        </div>
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="/about">About</a></li>
-                <li><a href="/connections">Connections</a></li>
-                <li><a href="/library" style="color: var(--hover-gray);">Library</a></li>
-                <li><a href="/fragments">Fragments</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
-                <a href="/contact" class="btn-action">CONTACT</a>
-            </div>
-            <button class="hamburger-btn" aria-label="Open Menu">
-                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- 2. MOBILE SIDEBAR -->
-    <div class="mobile-sidebar">
-        <div class="sidebar-header">
-            <a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a>
-            <button class="close-sidebar-btn" aria-label="Close Menu">&times;</button>
-        </div>
-        <div class="sidebar-menu-container">
-            <ul class="sidebar-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/connections">Connections</a></li>
-                <li><a href="/library">Library</a></li>
-                <li><a href="/fragments">Fragments</a></li>
-            </ul>
-            <div class="sidebar-actions">
-                <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
-                <a href="/contact" class="sidebar-btn-action">CONTACT</a>
-            </div>
-        </div>
-        <div class="sidebar-footer">
-            <span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span>
-        </div>
-    </div>
-    <div class="sidebar-overlay"></div>
-
- <!-- 3. MAIN LIBRARY CANVAS -->
-    <main class="contact-page-wrapper">
-        
-        <!-- Reusing the unified search header architecture -->
-        <div class="connections-header-wrapper" id="library-header-bar">
-            <div class="connections-header-left">
-                <h1>The Archive</h1>
-                <p>A curated collection of manga and literature.</p>
-            </div>
-            
-            <div class="search-container">
-                <input type="text" id="librarySearch" class="search-input" placeholder="Search series or authors...">
-                <svg class="search-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-        </div>
-
-        <!-- VIEW 1: THE MAIN GRID -->
-        <div id="main-view">
-            <div id="library-grid" class="library-grid">
-                
-                <!-- SKELETON LOADERS (Will be deleted by JS when data arrives) -->
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                
-            </div>
-            <div id="noResultsMsg" style="display: none; text-align: left; width: 100%; padding: 2rem 0; color: #777777; font-weight: 500;">
-                No records found in the archive.
-            </div>
-        </div>
-
-<!-- VIEW 2: THE KODANSHA DETAIL DOSSIER -->
-<div id="detail-view" class="detail-view">
-            
-    <div class="breadcrumbs">
-        <button class="btn-breadcrumb" onclick="closeDetailView()">
-            ← Back to Archive
-        </button>
-    </div>
-
-    <div class="detail-top">
-        <div class="detail-cover-wrapper">
-            <img id="det-cover" src="" class="detail-cover" alt="Volume Cover">
-        </div>
-        <div class="detail-info">
-            <h2 id="det-title" class="detail-title">Series Title</h2>
-            <p id="det-author" class="detail-author">By Author</p>
-                    
-            <!-- The Review Body -->
-            <div id="det-review" class="detail-review"></div>
-                    
-            <!-- Official Publisher Actions (Clean Button + Separate Logo) -->
-            <div class="publisher-action-group">
-                <a id="det-link" href="#" target="_blank" class="kodansha-btn">OFFICIAL SITE ↗</a>
-                <img id="det-publisher-logo" src="" alt="Publisher">
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW FULL-WIDTH VOLUME INFO BOARD (Matching Kodansha exactly) -->
-    <div class="volume-info-section">
-        <h2 class="volume-info-heading">Volume<br>Info</h2>
-        <div class="volume-info-board">
-            <div class="info-grid">
-                <div class="info-cell"><span class="info-label">Category</span><span id="det-category" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Publisher</span><span id="det-publisher" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Date Acquired</span><span id="det-date" class="info-value">-</span></div>
-            </div>
-            <div class="tags-row">
-                <span class="info-label" style="min-width: 50px;">Tags</span>
-                <div id="det-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mini Shelf for Other Volumes -->
-    <h3 class="other-volumes-header">Other Volumes in This Series</h3>
-    <div id="mini-shelf" class="mini-shelf"></div>
-
-</div>
-        
-</main>
-
-    <!-- 4. UNIFIED FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <span class="logo-text footer-logo">Suwuyiku</span>
-                <h2>Visual curation and digital architecture</h2>
-                <p>Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.</p>
-            </div>
-            <div class="footer-links">
-                <div class="link-column">
-                    <h3>Ecosystem</h3>
-                    <ul>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/library">Library</a></li>
-                        <li><a href="/fragments">Fragments</a></li>
-                        <li><a href="https://suwuyiku.pages.dev/shop">Shop</a></li>
-                    </ul>
-                </div>
-                <div class="link-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="/connections">Connections</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="https://github.com/Suwuyiku">GitHub</a></li>
-                    </ul>
-                </div>
-                <div class="link-column">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="https://github.com/Suwuyiku/suwuyiku/blob/main/LICENSE">MIT License</a></li>
-                        <li><a href="https://github.com/Suwuyiku/suwuyiku">Source Code</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-bottom-links">
-                <a href="/legal/privacy-policy">Privacy Policy</a><span class="divider">|</span>
-                <a href="/legal/terms-of-use">Terms of Use</a><span class="divider">|</span>
-                <a href="/legal/shipping-and-refund">Shipping and Refund Policy</a>
-            </div>
-            <div class="copyright">&copy; 2026 Suwuyiku. All Rights Reserved.</div>
-        </div>
-    </footer>
-
-    <!-- 5. INTERACTION & SMART API SCRIPT -->
-    <script>
-        let groupedSeries = {};
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // --- MOBILE SIDEBAR ---
-            const hamburger = document.querySelector('.hamburger-btn');
-            const sidebar = document.querySelector('.mobile-sidebar');
-            const overlay = document.querySelector('.sidebar-overlay');
-            const closeBtn = document.querySelector('.close-sidebar-btn');
-
-            if (hamburger && sidebar && overlay && closeBtn) {
-                function toggleMenu() {
-                    sidebar.classList.toggle('active');
-                    overlay.classList.toggle('active');
-                    document.body.classList.toggle('no-scroll'); 
-                }
-                hamburger.addEventListener('click', toggleMenu);
-                closeBtn.addEventListener('click', toggleMenu);
-                overlay.addEventListener('click', toggleMenu);
-            }
-
-            // --- SMART SEARCH ---
-            const searchInput = document.getElementById('librarySearch');
-            const noResultsMsg = document.getElementById('noResultsMsg');
-
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase().trim();
-                    const cards = document.querySelectorAll('.kodansha-card'); 
-                    let visible = 0;
-
-                    if (query !== '') document.body.classList.add('is-searching');
-                    else document.body.classList.remove('is-searching');
-
-                    cards.forEach(card => {
-                        const searchData = card.getAttribute('data-search');
-                        if (searchData.includes(query)) {
-                            card.style.display = 'flex';
-                            visible++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    noResultsMsg.style.display = (visible === 0 && query !== '') ? 'block' : 'none';
-                });
-            }
-
-            loadLibrary();
-        });
-
-        // --- NOTION API PIPELINE & GROUPING ENGINE ---
-        async function loadLibrary() {
-            const grid = document.getElementById('library-grid');
-            
-            try {
-                // THE CACHE BUSTER
-                const response = await fetch('https://api.suwuyiku.workers.dev/library?nocache=' + new Date().getTime());
-                const rawBooks = await response.json();
-
-                if (rawBooks.error) throw new Error(rawBooks.error);
-
-                grid.innerHTML = ""; // Clear loading skeleton
-
-                rawBooks.forEach(book => {
-                    if (!groupedSeries[book.series]) {
-                        groupedSeries[book.series] = {
-                            seriesName: book.series,
-                            author: book.author,
-                            publisher: book.publisher,
-                            volumes: []
-                        };
-                    }
-                    groupedSeries[book.series].volumes.push(book);
-                });
-
-                Object.values(groupedSeries).forEach(series => {
-                    series.volumes.sort((a, b) => a.volumeNumber - b.volumeNumber);
-                });
-
-                Object.values(groupedSeries).forEach(series => {
-                    const firstVol = series.volumes[0];
-                    if (!firstVol) return;
-
-                    const coverUrl = firstVol.covers.length > 0 ? firstVol.covers[0] : 'assets/placeholder.png';
-                    const searchData = `${series.seriesName} ${series.author} ${firstVol.genres.join(' ')}`.toLowerCase();
-
-                    const card = document.createElement('div');
-                    card.className = 'kodansha-card';
-                    card.setAttribute('data-search', searchData);
-                    card.onclick = () => openDetailView(series.seriesName, 0);
-
-                    card.innerHTML = `
-                        <div class="cover-wrapper">
-                            <img src="${coverUrl}" class="book-cover" alt="Cover">
-                        </div>
-                        <div class="card-text">
-                            <h3 class="series-title">${series.seriesName}</h3>
-                            <p class="series-author">By ${series.author}</p>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error("Library Sync Failed:", error);
-                grid.innerHTML = `<p style="color: #FF0000; padding: 2rem 0;"><strong>System Error:</strong><br>${error.message}</p>`;
-            }
-        }
-        
-        // --- DOSSIER INTERACTION LOGIC ---
-        function openDetailView(seriesName, volumeIndex) {
-            const series = groupedSeries[seriesName];
-            const activeVol = series.volumes[volumeIndex];
-
-            document.getElementById('main-view').style.display = 'none';
-            document.getElementById('library-header-bar').style.display = 'none';
-            document.getElementById('detail-view').style.display = 'flex';
-            window.scrollTo(0, 0); 
-
-            document.getElementById('det-cover').src = activeVol.covers[0] || 'assets/placeholder.png';
-            document.getElementById('det-title').textContent = activeVol.title; 
-            document.getElementById('det-author').textContent = `By ${activeVol.author}`;
-            document.getElementById('det-review').textContent = activeVol.review || "No ecosystem data recorded for this volume yet.";
-            
-            document.getElementById('det-category').textContent = activeVol.category || "-";
-            document.getElementById('det-publisher').textContent = activeVol.publisher || "-";
-            document.getElementById('det-date').textContent = activeVol.dateAcquired || "-";
-
-            // --- SEPARATED PUBLISHER LOGO SYSTEM ---
-            const linkBtn = document.getElementById('det-link');
-            const logoImg = document.getElementById('det-publisher-logo');
-            
-            if (activeVol.purchaseLink || activeVol.publisher) {
-                linkBtn.style.display = 'inline-flex';
-                linkBtn.href = activeVol.purchaseLink || "#"; 
-                
-                const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
-                let logoUrl = "";
-                
-                // Matches the publisher name flawlessly
-                if (pName.includes("viz")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Viz_Media_logo.svg/512px-Viz_Media_logo.svg.png";
-                } else if (pName.includes("kodansha") || pName.includes("vertical")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kodansha_logo.svg/512px-Kodansha_logo.svg.png";
-                } else if (pName.includes("yen press")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yen_Press_logo.svg/512px-Yen_Press_logo.svg.png";
-                } else if (pName.includes("seven seas")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Seven_Seas_Entertainment_logo.svg/512px-Seven_Seas_Entertainment_logo.svg.png";
-                } else if (pName.includes("dark horse")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Dark_Horse_Comics_logo.svg/512px-Dark_Horse_Comics_logo.svg.png";
-                } else if (pName.includes("square enix")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Square_Enix_logo.svg/512px-Square_Enix_logo.svg.png";
-                } else if (pName.includes("shueisha")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Shueisha_logo.svg/512px-Shueisha_logo.svg.png";
-                }
-
-                if (logoUrl !== "") {
-                    logoImg.src = logoUrl;
-                    logoImg.style.display = 'block';
-                    linkBtn.innerHTML = `OFFICIAL SITE ↗`; 
-                } else {
-                    logoImg.style.display = 'none';
-                    // Fallback to putting text inside the button if no logo is found
-                    linkBtn.innerHTML = `OFFICIAL SITE ↗ <span style="margin-left: 0.5rem; color: #888888;">${activeVol.publisher ? activeVol.publisher.toUpperCase() : ""}</span>`;
-                }
-            } else {
-                linkBtn.style.display = 'none';
-                logoImg.style.display = 'none';
-            }
-            
-            const tagsContainer = document.getElementById('det-tags');
-            tagsContainer.innerHTML = activeVol.genres.map(g => `<span class="tag-badge">${g}</span>`).join('');
-
-            const miniShelf = document.getElementById('mini-shelf');
-            miniShelf.innerHTML = "";
-            
-            series.volumes.forEach((vol, idx) => {
-                const mini = document.createElement('div');
-                mini.className = `mini-volume ${idx === volumeIndex ? 'active' : ''}`;
-                mini.onclick = () => openDetailView(seriesName, idx); 
-                
-                const miniCover = vol.covers[0] || 'assets/placeholder.png';
-                mini.innerHTML = `
-                    <img src="${miniCover}" alt="Vol ${vol.volumeNumber}">
-                    <span class="mini-vol-num">${vol.volumeNumber}</span>
-                `;
-                miniShelf.appendChild(mini);
-            });
-        }
-
-        function closeDetailView() {
-            document.getElementById('detail-view').style.display = 'none';
-            document.getElementById('main-view').style.display = 'block';
-            document.getElementById('library-header-bar').style.display = 'flex';
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="PBP_jXkzOYsuMUxEpSyD3RMMLK9uf7czmxw5eCV5MUw" />
-    <meta name="description" content="The official manga and book archive of Suwuyiku.">
-
-    <title>Library • Suwuyiku</title>
-    
-    <link rel="icon" type="image/webp" href="assets/logo.png">
-    <link rel="stylesheet" href="style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- KODANSHA EDITORIAL UPGRADES (Overrides style.css) -->
     <style>
-        /* 1. The Gray Box Frame */
+        /* 1. The Gray Box Frame (Taller, deeper gray, perfect breathing room) */
         .cover-wrapper, .detail-cover-wrapper { 
             background-color: #EBEBEB; 
             aspect-ratio: 1 / 1.45; 
@@ -436,7 +26,7 @@
             position: relative; 
         }
 
-        /* 2. The Cover Shadow */
+        /* 2. The Cover Shadow (Crucial for making it look like a physical monument) */
         .book-cover, .detail-cover { 
             max-width: 100%; 
             max-height: 100%; 
@@ -448,7 +38,7 @@
             -webkit-user-drag: none;
         }
 
-        /* 3. Grid Typography */
+        /* 3. Editorial Typography (Smaller, elegant, tighter spacing) */
         .card-text { 
             display: flex; 
             flex-direction: column; 
@@ -543,7 +133,7 @@
     </div>
     <div class="sidebar-overlay"></div>
 
- <!-- 3. MAIN LIBRARY CANVAS -->
+    <!-- 3. MAIN LIBRARY CANVAS -->
     <main class="contact-page-wrapper">
         
         <!-- Reusing the unified search header architecture -->
@@ -593,509 +183,54 @@
             </div>
         </div>
 
-<!-- VIEW 2: THE KODANSHA DETAIL DOSSIER -->
-<div id="detail-view" class="detail-view">
-            
-    <div class="breadcrumbs">
-        <button class="btn-breadcrumb" onclick="closeDetailView()">
-            ← Back to Archive
-        </button>
-    </div>
-
-    <div class="detail-top">
-        <div class="detail-cover-wrapper">
-            <img id="det-cover" src="" class="detail-cover" alt="Volume Cover">
-        </div>
-        <div class="detail-info">
-            <h2 id="det-title" class="detail-title">Series Title</h2>
-            <p id="det-author" class="detail-author">By Author</p>
+        <!-- VIEW 2: THE KODANSHA DETAIL DOSSIER -->
+        <div id="detail-view" class="detail-view">
                     
-            <!-- The Review Body -->
-            <div id="det-review" class="detail-review"></div>
-                    
-            <!-- Official Publisher Link -->
-            <a id="det-link" href="#" target="_blank" class="kodansha-btn">Visit Official Publisher ↗</a>
-        </div>
-    </div>
-
-    <!-- NEW FULL-WIDTH VOLUME INFO BOARD (Matching Kodansha exactly) -->
-    <div class="volume-info-section">
-        <h2 class="volume-info-heading">Volume<br>Info</h2>
-        <div class="volume-info-board">
-            <div class="info-grid">
-                <div class="info-cell"><span class="info-label">Category</span><span id="det-category" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Publisher</span><span id="det-publisher" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Date Acquired</span><span id="det-date" class="info-value">-</span></div>
+            <div class="breadcrumbs">
+                <button class="btn-breadcrumb" onclick="closeDetailView()">
+                    ← Back to Archive
+                </button>
             </div>
-            <div class="tags-row">
-                <span class="info-label" style="min-width: 50px;">Tags</span>
-                <div id="det-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+
+            <div class="detail-top">
+                <div class="detail-cover-wrapper">
+                    <img id="det-cover" src="" class="detail-cover" alt="Volume Cover">
+                </div>
+                <div class="detail-info">
+                    <h2 id="det-title" class="detail-title">Series Title</h2>
+                    <p id="det-author" class="detail-author">By Author</p>
+                            
+                    <!-- The Review Body -->
+                    <div id="det-review" class="detail-review"></div>
+                            
+                    <!-- Official Publisher Link -->
+                    <a id="det-link" href="#" target="_blank" class="kodansha-btn">Visit Official Publisher ↗</a>
+                </div>
             </div>
+
+            <!-- NEW FULL-WIDTH VOLUME INFO BOARD (Matching Kodansha exactly) -->
+            <div class="volume-info-section">
+                <h2 class="volume-info-heading">Volume<br>Info</h2>
+                <div class="volume-info-board">
+                    <div class="info-grid">
+                        <div class="info-cell"><span class="info-label">Category</span><span id="det-category" class="info-value">-</span></div>
+                        <div class="info-cell"><span class="info-label">Publisher</span><span id="det-publisher" class="info-value">-</span></div>
+                        <div class="info-cell"><span class="info-label">Date Acquired</span><span id="det-date" class="info-value">-</span></div>
+                    </div>
+                    <div class="tags-row">
+                        <span class="info-label" style="min-width: 50px;">Tags</span>
+                        <div id="det-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini Shelf for Other Volumes -->
+            <h3 class="other-volumes-header">Other Volumes in This Series</h3>
+            <div id="mini-shelf" class="mini-shelf"></div>
+
         </div>
-    </div>
-
-    <!-- Mini Shelf for Other Volumes -->
-    <h3 class="other-volumes-header">Other Volumes in This Series</h3>
-    <div id="mini-shelf" class="mini-shelf"></div>
-
-</div>
         
-</main>
-
-    <!-- 4. UNIFIED FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <span class="logo-text footer-logo">Suwuyiku</span>
-                <h2>Visual curation and digital architecture</h2>
-                <p>Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.</p>
-            </div>
-            <div class="footer-links">
-                <div class="link-column">
-                    <h3>Ecosystem</h3>
-                    <ul>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/library">Library</a></li>
-                        <li><a href="/fragments">Fragments</a></li>
-                        <li><a href="https://suwuyiku.pages.dev/shop">Shop</a></li>
-                    </ul>
-                </div>
-                <div class="link-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="/connections">Connections</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="https://github.com/Suwuyiku">GitHub</a></li>
-                    </ul>
-                </div>
-                <div class="link-column">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="https://github.com/Suwuyiku/suwuyiku/blob/main/LICENSE">MIT License</a></li>
-                        <li><a href="https://github.com/Suwuyiku/suwuyiku">Source Code</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-bottom-links">
-                <a href="/legal/privacy-policy">Privacy Policy</a><span class="divider">|</span>
-                <a href="/legal/terms-of-use">Terms of Use</a><span class="divider">|</span>
-                <a href="/legal/shipping-and-refund">Shipping and Refund Policy</a>
-            </div>
-            <div class="copyright">&copy; 2026 Suwuyiku. All Rights Reserved.</div>
-        </div>
-    </footer>
-
-    <!-- 5. INTERACTION & SMART API SCRIPT -->
-    <script>
-        let groupedSeries = {};
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // --- MOBILE SIDEBAR ---
-            const hamburger = document.querySelector('.hamburger-btn');
-            const sidebar = document.querySelector('.mobile-sidebar');
-            const overlay = document.querySelector('.sidebar-overlay');
-            const closeBtn = document.querySelector('.close-sidebar-btn');
-
-            if (hamburger && sidebar && overlay && closeBtn) {
-                function toggleMenu() {
-                    sidebar.classList.toggle('active');
-                    overlay.classList.toggle('active');
-                    document.body.classList.toggle('no-scroll'); 
-                }
-                hamburger.addEventListener('click', toggleMenu);
-                closeBtn.addEventListener('click', toggleMenu);
-                overlay.addEventListener('click', toggleMenu);
-            }
-
-            // --- SMART SEARCH ---
-            const searchInput = document.getElementById('librarySearch');
-            const noResultsMsg = document.getElementById('noResultsMsg');
-
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase().trim();
-                    const cards = document.querySelectorAll('.kodansha-card'); 
-                    let visible = 0;
-
-                    if (query !== '') document.body.classList.add('is-searching');
-                    else document.body.classList.remove('is-searching');
-
-                    cards.forEach(card => {
-                        const searchData = card.getAttribute('data-search');
-                        if (searchData.includes(query)) {
-                            card.style.display = 'flex';
-                            visible++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    noResultsMsg.style.display = (visible === 0 && query !== '') ? 'block' : 'none';
-                });
-            }
-
-            loadLibrary();
-        });
-
-        // --- NOTION API PIPELINE & GROUPING ENGINE ---
-        async function loadLibrary() {
-            const grid = document.getElementById('library-grid');
-            
-            try {
-                // THE CACHE BUSTER: Forces Cloudflare to pull live Notion data instantly
-                const response = await fetch('https://api.suwuyiku.workers.dev/library?nocache=' + new Date().getTime());
-                const rawBooks = await response.json();
-
-                if (rawBooks.error) throw new Error(rawBooks.error);
-
-                grid.innerHTML = ""; // Clear loading skeleton
-
-                rawBooks.forEach(book => {
-                    if (!groupedSeries[book.series]) {
-                        groupedSeries[book.series] = {
-                            seriesName: book.series,
-                            author: book.author,
-                            publisher: book.publisher,
-                            volumes: []
-                        };
-                    }
-                    groupedSeries[book.series].volumes.push(book);
-                });
-
-                Object.values(groupedSeries).forEach(series => {
-                    series.volumes.sort((a, b) => a.volumeNumber - b.volumeNumber);
-                });
-
-                Object.values(groupedSeries).forEach(series => {
-                    const firstVol = series.volumes[0];
-                    if (!firstVol) return;
-
-                    const coverUrl = firstVol.covers.length > 0 ? firstVol.covers[0] : 'assets/placeholder.png';
-                    const searchData = `${series.seriesName} ${series.author} ${firstVol.genres.join(' ')}`.toLowerCase();
-
-                    const card = document.createElement('div');
-                    card.className = 'kodansha-card';
-                    card.setAttribute('data-search', searchData);
-                    card.onclick = () => openDetailView(series.seriesName, 0);
-
-                    card.innerHTML = `
-                        <div class="cover-wrapper">
-                            <img src="${coverUrl}" class="book-cover" alt="Cover">
-                        </div>
-                        <div class="card-text">
-                            <h3 class="series-title">${series.seriesName}</h3>
-                            <p class="series-author">By ${series.author}</p>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error("Library Sync Failed:", error);
-                grid.innerHTML = `<p style="color: #FF0000; padding: 2rem 0;"><strong>System Error:</strong><br>${error.message}</p>`;
-            }
-        }
-        
-        // --- DOSSIER INTERACTION LOGIC ---
-        function openDetailView(seriesName, volumeIndex) {
-            const series = groupedSeries[seriesName];
-            const activeVol = series.volumes[volumeIndex];
-
-            document.getElementById('main-view').style.display = 'none';
-            document.getElementById('library-header-bar').style.display = 'none';
-            document.getElementById('detail-view').style.display = 'flex';
-            window.scrollTo(0, 0); 
-
-            document.getElementById('det-cover').src = activeVol.covers[0] || 'assets/placeholder.png';
-            
-            // THE FIX: Pulls the exact "Name" column from Notion
-            document.getElementById('det-title').textContent = activeVol.title; 
-            
-            document.getElementById('det-author').textContent = `By ${activeVol.author}`;
-            document.getElementById('det-review').textContent = activeVol.review || "No ecosystem data recorded for this volume yet.";
-            
-            document.getElementById('det-category').textContent = activeVol.category || "-";
-            document.getElementById('det-publisher').textContent = activeVol.publisher || "-";
-            document.getElementById('det-date').textContent = activeVol.dateAcquired || "-";
-
-            // --- BULLETPROOF PUBLISHER LOGO SYSTEM ---
-            const linkBtn = document.getElementById('det-link');
-            
-            if (activeVol.purchaseLink || activeVol.publisher) {
-                linkBtn.style.display = 'inline-flex';
-                linkBtn.href = activeVol.purchaseLink || "#"; 
-                
-                // HEAVILY SANITIZED: Forces string format, lowercases, and trims hidden spaces
-                const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
-                let logoUrl = "";
-                
-                if (pName.includes("viz")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Viz_Media_logo.svg/512px-Viz_Media_logo.svg.png";
-                } else if (pName.includes("kodansha") || pName.includes("vertical")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kodansha_logo.svg/512px-Kodansha_logo.svg.png";
-                } else if (pName.includes("yen press")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yen_Press_logo.svg/512px-Yen_Press_logo.svg.png";
-                } else if (pName.includes("seven seas")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Seven_Seas_Entertainment_logo.svg/512px-Seven_Seas_Entertainment_logo.svg.png";
-                } else if (pName.includes("dark horse")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Dark_Horse_Comics_logo.svg/512px-Dark_Horse_Comics_logo.svg.png";
-                } else if (pName.includes("square enix")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Square_Enix_logo.svg/512px-Square_Enix_logo.svg.png";
-                } else if (pName.includes("shueisha")) {
-                    logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Shueisha_logo.svg/512px-Shueisha_logo.svg.png";
-                }
-
-                if (logoUrl !== "") {
-                    // Injecting logo with explicit auto-margin to push it to the right of the button
-                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <img src="${logoUrl}" alt="${activeVol.publisher}" style="height: 1.25rem; width: auto; object-fit: contain; display: block; margin-left: auto;">`;
-                } else {
-                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <span>${activeVol.publisher ? activeVol.publisher.toUpperCase() : "VISIT ↗"}</span>`;
-                }
-            } else {
-                linkBtn.style.display = 'none';
-            }
-            
-            const tagsContainer = document.getElementById('det-tags');
-            tagsContainer.innerHTML = activeVol.genres.map(g => `<span class="tag-badge">${g}</span>`).join('');
-
-            const miniShelf = document.getElementById('mini-shelf');
-            miniShelf.innerHTML = "";
-            
-            series.volumes.forEach((vol, idx) => {
-                const mini = document.createElement('div');
-                mini.className = `mini-volume ${idx === volumeIndex ? 'active' : ''}`;
-                mini.onclick = () => openDetailView(seriesName, idx); 
-                
-                const miniCover = vol.covers[0] || 'assets/placeholder.png';
-                mini.innerHTML = `
-                    <img src="${miniCover}" alt="Vol ${vol.volumeNumber}">
-                    <span class="mini-vol-num">${vol.volumeNumber}</span>
-                `;
-                miniShelf.appendChild(mini);
-            });
-        }
-
-        function closeDetailView() {
-            document.getElementById('detail-view').style.display = 'none';
-            document.getElementById('main-view').style.display = 'block';
-            document.getElementById('library-header-bar').style.display = 'flex';
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="PBP_jXkzOYsuMUxEpSyD3RMMLK9uf7czmxw5eCV5MUw" />
-    <meta name="description" content="The official manga and book archive of Suwuyiku.">
-
-    <title>Library • Suwuyiku</title>
-    
-    <link rel="icon" type="image/webp" href="assets/logo.png">
-    <link rel="stylesheet" href="style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- KODANSHA EDITORIAL UPGRADES (Overrides style.css) -->
-    <style>
-        /* 1. The Gray Box Frame (Taller, deeper gray, perfect breathing room) */
-        .cover-wrapper, .detail-cover-wrapper { 
-            background-color: #EBEBEB; 
-            aspect-ratio: 1 / 1.45; 
-            padding: 1.5rem; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            position: relative; 
-        }
-
-        /* 2. The Cover Shadow (Crucial for making it look like a physical monument) */
-        .book-cover, .detail-cover { 
-            max-width: 100%; 
-            max-height: 100%; 
-            width: auto; 
-            height: auto; 
-            object-fit: contain; 
-            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.18), -1px -1px 3px rgba(255,255,255,0.6); 
-            pointer-events: none;
-            -webkit-user-drag: none;
-        }
-
-        /* 3. Editorial Typography (Smaller, elegant, tighter spacing) */
-        .card-text { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.15rem; 
-            margin-top: 1rem; 
-            z-index: 1000;
-            position: relative;
-        }
-
-        .series-title { 
-            font-size: 0.9rem; 
-            font-weight: 800; 
-            color: #000000; 
-            line-height: 1.3; 
-            letter-spacing: 0.01em;
-        }
-
-        .series-author { 
-            font-size: 0.75rem; 
-            color: #777777; 
-            font-weight: 500; 
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 1. UNIFIED NAVIGATION -->
-    <nav class="top-nav">
-        <div class="nav-left">
-            <a href="/" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a>
-        </div>
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="/about">About</a></li>
-                <li><a href="/connections">Connections</a></li>
-                <li><a href="/library" style="color: var(--hover-gray);">Library</a></li>
-                <li><a href="/fragments">Fragments</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
-                <a href="/contact" class="btn-action">CONTACT</a>
-            </div>
-            <button class="hamburger-btn" aria-label="Open Menu">
-                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- 2. MOBILE SIDEBAR -->
-    <div class="mobile-sidebar">
-        <div class="sidebar-header">
-            <a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a>
-            <button class="close-sidebar-btn" aria-label="Close Menu">&times;</button>
-        </div>
-        <div class="sidebar-menu-container">
-            <ul class="sidebar-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/connections">Connections</a></li>
-                <li><a href="/library">Library</a></li>
-                <li><a href="/fragments">Fragments</a></li>
-            </ul>
-            <div class="sidebar-actions">
-                <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
-                <a href="/contact" class="sidebar-btn-action">CONTACT</a>
-            </div>
-        </div>
-        <div class="sidebar-footer">
-            <span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span>
-        </div>
-    </div>
-    <div class="sidebar-overlay"></div>
-
- <!-- 3. MAIN LIBRARY CANVAS -->
-    <main class="contact-page-wrapper">
-        
-        <!-- Reusing the unified search header architecture -->
-        <div class="connections-header-wrapper" id="library-header-bar">
-            <div class="connections-header-left">
-                <h1>The Archive</h1>
-                <p>A curated collection of manga and literature.</p>
-            </div>
-            
-            <div class="search-container">
-                <input type="text" id="librarySearch" class="search-input" placeholder="Search series or authors...">
-                <svg class="search-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-        </div>
-
-        <!-- VIEW 1: THE MAIN GRID -->
-        <div id="main-view">
-            <div id="library-grid" class="library-grid">
-                
-                <!-- SKELETON LOADERS (Will be deleted by JS when data arrives) -->
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-cover"></div>
-                    <div class="skeleton-text title"></div>
-                    <div class="skeleton-text author"></div>
-                </div>
-                
-            </div>
-            <div id="noResultsMsg" style="display: none; text-align: left; width: 100%; padding: 2rem 0; color: #777777; font-weight: 500;">
-                No records found in the archive.
-            </div>
-        </div>
-
-<!-- VIEW 2: THE KODANSHA DETAIL DOSSIER -->
-<div id="detail-view" class="detail-view">
-            
-    <div class="breadcrumbs">
-        <button class="btn-breadcrumb" onclick="closeDetailView()">
-            ← Back to Archive
-        </button>
-    </div>
-
-    <div class="detail-top">
-        <div class="detail-cover-wrapper">
-            <img id="det-cover" src="" class="detail-cover" alt="Volume Cover">
-        </div>
-        <div class="detail-info">
-            <h2 id="det-title" class="detail-title">Series Title</h2>
-            <p id="det-author" class="detail-author">By Author</p>
-                    
-            <!-- The Review Body -->
-            <div id="det-review" class="detail-review"></div>
-                    
-            <!-- Official Publisher Link -->
-            <a id="det-link" href="#" target="_blank" class="kodansha-btn">Visit Official Publisher ↗</a>
-        </div>
-    </div>
-
-    <!-- NEW FULL-WIDTH VOLUME INFO BOARD (Matching Kodansha exactly) -->
-    <div class="volume-info-section">
-        <h2 class="volume-info-heading">Volume<br>Info</h2>
-        <div class="volume-info-board">
-            <div class="info-grid">
-                <div class="info-cell"><span class="info-label">Category</span><span id="det-category" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Publisher</span><span id="det-publisher" class="info-value">-</span></div>
-                <div class="info-cell"><span class="info-label">Date Acquired</span><span id="det-date" class="info-value">-</span></div>
-            </div>
-            <div class="tags-row">
-                <span class="info-label" style="min-width: 50px;">Tags</span>
-                <div id="det-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mini Shelf for Other Volumes -->
-    <h3 class="other-volumes-header">Other Volumes in This Series</h3>
-    <div id="mini-shelf" class="mini-shelf"></div>
-
-</div>
-        
-</main>
+    </main>
 
     <!-- 4. UNIFIED FOOTER -->
     <footer class="site-footer">
@@ -1282,7 +417,8 @@
                 linkBtn.style.display = 'inline-flex';
                 linkBtn.href = activeVol.purchaseLink || "#"; 
                 
-                const pName = activeVol.publisher ? activeVol.publisher.toLowerCase() : "";
+                // HEAVILY SANITIZED: Forces string format, lowercases, and trims hidden spaces
+                const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
                 let logoUrl = "";
                 
                 // Matches the publisher name flawlessly
@@ -1296,7 +432,7 @@
 
                 if (logoUrl) {
                     // Inline styles force the image to render perfectly, ignoring cached CSS
-                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <img src="${logoUrl}" alt="${activeVol.publisher}" style="height: 1.25rem; width: auto; object-fit: contain; display: block;">`;
+                    linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <img src="${logoUrl}" alt="${activeVol.publisher}" style="height: 1.25rem; width: auto; object-fit: contain; display: block; margin-left: auto;">`;
                 } else {
                     linkBtn.innerHTML = `<span>OFFICIAL SITE</span> <span>${activeVol.publisher ? activeVol.publisher.toUpperCase() : "VISIT ↗"}</span>`;
                 }
