@@ -75,7 +75,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .footer-social-icons {
     display: flex;
     gap: 16px;
-    margin-top: 4rem; /* Increased from 24px to push them down into the void */
+    margin-top: 2rem; /* Increased from 24px to push them down into the void */
 }
 
 .footer-social-icons a {
