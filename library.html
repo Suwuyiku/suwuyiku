@@ -393,11 +393,16 @@
             const series = groupedSeries[seriesName];
             const activeVol = series.volumes[volumeIndex];
 
+            // THE TRIGGER: Shrinks the top padding for the detail view
+            document.querySelector('.contact-page-wrapper').classList.add('dossier-active');
+
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('library-header-bar').style.display = 'none';
             document.getElementById('detail-view').style.display = 'flex';
             window.scrollTo(0, 0); 
-
+            
+            // ... (rest of your openDetailView code stays exactly the same)
+            
             document.getElementById('det-cover').src = activeVol.covers[0] || 'assets/placeholder.png';
             
             // THE FIX: Pulls the exact "Name" column from Notion (e.g. "Spy x Family, Vol. 1")
@@ -480,12 +485,16 @@
                 miniShelf.appendChild(mini);
             });
         }
-
+        
         function closeDetailView() {
+            // THE RESET: Restores the spacious padding for the main grid
+            document.querySelector('.contact-page-wrapper').classList.remove('dossier-active');
+
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('main-view').style.display = 'block';
             document.getElementById('library-header-bar').style.display = 'flex';
         }
+        
     </script>
 </body>
 </html>
