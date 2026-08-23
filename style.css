@@ -552,12 +552,19 @@ body.is-searching .library-header p { opacity: 0.3; }
             border-radius: 2px !important; 
         }
 
+/* Keeps the table horizontally unified on laptops and tablets */
 @media (max-width: 65rem) {
     .volume-info-section { flex-direction: column; gap: 1.5rem; }
-    .info-grid { grid-template-columns: 1fr; }
-    .info-cell { border-right: none; border-bottom: 2px solid #000000; }
 }
 
+/* Only collapses to vertical on mobile phones */
+@media (max-width: 48rem) {
+    .info-grid { grid-template-columns: 1fr; }
+    .info-cell { border-right: none; border-bottom: 2px solid #000000; }
+    
+    /* THE FIX: Removes the double border so the Genre row stays connected */
+    .info-cell:last-child { border-bottom: none; } 
+}
 /* Other Volumes Shelf */
 .other-volumes-header { 
     font-size: 1.5rem; 
