@@ -148,16 +148,15 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     transform: rotate(5deg); 
     
-    /* FAST EXIT: Triggers only when your mouse completely leaves the bento grid */
-    transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease; 
+    /* ULTRA-FAST EXIT: 0.15s hard snap the millisecond you leave the grid */
+    transition: opacity 0.15s ease-out, filter 0.15s ease-out, transform 0.15s ease-out; 
 }
 
-/* Card Hover: Logo glows, rotates, and switches to SLOW animations */
+/* Card Hover: Switch to SLOW, luxurious animations when inside */
 .about-card-special:hover .about-anchor-mark { 
     opacity: 1; 
     filter: grayscale(0%); 
     transform: rotate(-3deg); 
-    /* SLOW EXIT: Triggers if you leave the logo but stay inside the grid */
     transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
                 filter 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
                 transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
@@ -184,14 +183,13 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     margin: -2rem -2rem -2rem -3rem; 
     white-space: nowrap; 
     
-    /* FAST EXIT: Triggers only when your mouse completely leaves the bento grid */
-    transition: opacity 0.2s ease, transform 0.25s ease; 
+    /* ULTRA-FAST EXIT: 0.1s hard snap the millisecond you leave the grid */
+    transition: opacity 0.1s ease-out, transform 0.15s ease-out; 
     transition-delay: 0s; 
 }
 
-/* Card Hover for Text: Switches to SLOW animations while inside the grid */
+/* Card Hover for Text: Zips back beautifully if you drop off the logo but stay in the grid */
 .about-card-special:hover .about-logo-text {
-    /* SLOW EXIT: Zips back beautifully if you drop off the logo but stay in the grid */
     transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
                 transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: 0s; 
@@ -202,7 +200,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     opacity: 1; 
     pointer-events: auto; 
     transform: translateX(3.7rem); 
-    transition-delay: 2.5s; /* The entrance fuse */
+    transition-delay: 2.5s; 
 }
 
 /* Fragments Dual-Live Monitor */
