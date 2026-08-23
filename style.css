@@ -123,8 +123,8 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 
 .about-anchor-mark { 
     position: absolute; 
-    bottom: 1.15rem; /* Creates that odd, slightly lower gap */
-    left: 1.85rem;   /* Pushes it off the perfect left alignment */
+    bottom: 2.25rem; /* Moved it a little bit higher up */
+    left: 1.85rem;   /* Maintained the odd, scattered horizontal gap */
     width: 3.5rem; 
     height: 3.5rem; 
     border-radius: 50%; 
@@ -134,14 +134,14 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     border: 0.12rem solid var(--bg-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     pointer-events: none; 
-    transform: rotate(4deg); /* Gives it a resting, slightly scattered tilt */
-    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease; /* Ultra-smooth, no sudden jumping */
+    transform: rotate(5deg); /* A slightly stronger resting tilt */
+    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease; /* The buttery smooth iPhone-like animation from the Library */
 }
 
 .about-card-special:hover .about-anchor-mark { 
     opacity: 1; 
     filter: grayscale(0%); 
-    transform: rotate(-3deg); /* Smoothly rotates 3 degrees to the left */
+    transform: rotate(-3deg); /* Glides exactly 3 degrees to the left, no jump */
 }
 
 /* Fragments Dual-Live Monitor */
