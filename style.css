@@ -846,6 +846,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     margin-bottom: 0.5rem;
     color: var(--kodansha-black);
     letter-spacing: -0.02em;
+    text-align: center; /* Center the title */
 }
 
 .modal-text {
@@ -853,6 +854,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     color: #666666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    text-align: center; /* Center the description */
 }
 
 .modal-copy-box {
@@ -872,7 +874,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     letter-spacing: 0.02em;
 }
 
-/* New Icon Button Styles */
+/* Updated Icon Button Styles - Removed the movement */
 .btn-copy-icon {
     background: transparent;
     color: var(--kodansha-black);
@@ -882,15 +884,14 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease; /* Only transition the background now */
     border-radius: 4px;
 }
 
 .btn-copy-icon:hover {
     background: #EAEAEA;
-    transform: scale(1.05);
+    /* transform removed completely to keep it static */
 }
-
 
 /* =========================================
    11. MOBILE RESPONSIVE ENGINE
