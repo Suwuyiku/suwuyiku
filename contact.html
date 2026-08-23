@@ -217,11 +217,17 @@
     <div id="email-modal-overlay" class="modal-overlay">
         <div class="email-modal">
             <button class="close-modal-btn" aria-label="Close Modal">&times;</button>
-            <h3 class="modal-title">Email Client Triggered</h3>
-            <p class="modal-text">We have attempted to open your default email client. If it is not set up properly, we sincerely apologize for the inconvenience. You can copy the address directly below:</p>
+            <h3 class="modal-title">Routing Connection</h3>
+            <p class="modal-text">Launching your default mail client. If your system is unconfigured, please copy the routing address below.</p>
             <div class="modal-copy-box">
                 <span id="modal-email-text">email@example.com</span>
-                <button id="modal-copy-btn" class="btn-copy">COPY</button>
+                <button id="modal-copy-btn" class="btn-copy-icon" aria-label="Copy Email">
+                    <!-- Clean minimal copy SVG -->
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -241,52 +247,66 @@
                     overlay.classList.toggle('active');
                     document.body.classList.toggle('no-scroll'); 
                 }
-
                 hamburger.addEventListener('click', toggleMenu);
                 closeBtn.addEventListener('click', toggleMenu);
                 overlay.addEventListener('click', toggleMenu);
             }
 
-            // --- Email Fallback Modal Engine ---
+            // --- Delayed Email Fallback Modal Engine ---
             const connectBtns = document.querySelectorAll('.btn-connect');
             const modalOverlay = document.getElementById('email-modal-overlay');
             const closeModalBtn = document.querySelector('.close-modal-btn');
             const emailText = document.getElementById('modal-email-text');
             const copyBtn = document.getElementById('modal-copy-btn');
+            
+            let modalTimeout;
+            const defaultCopyIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            const successCheckIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             if (connectBtns.length > 0 && modalOverlay) {
                 connectBtns.forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        // We DO NOT prevent default because we still want the mailto: to fire!
-                        
-                        // Extract the raw email address from the href
                         const href = btn.getAttribute('href');
                         if(href && href.startsWith('mailto:')) {
+                            // Clear any existing timers so we don't trigger multiple modals
+                            clearTimeout(modalTimeout);
+                            
                             const email = href.replace('mailto:', '');
                             emailText.textContent = email;
                             
-                            // Reset copy button text and show modal
-                            copyBtn.textContent = 'COPY';
-                            modalOverlay.classList.add('active');
+                            // Reset icon state
+                            copyBtn.innerHTML = defaultCopyIcon;
+                            copyBtn.style.color = "var(--kodansha-black)";
+                            
+                            // Delay the modal pop-up by 2.5 seconds
+                            modalTimeout = setTimeout(() => {
+                                modalOverlay.classList.add('active');
+                            }, 2500);
                         }
                     });
                 });
 
                 const closeModal = () => {
                     modalOverlay.classList.remove('active');
+                    clearTimeout(modalTimeout); // Cancel if they click a link then quickly close it
                 };
 
                 closeModalBtn.addEventListener('click', closeModal);
                 modalOverlay.addEventListener('click', (e) => {
-                    if (e.target === modalOverlay) closeModal(); // Close if clicking outside the white box
+                    if (e.target === modalOverlay) closeModal();
                 });
 
-                // Copy to Clipboard logic
+                // Copy to Clipboard logic with SVG swap
                 copyBtn.addEventListener('click', () => {
                     navigator.clipboard.writeText(emailText.textContent).then(() => {
-                        copyBtn.textContent = 'COPIED!';
+                        // Swap to green checkmark
+                        copyBtn.innerHTML = successCheckIcon;
+                        copyBtn.style.color = "#107C10";
+                        
+                        // Revert back after 2 seconds
                         setTimeout(() => {
-                            copyBtn.textContent = 'COPY';
+                            copyBtn.innerHTML = defaultCopyIcon;
+                            copyBtn.style.color = "var(--kodansha-black)";
                         }, 2000);
                     }).catch(err => {
                         console.error('Failed to copy text: ', err);
