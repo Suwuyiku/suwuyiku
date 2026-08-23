@@ -203,6 +203,54 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     transition-delay: 2.5s; 
 }
 
+/* =========================================
+   EASTER EGG: CINEMATIC CHERRY BLOSSOM ENGINE
+   ========================================= */
+.cherry-petal {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(250, 218, 221, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
+    border-radius: 100% 0% 100% 0%;
+    pointer-events: none; /* Kills hit-testing, massive FPS boost */
+    z-index: 9999;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.cherry-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+/* The Apple-Smooth Fall Physics */
+@keyframes apple-fall {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) rotate3d(1, 1, 0, 0deg) scale(0.6);
+    }
+    15% {
+        opacity: 1; 
+    }
+    85% {
+        opacity: 1; 
+    }
+    100% {
+        opacity: 0; 
+        transform: translate3d(var(--end-x), var(--end-y), 0) rotate3d(var(--rot-x), var(--rot-y), var(--rot-z), var(--rot-deg)) scale(1);
+    }
+}
+
+/* The Gentle Vaporize Override */
+.vaporize {
+    opacity: 0 !important;
+    transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
 /* Fragments Dual-Live Monitor */
 .fragments-card-special .card-content { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; }
 .fragments-card-special .card-content p { margin-bottom: 0; }
