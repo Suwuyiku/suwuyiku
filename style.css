@@ -318,6 +318,11 @@ body.is-searching .library-header p { opacity: 0.3; }
     height: 0.8rem;
 }
 
+/* 5. Tighten Top Canvas Gap (ONLY FOR DETAIL VIEW) */
+        .contact-page-wrapper.dossier-active {
+            padding-top: 1.25rem !important; 
+        }
+
 /* =========================================
    EDITORIAL TYPOGRAPHY
    ========================================= */
