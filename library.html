@@ -410,32 +410,96 @@
             document.getElementById('det-publisher').textContent = activeVol.publisher || "-";
             document.getElementById('det-date').textContent = activeVol.dateAcquired || "-";
             
-            // --- LEGAL-SAFE STATIC PUBLISHER BUTTON ---
+            // --- DYNAMIC BRAND-GLOW PUBLISHER BUTTON ---
             const linkBtn = document.getElementById('det-link');
             
             if (activeVol.purchaseLink || activeVol.publisher) {
                 linkBtn.style.display = 'inline-flex';
                 linkBtn.href = activeVol.purchaseLink || "#"; 
                 
-                // Wipe previous classes to guarantee total control
+                // Wipe previous classes
                 linkBtn.className = ''; 
                 
-                // Match the exact "Back to Archive" brutalist styling with ZERO animation
-                linkBtn.style.padding = '0.4rem 1.25rem';
+                // THE FIX FOR THE TERRIBLE STRETCHING: Forces the box to hug the text
+                linkBtn.style.width = 'max-content';
+                linkBtn.style.alignSelf = 'flex-start';
+                
+                const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
+                
+                // Brand Design Variables
+                let brandColor = "#000000"; // Default
+                let brandGlow = "rgba(0, 0, 0, 0.3)";
+                let brandFont = "'Inter', sans-serif";
+                let pubText = activeVol.publisher ? activeVol.publisher.toUpperCase() : "OFFICIAL SITE";
+                let customFontSize = "0.75rem";
+                
+                // The Publisher Aesthetic Engine
+                if (pName.includes("viz")) {
+                    brandColor = "#E50000"; // VIZ Red
+                    brandGlow = "rgba(229, 0, 0, 0.4)";
+                    brandFont = "'Arial Black', 'Inter', sans-serif"; // Thick, geometric
+                } else if (pName.includes("kodansha") || pName.includes("vertical")) {
+                    brandColor = "#000000"; // Kodansha Black
+                    brandGlow = "rgba(0, 0, 0, 0.3)";
+                    brandFont = "'Georgia', 'Times New Roman', serif"; // Classic serif
+                    customFontSize = "0.85rem";
+                } else if (pName.includes("yen press") || pName.includes("jy")) {
+                    brandColor = "#E6332A"; // Yen Press Red
+                    brandGlow = "rgba(230, 51, 42, 0.4)";
+                    brandFont = "'Trebuchet MS', 'Inter', sans-serif"; 
+                } else if (pName.includes("seven seas") || pName.includes("ghost ship")) {
+                    brandColor = "#0055A4"; // Seven Seas Blue
+                    brandGlow = "rgba(0, 85, 164, 0.4)";
+                    brandFont = "'Bebas Neue', sans-serif"; // Tall, condensed
+                    customFontSize = "1.1rem"; // Bumped up because Bebas renders small
+                } else if (pName.includes("dark horse")) {
+                    brandColor = "#D01018"; // Dark Horse Red
+                    brandGlow = "rgba(208, 16, 24, 0.4)";
+                    brandFont = "'Teko', 'Impact', sans-serif"; // Blocky
+                    customFontSize = "1.05rem";
+                } else if (pName.includes("square enix")) {
+                    brandColor = "#E3000F"; // Square Enix Crimson
+                    brandGlow = "rgba(227, 0, 15, 0.4)";
+                    brandFont = "'Verdana', 'Inter', sans-serif";
+                } else if (pName.includes("shueisha")) {
+                    brandColor = "#00A2D1"; // Shueisha Light Blue
+                    brandGlow = "rgba(0, 162, 209, 0.4)";
+                    brandFont = "'Arial', sans-serif";
+                }
+
+                // Apply Base Architectural Styling
+                linkBtn.style.padding = '0.5rem 1.25rem';
                 linkBtn.style.border = '1px solid #000000';
-                linkBtn.style.textTransform = 'uppercase';
-                linkBtn.style.fontSize = '0.75rem';
-                linkBtn.style.fontWeight = '800';
-                linkBtn.style.letterSpacing = '0.05em';
                 linkBtn.style.backgroundColor = '#ffffff';
                 linkBtn.style.color = '#000000';
                 linkBtn.style.textDecoration = 'none';
                 linkBtn.style.marginTop = '1.5rem';
                 linkBtn.style.cursor = 'pointer';
-                linkBtn.style.transition = 'none'; // Strictly no animation
+                linkBtn.style.transition = 'all 0.3s ease'; // Re-enabled transition for smooth glowing
+                linkBtn.style.fontFamily = brandFont;
+                linkBtn.style.fontSize = customFontSize;
+                linkBtn.style.fontWeight = '800';
+                linkBtn.style.letterSpacing = '0.05em';
+                linkBtn.style.boxShadow = 'none';
+                linkBtn.style.transform = 'translateY(0)';
                 
-                // Inject the publisher name directly into the box
-                linkBtn.innerHTML = activeVol.publisher ? activeVol.publisher : "OFFICIAL SITE";
+                // Inject the Dynamic Hover Glow
+                linkBtn.onmouseover = function() {
+                    this.style.borderColor = brandColor;
+                    this.style.color = brandColor;
+                    this.style.boxShadow = `0 4px 15px ${brandGlow}, 0 0 8px ${brandGlow}`;
+                    this.style.transform = 'translateY(-2px)';
+                };
+                
+                linkBtn.onmouseout = function() {
+                    this.style.borderColor = '#000000';
+                    this.style.color = '#000000';
+                    this.style.boxShadow = 'none';
+                    this.style.transform = 'translateY(0)';
+                };
+                
+                // Set the text
+                linkBtn.innerHTML = pubText;
             } else {
                 linkBtn.style.display = 'none';
             }
