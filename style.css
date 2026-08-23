@@ -70,6 +70,27 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .footer-bottom-links { display: flex; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
 .footer-bottom-links a { color: #777777; text-decoration: none; transition: color 0.2s ease; }
 .footer-bottom-links a:hover { color: var(--bg-color); }
+
+/* ADD IT RIGHT HERE */
+/* Footer Social Icons */
+.footer-social-icons {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+.footer-social-icons a {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.footer-social-icons a:hover {
+    opacity: 0.6;
+    transform: translateY(-2px);
+}
+/* END OF NEW CODE */
+
 .hamburger-btn, .mobile-sidebar, .sidebar-overlay { display: none; } 
 .no-scroll { overflow: hidden; }
 
@@ -464,6 +485,7 @@ body.is-searching .library-header p { opacity: 0.3; }
     width: 100%;
     max-width: 280px;
 }
+
 .kodansha-btn:hover { background: #EAEAEA; }
 
 #det-publisher-logo {
@@ -845,6 +867,10 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     .footer-top { flex-direction: column; gap: 3rem; text-align: center; }
     .footer-brand, .footer-links { flex: 1 1 auto; width: 100%; padding-right: 0; }
     .footer-brand p { margin: 0 auto; }
+    
+    /* ADD THIS LINE FOR MOBILE CENTERING */
+    .footer-social-icons { justify-content: center; }
+    
     .footer-links { grid-template-columns: 1fr; gap: 2.5rem; }
     .link-column { text-align: center; }
     .link-column ul { align-items: center; }
