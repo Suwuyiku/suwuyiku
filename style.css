@@ -121,10 +121,20 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 /* About Box Anchor */
 .about-card-special { position: relative; overflow: hidden; }
 
+/* The new wrapper keeps the positioning locked and detects the specific hover */
+.about-logo-wrapper {
+    position: absolute;
+    bottom: 2.25rem;
+    left: 1.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 3.5rem;
+    pointer-events: auto; /* Required to isolate the hover state */
+}
+
+/* Image styling (Position absolute removed because the wrapper handles it now) */
 .about-anchor-mark { 
-    position: absolute; 
-    bottom: 2.25rem; /* Moved it a little bit higher up */
-    left: 1.85rem;   /* Maintained the odd, scattered horizontal gap */
     width: 3.5rem; 
     height: 3.5rem; 
     border-radius: 50%; 
@@ -133,15 +143,35 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     filter: grayscale(60%); 
     border: 0.12rem solid var(--bg-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
-    pointer-events: none; 
-    transform: rotate(5deg); /* A slightly stronger resting tilt */
-    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease; /* The buttery smooth iPhone-like animation from the Library */
+    transform: rotate(5deg); 
+    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease; 
 }
 
+/* Logo gracefully shifts when the whole CARD is hovered */
 .about-card-special:hover .about-anchor-mark { 
     opacity: 1; 
     filter: grayscale(0%); 
-    transform: rotate(-3deg); /* Glides exactly 3 degrees to the left, no jump */
+    transform: rotate(-3deg); 
+}
+
+/* The hidden name text styling */
+.about-logo-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--kodansha-black);
+    margin-top: 0.5rem; /* The gap between the logo and the text */
+    opacity: 0;
+    transform: translateY(-5px); /* Tucked slightly upward */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: 0s; /* Disappears instantly when the mouse leaves */
+}
+
+/* 2.5-SECOND FUSE: Triggered ONLY when hovering the LOGO specifically */
+.about-logo-wrapper:hover .about-logo-name {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 2.5s; /* The magic countdown */
 }
 
 /* Fragments Dual-Live Monitor */
