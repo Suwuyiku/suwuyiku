@@ -120,8 +120,28 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
    ========================================= */
 /* About Box Anchor */
 .about-card-special { position: relative; overflow: hidden; }
-.about-anchor-mark { position: absolute; bottom: 1.5rem; left: 1.5rem; width: 3.5rem; height: auto; opacity: 0.08; filter: grayscale(100%); pointer-events: none; transition: opacity 0.3s ease; }
-.about-card-special:hover .about-anchor-mark { opacity: 0.15; }
+
+.about-anchor-mark { 
+    position: absolute; 
+    bottom: 1.5rem; 
+    left: 1.5rem; 
+    width: 3.5rem; 
+    height: 3.5rem; /* Locked height to match width for a perfect circle */
+    border-radius: 50%; /* Turns it into a perfect circle */
+    object-fit: cover; /* Ensures the image doesn't stretch */
+    opacity: 0.65; /* Much more visible, but slightly transparent */
+    filter: grayscale(60%); /* A cool partial-gray effect, not 100% dead */
+    border: 0.12rem solid var(--bg-color); /* Matches the Shop avatar border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    pointer-events: none; 
+    transition: all 0.4s ease; /* Smooth transition for all properties */
+}
+
+.about-card-special:hover .about-anchor-mark { 
+    opacity: 1; /* Fully opaque on hover */
+    filter: grayscale(0%); /* Snaps back to full, normal color */
+    transform: scale(1.05); /* A very subtle, clean pop */
+}
 
 /* Fragments Dual-Live Monitor */
 .fragments-card-special .card-content { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; }
