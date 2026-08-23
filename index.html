@@ -220,6 +220,159 @@
     </footer>
 
     <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const aboutCard = document.querySelector('.about-card-special');
+    const logoMark = document.querySelector('.about-anchor-mark');
+    
+    // Page anchor points for smart targeting
+    const libraryCard = document.querySelector('.library-card-special');
+    const footer = document.querySelector('.site-footer');
+    const footerBottom = document.querySelector('.footer-bottom');
+
+    if (aboutCard && logoMark) {
+        let hoverTimer = null;
+        let jackpotTriggered = false;
+        let activeParticles = []; // Tracks live particles for vaporization
+
+        // 1. The 7-Second Suspense Timer
+        logoMark.addEventListener('mouseenter', () => {
+            if (jackpotTriggered) return;
+
+            hoverTimer = setTimeout(() => {
+                // The exact 1/29 Jackpot Roll
+                const roll = Math.floor(Math.random() * 29) + 1;
+                
+                // Set to '=== 1' for the true 1/29 chance. (Change to > 0 to test it instantly)
+                if (roll === 1) { 
+                    jackpotTriggered = true;
+                    triggerCinematicStorm();
+                }
+            }, 7000); 
+        });
+
+        // 2. The Vaporize Trigger
+        logoMark.addEventListener('mouseleave', () => {
+            if (hoverTimer) {
+                clearTimeout(hoverTimer);
+                hoverTimer = null;
+            }
+            
+            // If the storm is running and they leave, vaporize them gracefully
+            if (activeParticles.length > 0) {
+                activeParticles.forEach(petal => {
+                    petal.classList.add('vaporize');
+                });
+            }
+        });
+
+        // 3. The Particle Physics Engine
+        function triggerCinematicStorm() {
+            const numPetals = 45; // Rich but optimized count
+            
+            // Calculate absolute starting coordinates based on the logo
+            const logoRect = logoMark.getBoundingClientRect();
+            const startX = logoRect.left + (logoRect.width / 2);
+            const startY = logoRect.top + window.scrollY + 20;
+
+            for (let i = 0; i < numPetals; i++) {
+                setTimeout(() => {
+                    // Create the DOM Node
+                    const isParticle = Math.random() > 0.7; // 30% ambient dust, 70% petals
+                    const petal = document.createElement('div');
+                    petal.classList.add(isParticle ? 'cherry-particle' : 'cherry-petal');
+
+                    // Random sizing
+                    if (isParticle) {
+                        const size = Math.random() * 3 + 1.5;
+                        petal.style.width = `${size}px`;
+                        petal.style.height = `${size}px`;
+                    } else {
+                        petal.style.width = `${Math.random() * 6 + 6}px`;
+                        petal.style.height = `${Math.random() * 4 + 4}px`;
+                        // Subtle depth of field blur on some leaves
+                        if (Math.random() > 0.6) petal.style.filter = 'blur(1px)';
+                    }
+
+                    // Place at origin
+                    petal.style.left = `${startX}px`;
+                    petal.style.top = `${startY}px`;
+
+                    // ==========================================
+                    // SMART TARGETING (Where will it land?)
+                    // ==========================================
+                    let targetAbsoluteY;
+                    const destRand = Math.random();
+
+                    if (destRand < 0.30 && libraryCard) {
+                        // 30% chance: Land on the Library Books
+                        const libRect = libraryCard.getBoundingClientRect();
+                        targetAbsoluteY = libRect.top + window.scrollY + (libRect.height * 0.7);
+                    
+                    } else if (destRand < 0.60 && footer) {
+                        // 30% chance: Land in the black footer (Suwuyiku brand text)
+                        const footRect = footer.getBoundingClientRect();
+                        targetAbsoluteY = footRect.top + window.scrollY + 50 + (Math.random() * 100);
+                    
+                    } else if (destRand < 0.85 && footerBottom) {
+                        // 25% chance: Sink to the absolute bottom (Copyright / Policies)
+                        const botRect = footerBottom.getBoundingClientRect();
+                        targetAbsoluteY = botRect.top + window.scrollY + 10;
+                    
+                    } else {
+                        // 15% chance: Float randomly down the page
+                        targetAbsoluteY = startY + (Math.random() * 800 + 300);
+                    }
+
+                    // Convert absolute Y to a relative translation distance
+                    const translateEndY = targetAbsoluteY - startY;
+
+                    // Drift Calculation (Mostly right, sweeping across the screen)
+                    const endX = (Math.random() > 0.15) 
+                        ? (Math.random() * window.innerWidth * 0.5) + 50 // Sweeps Right
+                        : -(Math.random() * 100 + 20); // Floats slightly Left
+
+                    // 3D Flip Mechanics
+                    const rotX = Math.random();
+                    const rotY = Math.random();
+                    const rotZ = Math.random();
+                    const rotDeg = Math.random() * 720 + 360; // Flips 1-3 times in mid-air
+
+                    // Inject Variables into CSS
+                    petal.style.setProperty('--end-x', `${endX}px`);
+                    petal.style.setProperty('--end-y', `${translateEndY}px`);
+                    petal.style.setProperty('--rot-x', rotX);
+                    petal.style.setProperty('--rot-y', rotY);
+                    petal.style.setProperty('--rot-z', rotZ);
+                    petal.style.setProperty('--rot-deg', `${rotDeg}deg`);
+
+                    // Apple-Smooth Timing (4 to 8.5 seconds of luxurious falling)
+                    const duration = Math.random() * 4.5 + 4;
+                    
+                    // The cubic-bezier mimics air friction—fast initial fall, slow graceful settle
+                    petal.style.animation = `apple-fall ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+
+                    // Add to DOM and track
+                    document.body.appendChild(petal);
+                    activeParticles.push(petal);
+
+                    // Clean up the DOM node after it finishes to keep the PC running perfectly
+                    setTimeout(() => {
+                        if (petal.parentNode) petal.remove();
+                        activeParticles = activeParticles.filter(p => p !== petal);
+                    }, duration * 1000);
+
+                }, i * 180); // Staggers the spawn rate so it looks like a natural gust of wind
+            }
+
+            // Cooldown so it doesn't trigger repeatedly
+            setTimeout(() => {
+                jackpotTriggered = false;
+            }, 60000);
+        }
+    }
+});
+        
         document.addEventListener("DOMContentLoaded", () => {
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
