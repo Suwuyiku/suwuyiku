@@ -121,14 +121,23 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 /* About Box Anchor */
 .about-card-special { position: relative; overflow: hidden; }
 
-/* The Image (Lifted to 2.25rem gap) */
+/* The Wrapper anchors the entire interaction */
+.about-logo-wrapper {
+    position: absolute;
+    bottom: 2.25rem;
+    left: 1.85rem;
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+/* The Image */
 .about-anchor-mark { 
-    position: absolute !important; 
-    bottom: 2.25rem !important; 
-    left: 1.85rem !important;
-    z-index: 5 !important; 
-    width: 3.5rem !important; 
-    height: 3.5rem !important; 
+    position: relative;
+    z-index: 5; 
+    width: 3.5rem; 
+    height: 3.5rem; 
     border-radius: 50%; 
     object-fit: cover; 
     opacity: 0.65; 
@@ -136,48 +145,51 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     border: 0.12rem solid var(--bg-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     transform: rotate(5deg); 
-    /* Upgraded to an ultra-smooth, premium cubic-bezier glide */
-    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
-                filter 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
-                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
-    pointer-events: auto; 
-    will-change: transform, opacity, filter; 
+    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease; 
 }
 
-/* 1. CARD HOVER: Logo glows and rotates when you hover ANYWHERE on the Bento Card */
+/* 1. Card Hover: Logo glows and rotates to -3deg */
 .about-card-special:hover .about-anchor-mark { 
     opacity: 1; 
     filter: grayscale(0%); 
     transform: rotate(-3deg); 
 }
 
+/* 2. The 2.5s Logo Reset Animation */
+.about-logo-wrapper:hover .about-anchor-mark {
+    /* Exactly at 2.5s, overrides the hover and rotates back to 5deg */
+    animation: logo-rotate-back 0.6s cubic-bezier(0.22, 1, 0.36, 1) 2.5s forwards;
+}
+
+@keyframes logo-rotate-back {
+    to { transform: rotate(5deg); }
+}
+
 /* The Hidden Text */
 .about-logo-text {
     position: absolute;
-    bottom: 4rem; 
-    left: 1.85rem; 
+    left: 0; 
     z-index: 4; 
-    font-family: 'Inter', sans-serif; 
-    font-size: 0.95rem; 
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--hover-gray); 
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem; /* Bigger, premium size */
+    font-weight: 800; /* Bold architecture weight */
+    letter-spacing: -0.02em;
+    color: var(--kodansha-black); /* Changed to your deep black */
     opacity: 0; 
     pointer-events: none; 
-    transform: translateY(50%) translateX(0); 
-    /* Premium hardware-accelerated glide */
-    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); 
+    transform: translateX(1rem); /* Tucked behind logo */
+    transition: opacity 0.4s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); 
     transition-delay: 0s; 
     white-space: nowrap; 
-    will-change: transform, opacity; 
 }
 
-/* 2. LOGO HOVER (THE FUSE): Name only slides out when hovering EXACTLY on the logo */
-.about-anchor-mark:hover + .about-logo-text {
+/* 3. The 2.5-SECOND FUSE: Text slides out */
+.about-logo-wrapper:hover .about-logo-text {
     opacity: 1; 
-    transform: translateY(50%) translateX(3.75rem); 
-    transition-delay: 2.5s; /* The magic 2.5s countdown */
+    pointer-events: auto; /* Now the text accepts your mouse hover */
+    /* 3.5rem (Logo Width) + 0.2rem (Gap) = 3.7rem precise placement */
+    transform: translateX(3.7rem); 
+    transition-delay: 2.5s; 
 }
 
 /* Fragments Dual-Live Monitor */
