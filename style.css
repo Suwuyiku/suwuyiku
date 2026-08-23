@@ -121,25 +121,25 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 /* About Box Anchor */
 .about-card-special { position: relative; overflow: hidden; }
 
-/* The wrapper controls the location */
+/* The Wrapper anchors firmly back down into the odd gap */
 .about-logo-wrapper {
     position: absolute;
-    bottom: 1.15rem; /* Lowered back down to that perfect odd spot */
+    bottom: 1.15rem; 
     left: 1.85rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 3.5rem;
     pointer-events: auto;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
 }
 
-/* The image (Overrides any old ghost rules) */
+/* The Image */
 .about-anchor-mark { 
-    position: relative !important; /* Kills any leftover absolute positioning */
-    bottom: auto !important; 
-    left: auto !important;
-    width: 3.5rem; 
-    height: 3.5rem; 
+    position: relative; 
+    z-index: 2; /* Keeps the logo on top of the text */
+    width: 3.5rem !important; 
+    height: 3.5rem !important; 
     border-radius: 50%; 
     object-fit: cover; 
     opacity: 0.65; 
@@ -148,36 +148,41 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     transform: rotate(5deg); 
     transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease; 
+    margin: 0 !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
 }
 
+/* Image glides and colors up when the card is hovered */
 .about-card-special:hover .about-anchor-mark { 
     opacity: 1; 
     filter: grayscale(0%); 
     transform: rotate(-3deg); 
 }
 
-/* The Name */
+/* The Hidden Text */
 .about-logo-name {
     position: absolute;
-    top: 100%; /* Forces it to sit perfectly under the image */
-    margin-top: 0.5rem;
+    left: 1rem; /* Hides the text squarely behind the logo */
+    z-index: 1; /* Forces the text to stay underneath the image */
     font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--kodansha-black);
-    opacity: 0 !important; /* Bulletproof hidden state */
-    pointer-events: none; /* Stops it from blocking clicks */
-    transform: translateY(-5px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    transition-delay: 0s; /* Vanishes instantly when you leave */
-    white-space: nowrap; /* Prevents the text from stacking */
+    opacity: 0; 
+    pointer-events: none; 
+    transform: translateX(0); /* Resting position */
+    transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 0s; /* Zips back instantly when mouse leaves */
+    white-space: nowrap; 
 }
 
-/* 2.5-SECOND FUSE */
+/* 2.5-SECOND FUSE: Slides out from behind to the right side */
 .about-logo-wrapper:hover .about-logo-name {
-    opacity: 1 !important; /* Force visible on hover */
-    transform: translateY(0);
-    transition-delay: 2.5s; /* The magic countdown */
+    opacity: 1; 
+    transform: translateX(3rem); /* Glides smoothly to the right */
+    transition-delay: 2.5s; 
 }
 
 /* Fragments Dual-Live Monitor */
