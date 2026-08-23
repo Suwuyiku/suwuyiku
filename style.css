@@ -540,15 +540,17 @@ body.is-searching .library-header p { opacity: 0.3; }
 .tags-row { display: flex; align-items: center; padding: 1.2rem 1.5rem; gap: 1.5rem; }
 
 .tag-badge { 
-    font-family: 'Inter', sans-serif; 
-    font-size: 0.7rem; 
-    font-weight: 600; 
-    background-color: #F4F4F4; /* Minimalist Kodansha Gray */
-    color: #555555; 
-    padding: 0.35rem 0.6rem; 
-    border: none; /* Stripped the brutalist border */
-    border-radius: 2px; 
-}
+            font-family: 'Inter', sans-serif !important; 
+            font-size: 0.65rem !important; 
+            font-weight: 600 !important; 
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            background-color: #F4F4F4 !important; /* Minimalist Kodansha Gray */
+            color: #888888 !important; /* Lighter, cleaner text */
+            padding: 0.15rem 0.5rem !important; /* Squashed vertical padding */
+            border: none !important; 
+            border-radius: 2px !important; 
+        }
 
 @media (max-width: 65rem) {
     .volume-info-section { flex-direction: column; gap: 1.5rem; }
