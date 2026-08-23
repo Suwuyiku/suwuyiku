@@ -123,24 +123,25 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 
 .about-anchor-mark { 
     position: absolute; 
-    bottom: 1.5rem; 
-    left: 1.5rem; 
+    bottom: 1.15rem; /* Creates that odd, slightly lower gap */
+    left: 1.85rem;   /* Pushes it off the perfect left alignment */
     width: 3.5rem; 
-    height: 3.5rem; /* Locked height to match width for a perfect circle */
-    border-radius: 50%; /* Turns it into a perfect circle */
-    object-fit: cover; /* Ensures the image doesn't stretch */
-    opacity: 0.65; /* Much more visible, but slightly transparent */
-    filter: grayscale(60%); /* A cool partial-gray effect, not 100% dead */
-    border: 0.12rem solid var(--bg-color); /* Matches the Shop avatar border */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    height: 3.5rem; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    opacity: 0.65; 
+    filter: grayscale(60%); 
+    border: 0.12rem solid var(--bg-color); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
     pointer-events: none; 
-    transition: all 0.4s ease; /* Smooth transition for all properties */
+    transform: rotate(4deg); /* Gives it a resting, slightly scattered tilt */
+    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease; /* Ultra-smooth, no sudden jumping */
 }
 
 .about-card-special:hover .about-anchor-mark { 
-    opacity: 1; /* Fully opaque on hover */
-    filter: grayscale(0%); /* Snaps back to full, normal color */
-    transform: scale(1.05); /* A very subtle, clean pop */
+    opacity: 1; 
+    filter: grayscale(0%); 
+    transform: rotate(-3deg); /* Smoothly rotates 3 degrees to the left */
 }
 
 /* Fragments Dual-Live Monitor */
