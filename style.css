@@ -581,9 +581,9 @@ body.is-searching .library-header p { opacity: 0.3; }
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    gap: 0.5rem; 
+    gap: 0.75rem; /* Slightly increased gap to match larger scale */
     cursor: pointer; 
-    width: 80px; 
+    width: 125px; /* Pulled straight from the Kodansha inspector */
     flex-shrink: 0; 
     opacity: 0.6; 
     transition: opacity 0.2s; 
@@ -596,9 +596,9 @@ body.is-searching .library-header p { opacity: 0.3; }
 /* The Exact Kodansha Miniature Gray Box Engine */
 .mini-cover-wrapper {
     background-color: #EBEBEB;
-    padding: 8%; /* Kodansha's exact relative padding */
+    padding: 8%; 
     width: 100%;
-    aspect-ratio: 200 / 273; /* Kodansha's exact aspect ratio */
+    aspect-ratio: 2 / 3; /* The exact 124x186 ratio from your screenshot */
     display: flex;
     align-items: center;
     justify-content: center;
