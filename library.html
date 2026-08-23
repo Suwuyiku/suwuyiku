@@ -410,7 +410,7 @@
             document.getElementById('det-publisher').textContent = activeVol.publisher || "-";
             document.getElementById('det-date').textContent = activeVol.dateAcquired || "-";
             
-            // --- DYNAMIC BRAND-GLOW PUBLISHER BUTTON ---
+            // --- STRICT BRUTALIST PUBLISHER BUTTON (TEXT-COLOR HOVER ONLY) ---
             const linkBtn = document.getElementById('det-link');
             
             if (activeVol.purchaseLink || activeVol.publisher) {
@@ -420,82 +420,110 @@
                 // Wipe previous classes
                 linkBtn.className = ''; 
                 
-                // THE FIX FOR THE TERRIBLE STRETCHING: Forces the box to hug the text
+                // Brutalist container limits (Fixes the stretching)
                 linkBtn.style.width = 'max-content';
                 linkBtn.style.alignSelf = 'flex-start';
                 
                 const pName = activeVol.publisher ? String(activeVol.publisher).toLowerCase().trim() : "";
                 
-                // Brand Design Variables
-                let brandColor = "#000000"; // Default
-                let brandGlow = "rgba(0, 0, 0, 0.3)";
+                // Brand Design Variables (Strictly accurate hex codes & fonts)
+                let brandColor = "#000000"; 
                 let brandFont = "'Inter', sans-serif";
                 let pubText = activeVol.publisher ? activeVol.publisher.toUpperCase() : "OFFICIAL SITE";
-                let customFontSize = "0.75rem";
                 
-                // The Publisher Aesthetic Engine
+                // Exhaustive Publisher Typographic & Color Mapping
                 if (pName.includes("viz")) {
-                    brandColor = "#E50000"; // VIZ Red
-                    brandGlow = "rgba(229, 0, 0, 0.4)";
-                    brandFont = "'Arial Black', 'Inter', sans-serif"; // Thick, geometric
+                    brandColor = "#E50000"; // Exact VIZ Red
+                    brandFont = "'Arial Black', 'Impact', sans-serif"; 
                 } else if (pName.includes("kodansha") || pName.includes("vertical")) {
-                    brandColor = "#000000"; // Kodansha Black
-                    brandGlow = "rgba(0, 0, 0, 0.3)";
-                    brandFont = "'Georgia', 'Times New Roman', serif"; // Classic serif
-                    customFontSize = "0.85rem";
+                    brandColor = "#000000"; 
+                    brandFont = "'Georgia', 'Times New Roman', serif"; 
                 } else if (pName.includes("yen press") || pName.includes("jy")) {
-                    brandColor = "#E6332A"; // Yen Press Red
-                    brandGlow = "rgba(230, 51, 42, 0.4)";
+                    brandColor = "#D92128"; // Yen Press Red
                     brandFont = "'Trebuchet MS', 'Inter', sans-serif"; 
                 } else if (pName.includes("seven seas") || pName.includes("ghost ship")) {
-                    brandColor = "#0055A4"; // Seven Seas Blue
-                    brandGlow = "rgba(0, 85, 164, 0.4)";
-                    brandFont = "'Bebas Neue', sans-serif"; // Tall, condensed
-                    customFontSize = "1.1rem"; // Bumped up because Bebas renders small
+                    brandColor = "#00529B"; // Seven Seas Marine Blue
+                    brandFont = "'Bebas Neue', sans-serif"; 
                 } else if (pName.includes("dark horse")) {
-                    brandColor = "#D01018"; // Dark Horse Red
-                    brandGlow = "rgba(208, 16, 24, 0.4)";
-                    brandFont = "'Teko', 'Impact', sans-serif"; // Blocky
-                    customFontSize = "1.05rem";
+                    brandColor = "#D0101A"; // Dark Horse Red
+                    brandFont = "'Arial Black', 'Inter', sans-serif"; 
                 } else if (pName.includes("square enix")) {
-                    brandColor = "#E3000F"; // Square Enix Crimson
-                    brandGlow = "rgba(227, 0, 15, 0.4)";
+                    brandColor = "#ED1C24"; // Square Enix Red
                     brandFont = "'Verdana', 'Inter', sans-serif";
                 } else if (pName.includes("shueisha")) {
-                    brandColor = "#00A2D1"; // Shueisha Light Blue
-                    brandGlow = "rgba(0, 162, 209, 0.4)";
+                    brandColor = "#00A2D1"; // Shueisha Blue
+                    brandFont = "'Inter', sans-serif";
+                } else if (pName.includes("kadokawa")) {
+                    brandColor = "#0073B9"; // Kadokawa Blue
+                    brandFont = "'Georgia', serif";
+                } else if (pName.includes("tokyopop")) {
+                    brandColor = "#E50012"; // Tokyopop Red
+                    brandFont = "'Impact', sans-serif";
+                } else if (pName.includes("shogakukan")) {
+                    brandColor = "#000000"; 
+                    brandFont = "'Georgia', serif";
+                } else if (pName.includes("hakusensha")) {
+                    brandColor = "#000000"; 
+                    brandFont = "'Georgia', serif";
+                } else if (pName.includes("j-novel")) {
+                    brandColor = "#E4000F"; // J-Novel Red
+                    brandFont = "'Inter', sans-serif";
+                } else if (pName.includes("marvel")) {
+                    brandColor = "#ED1D24"; // Marvel Red
+                    brandFont = "'Impact', 'Arial Black', sans-serif";
+                } else if (pName.includes("dc comics") || pName === "dc") {
+                    brandColor = "#0476F2"; // DC Blue
+                    brandFont = "'Arial Black', sans-serif";
+                } else if (pName.includes("image comics") || pName === "image") {
+                    brandColor = "#000000"; 
+                    brandFont = "'Arial Black', sans-serif";
+                } else if (pName.includes("scholastic")) {
+                    brandColor = "#D11241"; // Scholastic Red
                     brandFont = "'Arial', sans-serif";
+                } else if (pName.includes("penguin") || pName.includes("random house")) {
+                    brandColor = "#FF6600"; // Penguin Orange
+                    brandFont = "'Georgia', serif";
+                } else if (pName.includes("udon")) {
+                    brandColor = "#000000"; 
+                    brandFont = "'Impact', sans-serif";
+                } else if (pName.includes("denpa")) {
+                    brandColor = "#000000"; 
+                    brandFont = "'Inter', sans-serif";
+                } else if (pName.includes("sublime")) {
+                    brandColor = "#00A1E9"; // SuBLime Blue
+                    brandFont = "'Inter', sans-serif";
                 }
 
-                // Apply Base Architectural Styling
-                linkBtn.style.padding = '0.5rem 1.25rem';
+                // Apply Brutalist Base Styling
+                linkBtn.style.padding = '0.4rem 1.25rem';
                 linkBtn.style.border = '1px solid #000000';
                 linkBtn.style.backgroundColor = '#ffffff';
                 linkBtn.style.color = '#000000';
                 linkBtn.style.textDecoration = 'none';
                 linkBtn.style.marginTop = '1.5rem';
                 linkBtn.style.cursor = 'pointer';
-                linkBtn.style.transition = 'all 0.3s ease'; // Re-enabled transition for smooth glowing
                 linkBtn.style.fontFamily = brandFont;
-                linkBtn.style.fontSize = customFontSize;
+                
+                // Font-size compensation for stylistic differences
+                if (brandFont.includes('Bebas Neue') || brandFont.includes('Impact')) {
+                    linkBtn.style.fontSize = '1.05rem'; 
+                } else {
+                    linkBtn.style.fontSize = '0.75rem';
+                }
+                
                 linkBtn.style.fontWeight = '800';
                 linkBtn.style.letterSpacing = '0.05em';
-                linkBtn.style.boxShadow = 'none';
-                linkBtn.style.transform = 'translateY(0)';
                 
-                // Inject the Dynamic Hover Glow
+                // STRICTLY NO JUMP, NO BOX SHADOW. Only pure text color transitions.
+                linkBtn.style.transition = 'color 0.2s ease'; 
+                
+                // Inject the Brutalist Text Hover Effect
                 linkBtn.onmouseover = function() {
-                    this.style.borderColor = brandColor;
                     this.style.color = brandColor;
-                    this.style.boxShadow = `0 4px 15px ${brandGlow}, 0 0 8px ${brandGlow}`;
-                    this.style.transform = 'translateY(-2px)';
                 };
                 
                 linkBtn.onmouseout = function() {
-                    this.style.borderColor = '#000000';
                     this.style.color = '#000000';
-                    this.style.boxShadow = 'none';
-                    this.style.transform = 'translateY(0)';
                 };
                 
                 // Set the text
