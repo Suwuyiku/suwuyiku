@@ -782,6 +782,114 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
 .legal-content a { color: var(--kodansha-black) !important; font-weight: 600; text-decoration: underline; text-decoration-thickness: 0.125rem; text-underline-offset: 0.2rem; transition: color 0.2s ease; }
 .legal-content a:hover { color: var(--hover-gray) !important; }
 
+/* =========================================
+   EMAIL FALLBACK MODAL
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.email-modal {
+    background: var(--bg-color);
+    border: 0.125rem solid var(--kodansha-black);
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 28rem;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.modal-overlay.active .email-modal {
+    transform: translateY(0);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--kodansha-black);
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    color: var(--hover-gray);
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: var(--kodansha-black);
+    letter-spacing: -0.02em;
+}
+
+.modal-text {
+    font-size: 0.85rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.modal-copy-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.125rem solid var(--border-color);
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    border-radius: 4px;
+    background: #FAFAFA;
+}
+
+#modal-email-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--kodansha-black);
+    letter-spacing: 0.02em;
+}
+
+.btn-copy {
+    background: var(--kodansha-black);
+    color: var(--bg-color);
+    border: 0.125rem solid var(--kodansha-black);
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-copy:hover {
+    background: var(--bg-color);
+    color: var(--kodansha-black);
+}
+
 
 /* =========================================
    11. MOBILE RESPONSIVE ENGINE
