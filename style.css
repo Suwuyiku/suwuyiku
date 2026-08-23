@@ -581,24 +581,24 @@ body.is-searching .library-header p { opacity: 0.3; }
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    gap: 0.75rem; /* Slightly increased gap to match larger scale */
+    gap: 0.75rem; 
     cursor: pointer; 
-    width: 125px; /* Pulled straight from the Kodansha inspector */
+    width: 125px; 
     flex-shrink: 0; 
-    opacity: 0.6; 
-    transition: opacity 0.2s; 
+    /* Opacity and transition rules completely deleted */
 }
 
-.mini-volume:hover, .mini-volume.active { 
-    opacity: 1; 
-}
+/* 
+   Make sure to completely DELETE this old rule if it's still there:
+   .mini-volume:hover, .mini-volume.active { opacity: 1; } 
+*/
 
 /* The Exact Kodansha Miniature Gray Box Engine */
 .mini-cover-wrapper {
     background-color: #EBEBEB;
     padding: 8%; 
     width: 100%;
-    aspect-ratio: 2 / 3; /* The exact 124x186 ratio from your screenshot */
+    aspect-ratio: 2 / 3; 
     display: flex;
     align-items: center;
     justify-content: center;
