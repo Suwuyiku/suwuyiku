@@ -319,9 +319,9 @@ body.is-searching .library-header p { opacity: 0.3; }
 }
 
 /* 5. Tighten Top Canvas Gap (ONLY FOR DETAIL VIEW) */
-        .contact-page-wrapper.dossier-active {
-            padding-top: 1.25rem !important; 
-        }
+.contact-page-wrapper.dossier-active {
+    padding-top: 1.25rem !important; 
+}
 
 /* =========================================
    EDITORIAL TYPOGRAPHY
@@ -482,7 +482,9 @@ body.is-searching .library-header p { opacity: 0.3; }
     gap: 2rem;
     width: 100%;
     margin-top: 3rem;
-    margin-bottom: 4rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border-color); /* The clean minimalist line */
+    margin-bottom: 2rem;
     align-items: stretch;
 }
 
@@ -519,11 +521,34 @@ body.is-searching .library-header p { opacity: 0.3; }
 
 .info-cell:last-child { border-right: none; }
 
-.info-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #888888; letter-spacing: 0.05em; }
-.info-value { font-size: 1rem; font-weight: 700; color: #000000; }
+/* OVERRIDDEN: Kodansha Editorial Hierarchy */
+.info-label { 
+    font-size: 0.85rem; 
+    font-weight: 800; 
+    text-transform: capitalize; /* Kodansha uses Title Case, not ALL CAPS */
+    color: #000000; 
+    letter-spacing: 0; 
+}
+
+.info-value { 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    color: #666666; /* Light breathable text */
+    margin-top: 0.15rem; 
+}
 
 .tags-row { display: flex; align-items: center; padding: 1.2rem 1.5rem; gap: 1.5rem; }
-.tag-badge { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--border-color); padding: 0.35rem 0.6rem; color: #444444; background: transparent; }
+
+.tag-badge { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.7rem; 
+    font-weight: 600; 
+    background-color: #F4F4F4; /* Minimalist Kodansha Gray */
+    color: #555555; 
+    padding: 0.35rem 0.6rem; 
+    border: none; /* Stripped the brutalist border */
+    border-radius: 2px; 
+}
 
 @media (max-width: 65rem) {
     .volume-info-section { flex-direction: column; gap: 1.5rem; }
