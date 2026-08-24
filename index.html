@@ -235,37 +235,31 @@
         let jackpotTriggered = false;
         let activeParticles = []; // Tracks live particles for vaporization
 
-        // 1. The 7-Second Suspense Timer (NOW ON THE WHOLE BENTO CARD)
+       // 1. TEST MODE: 1-Second Timer (100% Guarantee)
         aboutCard.addEventListener('mouseenter', () => {
             if (jackpotTriggered) return;
 
             hoverTimer = setTimeout(() => {
-                // The exact 1/29 Jackpot Roll
-                const roll = Math.floor(Math.random() * 29) + 1;
-                
-                // Set to '=== 1' for the true 1/29 chance.
-                if (roll === 1) { 
-                    jackpotTriggered = true;
-                    triggerCinematicStorm();
-                }
-            }, 7000); 
+                // The dice roll is bypassed. It hits the jackpot every single time.
+                jackpotTriggered = true;
+                triggerCinematicStorm();
+            }, 1000); // Changed from 7000 to 1000 (1 second wait)
         });
 
-        // 2. The Vaporize Trigger (NOW TRIGGERS WHEN LEAVING THE BENTO CARD)
+        // 2. The Vaporize Trigger (Remains the same)
         aboutCard.addEventListener('mouseleave', () => {
             if (hoverTimer) {
                 clearTimeout(hoverTimer);
                 hoverTimer = null;
             }
             
-            // If the storm is running and they leave the card, vaporize them gracefully
             if (activeParticles.length > 0) {
                 activeParticles.forEach(petal => {
                     petal.classList.add('vaporize');
                 });
             }
         });
-
+        
         // 3. The Particle Physics Engine
         function triggerCinematicStorm() {
             const numPetals = 45; // Rich but optimized count
@@ -365,10 +359,10 @@
                 }, i * 180); // Staggers the spawn rate so it looks like a natural gust of wind
             }
 
-            // Cooldown so it doesn't trigger repeatedly
+        // TEST MODE: 1-Second Cooldown (So you can spam it)
             setTimeout(() => {
                 jackpotTriggered = false;
-            }, 60000);
+            }, 1000); // Changed from 60000 (1 minute) to 1000
         }
     }
 });
