@@ -1,1 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Behind the delusion. The visual curation and digital architecture of Suwuyiku.">
 
+    <title>About • Suwuyiku</title>
+    
+    <link rel="icon" type="image/webp" href="assets/logo.png">
+    
+    <!-- Strict External Stylesheet Link -->
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Fredoka:wght@600&family=Sniglet&family=Teko:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAV BAR (Exact match to index) -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="/" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="/about" class="active">About</a></li>
+                <li><a href="/connections">Connections</a></li>
+                <li><a href="/library">Library</a></li>
+                <li><a href="/fragments">Fragments</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
+                <a href="/contact" class="btn-action">CONTACT</a>
+            </div>
+            <button class="hamburger-btn" aria-label="Open Menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE SIDEBAR (Exact match to index) -->
+    <div class="mobile-sidebar">
+        <div class="sidebar-header">
+            <a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a>
+            <button class="close-sidebar-btn" aria-label="Close Menu">&times;</button>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul class="sidebar-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/connections">Connections</a></li>
+                <li><a href="/library">Library</a></li>
+                <li><a href="/fragments">Fragments</a></li>
+            </ul>
+            <div class="sidebar-actions">
+                <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
+                <a href="/contact" class="sidebar-btn-action">CONTACT</a>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span>
+        </div>
+    </div>
+    <div class="sidebar-overlay"></div>
+    
+    <!-- PAGE HERO -->
+    <header class="page-hero">
+        <div class="hero-content">
+            <h1>Behind the delusion</h1>
+            <h2>visual curation and digital architecture by <span class="name-glow">suwuyiku</span>.</h2>
+        </div>
+    </header>
+    
+    <!-- ABOUT BENTO GRID -->
+    <main class="bento-container about-page-grid">
+        
+        <!-- Bio Card (Large) -->
+        <div class="bento-card card-large profile-card">
+            <div class="card-content">
+                <h2>The Architect</h2>
+                <p>Echoes under the april aozora</p>
+                <div class="bio-text">
+                    <p>This space serves as a digital archive, a visual diary, and a testing ground for seamless web architecture. Built to be a quiet corner of the internet without restrictions.</p>
+                    <br>
+                    <p>Rooted in minimalist design, manga curation, and absolute visual performance. Built to last a thousand years.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status Card -->
+        <div class="bento-card status-card">
+            <div class="card-content">
+                <h2>Currently</h2>
+                <p>Real-time status</p>
+                <ul class="status-list">
+                    <li><span class="status-icon">🎧</span> <span>Listening to silence</span></li>
+                    <li><span class="status-icon">📖</span> <span>Reading manga archives</span></li>
+                    <li><span class="status-icon">💻</span> <span>Refining digital physics</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Stack / Philosophy Card -->
+        <div class="bento-card stack-card">
+            <div class="card-content">
+                <h2>Ecosystem</h2>
+                <p>Tools & architecture</p>
+                <div class="stack-tags">
+                    <span class="tag">Vanilla HTML/CSS</span>
+                    <span class="tag">JavaScript Engine</span>
+                    <span class="tag">Cloudflare</span>
+                    <span class="tag">Figma</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote Card (Full Wide) -->
+        <div class="bento-card card-full-wide quote-card">
+             <div class="card-content">
+                  <h2 class="handwriting-quote">"Building timeless structures without restrictions."</h2>
+             </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER (Exact match to index) -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="logo-text footer-logo">Suwuyiku</span>
+                <h2>Visual curation and digital architecture</h2>
+                <p>Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.</p>
+                <div class="footer-social-icons">
+                    <a href="https://instagram.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://x.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="link-column">
+                    <h3>Ecosystem</h3>
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/library">Library</a></li>
+                        <li><a href="/fragments">Fragments</a></li>
+                        <li><a href="https://suwuyiku.pages.dev/shop">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/connections">Connections</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="https://github.com/Suwuyiku">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="https://github.com/Suwuyiku/suwuyiku/blob/main/LICENSE">MIT License</a></li>
+                        <li><a href="https://github.com/Suwuyiku/suwuyiku">Source Code</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="/legal/privacy-policy">Privacy Policy</a><span class="divider">|</span>
+                <a href="/legal/terms-of-use">Terms of Use</a><span class="divider">|</span>
+                <a href="/legal/shipping-and-refund">Shipping and Refund Policy</a>
+            </div>
+            <div class="copyright">&copy; 2026 Suwuyiku. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- LIGHTWEIGHT JS FOR MOBILE MENU ONLY -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hamburger = document.querySelector('.hamburger-btn');
+            const sidebar = document.querySelector('.mobile-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const closeBtn = document.querySelector('.close-sidebar-btn');
+
+            if (hamburger && sidebar && overlay && closeBtn) {
+                function toggleMenu() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    document.body.classList.toggle('no-scroll'); 
+                }
+                hamburger.addEventListener('click', toggleMenu);
+                closeBtn.addEventListener('click', toggleMenu);
+                overlay.addEventListener('click', toggleMenu);
+            }
+        });
+    </script>
+</body>
+</html>
