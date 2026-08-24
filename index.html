@@ -221,37 +221,29 @@
 
     <script>
 
-   document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     const aboutCard = document.querySelector('.about-card-special');
     const logoMark = document.querySelector('.about-anchor-mark');
     
-    // Page anchor points for smart targeting
+    // Page anchor points
     const libraryCard = document.querySelector('.library-card-special');
     const footer = document.querySelector('.site-footer');
     const footerBottom = document.querySelector('.footer-bottom');
 
-    if (aboutCard && logoMark) {
+    if (aboutCard) {
         let hoverTimer = null;
         let jackpotTriggered = false;
-        let activeParticles = []; // Tracks live particles for vaporization
+        let activeParticles = [];
 
-        // 1. BULLETPROOF TEST MODE: Triggers instantly, zero delay.
+        // 1. LINUX/FIREFOX BULLETPROOF TEST MODE (Zero Delay)
         aboutCard.addEventListener('mouseenter', () => {
             if (jackpotTriggered) return;
-            
-            // ENGINE LIGHT: This prints to your browser console to prove the JS is working
-            console.log("🌸 Cherry Blossom Engine Triggered!");
-            
             jackpotTriggered = true;
             triggerCinematicStorm();
         });
 
         // 2. The Vaporize Trigger
         aboutCard.addEventListener('mouseleave', () => {
-            if (hoverTimer) {
-                clearTimeout(hoverTimer);
-                hoverTimer = null;
-            }
             if (activeParticles.length > 0) {
                 activeParticles.forEach(petal => {
                     petal.classList.add('vaporize');
@@ -259,13 +251,15 @@
             }
         });
         
-        // 3. The Bulletproof Particle Physics Engine
+        // 3. The Web Animations API Physics Engine
         function triggerCinematicStorm() {
             const numPetals = 45; 
             
-            const logoRect = logoMark.getBoundingClientRect();
-            const startX = logoRect.left + (logoRect.width / 2);
-            const startY = logoRect.top + window.scrollY + 20;
+            // Safe fallback coordinates in case the image hasn't loaded yet
+            const anchorElement = logoMark || aboutCard;
+            const rect = anchorElement.getBoundingClientRect();
+            const startX = rect.left + (rect.width / 2);
+            const startY = rect.top + window.scrollY + (logoMark ? 20 : rect.height / 2);
 
             for (let i = 0; i < numPetals; i++) {
                 setTimeout(() => {
@@ -283,6 +277,7 @@
                         if (Math.random() > 0.6) petal.style.filter = 'blur(1px)';
                     }
 
+                    // Set starting location
                     petal.style.left = `${startX}px`;
                     petal.style.top = `${startY}px`;
 
@@ -308,39 +303,40 @@
                         ? (Math.random() * window.innerWidth * 0.5) + 50 
                         : -(Math.random() * 100 + 20); 
 
-                    // Forcing rigid decimals to prevent CSS parser crashes
                     const rotX = Math.random().toFixed(2);
                     const rotY = Math.random().toFixed(2);
                     const rotZ = Math.random().toFixed(2);
                     const rotDeg = Math.random() * 720 + 360; 
 
-                    petal.style.setProperty('--end-x', `${endX}px`);
-                    petal.style.setProperty('--end-y', `${translateEndY}px`);
-                    petal.style.setProperty('--rot-x', rotX);
-                    petal.style.setProperty('--rot-y', rotY);
-                    petal.style.setProperty('--rot-z', rotZ);
-                    petal.style.setProperty('--rot-deg', `${rotDeg}deg`);
-
-                    const duration = Math.random() * 4.5 + 4;
-                    
-                    // EXPLICIT ANIMATION: Forcing the browser to read it correctly
-                    petal.style.animationName = 'apple-fall';
-                    petal.style.animationDuration = `${duration}s`;
-                    petal.style.animationTimingFunction = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                    petal.style.animationFillMode = 'forwards';
-
                     document.body.appendChild(petal);
                     activeParticles.push(petal);
 
-                    setTimeout(() => {
+                    const durationMs = (Math.random() * 4.5 + 4) * 1000;
+                    
+                    // ========================================================
+                    // BYPASSING CSS ENTIRELY: Directly commanding the GPU
+                    // ========================================================
+                    const animation = petal.animate([
+                        { opacity: 0, transform: `translate3d(0, 0, 0) rotate3d(1, 1, 0, 0deg) scale(0.6)` },
+                        { opacity: 1, offset: 0.15 },
+                        { opacity: 1, offset: 0.85 },
+                        { opacity: 0, transform: `translate3d(${endX}px, ${translateEndY}px, 0) rotate3d(${rotX}, ${rotY}, ${rotZ}, ${rotDeg}deg) scale(1)` }
+                    ], {
+                        duration: durationMs,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        fill: 'forwards'
+                    });
+
+                    // Clean up the DOM node after the animation naturally finishes
+                    animation.onfinish = () => {
                         if (petal.parentNode) petal.remove();
                         activeParticles = activeParticles.filter(p => p !== petal);
-                    }, duration * 1000);
+                    };
 
                 }, i * 180); 
             }
 
-            // Instant reset so you can test it repeatedly
+            // Test Mode: Fast Reset
             setTimeout(() => {
                 jackpotTriggered = false;
             }, 1000); 
