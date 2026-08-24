@@ -276,7 +276,7 @@
                     item.className = 'fragment-item';
                     item.onclick = () => openCanvas(post.id, title, category, formattedDate);
                     
-                    // Conditionally load the image if the Worker found one!
+                   // Conditionally load the image if the Worker found one!
                     let imageHtml = "";
                     if (coverImage) {
                         imageHtml = `
@@ -286,15 +286,15 @@
                         `;
                     }
 
+                   // Index view stays strictly text-only
                     item.innerHTML = `
-                        <div class="fragment-content-wrapper">
+                        <div class="fragment-content-wrapper" style="width: 100%;">
                             <div class="fragment-meta">
                                 <span class="meta-category">${category}</span>
                                 <span>${formattedDate}</span>
                             </div>
                             <div class="fragment-title">${title}</div>
                         </div>
-                        ${imageHtml}
                     `;
                     indexContainer.appendChild(item);
                 });
