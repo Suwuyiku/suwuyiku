@@ -771,9 +771,13 @@ body.is-searching .library-header p { opacity: 0.3; }
     user-select: none; /* Prevents highlighting */
     -webkit-touch-callout: none; /* Prevents mobile save prompts */
 }
+
 /* =========================================
    08. PAGE: FRAGMENTS
    ========================================= */
+
+
+
 .fragments-header { margin-bottom: 3rem; border-bottom: 0.125rem solid var(--kodansha-black); padding-bottom: 1.5rem; }
 .fragments-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--kodansha-black); margin-bottom: 0.5rem; }
 .fragments-header p { font-size: 1rem; color: #777777; }
@@ -807,6 +811,39 @@ body.is-searching .library-header p { opacity: 0.3; }
 .spark-count { font-size: 0.85rem; font-weight: 600; color: #A0A0A0; letter-spacing: 0.05em; }
 .particle { position: fixed; pointer-events: none; width: 5px; height: 5px; background-color: var(--kodansha-black); border-radius: 50%; z-index: 9999; animation: shoot 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
 @keyframes shoot { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+
+/* =========================================
+   FRAGMENTS: SKELETON LOADERS
+   ========================================= */
+@keyframes skeletonPulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.4; }
+}
+
+.fragment-skeleton {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-line {
+    background-color: #E5E5E5;
+    border-radius: 4px;
+}
+
+.skeleton-meta {
+    width: 35%;
+    height: 0.75rem;
+}
+
+.skeleton-title {
+    width: 65%;
+    height: 1.5rem;
+}
 
 /* =========================================
    09. PAGE: CONNECTIONS
