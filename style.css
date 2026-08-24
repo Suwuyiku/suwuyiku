@@ -314,7 +314,84 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 /* =========================================
    05. PAGE: ABOUT (Reserved Room)
    ========================================= */
-/* Future About Page styling will go here */
+
+.page-hero {
+    padding: 9rem 5% 4rem; /* No image banner, just clean text spacing */
+    text-align: center;
+}
+
+.bio-text {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--kodansha-black);
+}
+
+.status-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.status-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+    color: var(--kodansha-black);
+    font-weight: 500;
+}
+
+.status-icon {
+    font-size: 1.2rem;
+}
+
+.stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.tag {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--hover-gray);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), 
+                border-color 0.3s ease, 
+                color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+.tag:hover {
+    border-color: var(--kodansha-black);
+    color: var(--kodansha-black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.quote-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem !important;
+}
+
+.handwriting-quote {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--kodansha-black);
+    margin: 0;
+}
 
 /* =========================================
    06. PAGE: SHOP (Reserved Room)
