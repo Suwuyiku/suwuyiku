@@ -203,35 +203,6 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     transition-delay: 2.5s; 
 }
 
-/* =========================================
-   EASTER EGG: CINEMATIC CHERRY BLOSSOM ENGINE
-   ========================================= */
-.cherry-petal {
-    position: absolute;
-    background: linear-gradient(135deg, rgba(250, 218, 221, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
-    border-radius: 100% 0% 100% 0%;
-    pointer-events: none; /* Kills hit-testing, massive FPS boost */
-    z-index: 9999;
-    opacity: 0;
-    will-change: transform, opacity;
-}
-
-.cherry-particle {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0;
-    will-change: transform, opacity;
-}
-
-/* The Gentle Vaporize Override */
-.vaporize {
-    opacity: 0 !important;
-    transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
-}
 
 /* Fragments Dual-Live Monitor */
 .fragments-card-special .card-content { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; }
