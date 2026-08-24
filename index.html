@@ -235,15 +235,15 @@
         let jackpotTriggered = false;
         let activeParticles = []; // Tracks live particles for vaporization
 
-        // 1. The 7-Second Suspense Timer
-        logoMark.addEventListener('mouseenter', () => {
+        // 1. The 7-Second Suspense Timer (NOW ON THE WHOLE BENTO CARD)
+        aboutCard.addEventListener('mouseenter', () => {
             if (jackpotTriggered) return;
 
             hoverTimer = setTimeout(() => {
                 // The exact 1/29 Jackpot Roll
                 const roll = Math.floor(Math.random() * 29) + 1;
                 
-                // Set to '=== 1' for the true 1/29 chance. (Change to > 0 to test it instantly)
+                // Set to '=== 1' for the true 1/29 chance.
                 if (roll === 1) { 
                     jackpotTriggered = true;
                     triggerCinematicStorm();
@@ -251,14 +251,14 @@
             }, 7000); 
         });
 
-        // 2. The Vaporize Trigger
-        logoMark.addEventListener('mouseleave', () => {
+        // 2. The Vaporize Trigger (NOW TRIGGERS WHEN LEAVING THE BENTO CARD)
+        aboutCard.addEventListener('mouseleave', () => {
             if (hoverTimer) {
                 clearTimeout(hoverTimer);
                 hoverTimer = null;
             }
             
-            // If the storm is running and they leave, vaporize them gracefully
+            // If the storm is running and they leave the card, vaporize them gracefully
             if (activeParticles.length > 0) {
                 activeParticles.forEach(petal => {
                     petal.classList.add('vaporize');
