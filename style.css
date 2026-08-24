@@ -388,6 +388,34 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     margin: 0;
 }
 
+/* ====================================================
+   PROFILE VIEW: SPOTIFY PLAYER
+   ==================================================== */
+.spotify-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: #1DB954;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(29, 185, 84, 0.3);
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.spotify-btn:hover {
+    transform: scale(1.05);
+    background-color: #1ed760;
+    box-shadow: 0 8px 20px rgba(29, 185, 84, 0.45);
+}
+
+.spotify-btn:active {
+    transform: scale(0.95);
+}
+
 /* =========================================
    06. PAGE: SHOP (Reserved Room)
    ========================================= */
