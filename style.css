@@ -227,24 +227,6 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     will-change: transform, opacity;
 }
 
-/* The Apple-Smooth Fall Physics */
-@keyframes apple-fall {
-    0% {
-        opacity: 0;
-        transform: translate3d(0, 0, 0) rotate3d(1, 1, 0, 0deg) scale(0.6);
-    }
-    15% {
-        opacity: 1; 
-    }
-    85% {
-        opacity: 1; 
-    }
-    100% {
-        opacity: 0; 
-        transform: translate3d(var(--end-x), var(--end-y), 0) rotate3d(var(--rot-x), var(--rot-y), var(--rot-z), var(--rot-deg)) scale(1);
-    }
-}
-
 /* The Gentle Vaporize Override */
 .vaporize {
     opacity: 0 !important;
