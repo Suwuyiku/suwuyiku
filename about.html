@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="PBP_jXkzOYsuMUxEpSyD3RMMLK9uf7czmxw5eCV5MUw" />
     <meta name="description" content="Behind the delusion. The visual curation and digital architecture of Suwuyiku.">
 
     <title>About • Suwuyiku</title>
@@ -65,78 +64,19 @@
     </div>
     <div class="sidebar-overlay"></div>
     
-    <!-- UNIFIED THEME HEADER (Now identical to Library & Connections) -->
+    <!-- UNIFIED THEME HEADER -->
     <main class="contact-page-wrapper">
         
-        <!-- Stripped all inline styles so it perfectly inherits your native style.css line -->
-        <div class="connections-header-wrapper">
+        <!-- The left-aligned typography header with the perfect line -->
+        <div class="connections-header-wrapper" style="border-bottom: 1px solid var(--border-color); padding-bottom: 2rem; margin-bottom: 2.5rem;">
             <div class="connections-header-left">
-                <h1>Behind the delusion</h1>
-                <p>visual curation and digital architecture by <span class="name-glow">suwuyiku</span>.</p>
+                <h1>About</h1>
+                <p>Behind the delusion</p>
             </div>
         </div>
         
-        <!-- PROFILE BENTO GRID -->
-        <div class="connections-grid">
-            
-            <!-- 1. The Avatar Profile Card (Spans Full Width) -->
-            <div class="bento-card profile-card" style="grid-column: 1 / -1; padding: 3.5rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                <img src="assets/logo/me.jpg" alt="Suwuyiku" style="width: 7.5rem; height: 7.5rem; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); margin-bottom: 1.2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.06);">
-                <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800; letter-spacing: -0.02em;">suwuyiku</h2>
-                <p style="color: var(--hover-gray); font-size: 0.95rem; margin: 0.4rem 0 1.2rem 0; font-family: monospace; background: var(--bg-color); padding: 0.3rem 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">soo-vee-koo</p>
-                <p style="font-size: 1.15rem; font-weight: 500; margin: 0; color: var(--kodansha-black);">livíng ìn dèlusión. 🍁</p>
-            </div>
-            
-            <!-- 2. The Custom Spotify Player -->
-            <div class="bento-card spotify-card" style="padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.5rem;">
-                <button id="spotify-play-btn" class="spotify-btn" aria-label="Play Music">
-                    <!-- SVG Play Icon -->
-                    <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24" fill="#ffffff"><path d="M8 5v14l11-7z"/></svg>
-                    <!-- SVG Pause Icon -->
-                    <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" fill="#ffffff" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                </button>
-                <div class="spotify-info">
-                    <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--hover-gray); margin: 0 0 0.3rem 0; font-weight: 700;">Now Playing</p>
-                    <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--kodansha-black);">Your Lie in April OST</h3>
-                </div>
-                <!-- AUDIO SOURCE -->
-                <audio id="bg-audio" src="assets/audio/ylia.mp3"></audio> 
-            </div>
+        <!-- YOUR NEW CONTENT WILL GO HERE -->
 
-            <!-- 3. The Architecture -->
-            <div class="bento-card architecture-card" style="padding: 2rem;">
-                <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">The Architecture</h2>
-                <p style="color: var(--kodansha-black); line-height: 1.6; font-size: 0.95rem;">
-                    A minimalist digital space built to house scattered thoughts, manga archives, and lo-fi aesthetics. A custom Headless CMS powered by Notion.
-                </p>
-            </div>
-
-            <!-- 4. The Ecosystem (Spans Full Width) -->
-            <div class="bento-card ecosystem-card" style="grid-column: 1 / -1; padding: 2.5rem;">
-                <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem;">The Ecosystem</h2>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.2rem;">
-                    <li style="display: flex; align-items: flex-start; gap: 0.8rem; font-size: 0.95rem; color: var(--kodansha-black); line-height: 1.5;">
-                        <span style="font-size: 1.2rem; transform: translateY(2px);">📸</span> 
-                        <span><strong>The Archive (Instagram):</strong> Curated visual updates.</span>
-                    </li>
-                    <li style="display: flex; align-items: flex-start; gap: 0.8rem; font-size: 0.95rem; color: var(--kodansha-black); line-height: 1.5;">
-                        <span style="font-size: 1.2rem; transform: translateY(2px);">🖋️</span> 
-                        <span><strong>Echoes (Fanzai):</strong> The community diary.</span>
-                    </li>
-                    <li style="display: flex; align-items: flex-start; gap: 0.8rem; font-size: 0.95rem; color: var(--kodansha-black); line-height: 1.5;">
-                        <span style="font-size: 1.2rem; transform: translateY(2px);">☁️</span> 
-                        <span><strong>A Silent Aozora (Discord):</strong> A private space for acoustics.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 5. Inquiries -->
-            <div class="bento-card inquiries-card" style="grid-column: 1 / -1; padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-                <h2 style="font-size: 1.3rem; margin: 0;">Inquiries</h2>
-                <a href="mailto:hisuwuyiku@gmail.com" style="color: var(--kodansha-black); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; font-size: 1.05rem;">hisuwuyiku@gmail.com</a>
-            </div>
-
-        </div>
     </main>
 
     <!-- FOOTER -->
@@ -192,11 +132,9 @@
         </div>
     </footer>
 
-    <!-- COMBINED SCRIPT ENGINE -->
+    <!-- MOBILE MENU SCRIPT ONLY -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
-            // 1. MOBILE SIDEBAR LOGIC
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -211,46 +149,6 @@
                 hamburger.addEventListener('click', toggleMenu);
                 closeBtn.addEventListener('click', toggleMenu);
                 overlay.addEventListener('click', toggleMenu);
-            }
-
-            // 2. SPOTIFY PLAYER LOGIC
-            const playBtn = document.getElementById('spotify-play-btn');
-            const audio = document.getElementById('bg-audio');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-
-            if(playBtn && audio) {
-                let fadeInterval;
-
-                playBtn.addEventListener('click', () => {
-                    if (audio.paused) {
-                        playIcon.style.display = 'none';
-                        pauseIcon.style.display = 'block';
-                        
-                        audio.volume = 0;
-                        audio.play();
-                        clearInterval(fadeInterval);
-                        fadeInterval = setInterval(() => {
-                            if (audio.volume < 0.95) {
-                                audio.volume += 0.05; 
-                            } else {
-                                audio.volume = 1;
-                                clearInterval(fadeInterval);
-                            }
-                        }, 50);
-                    } else {
-                        pauseIcon.style.display = 'none';
-                        playIcon.style.display = 'block';
-                        
-                        audio.pause();
-                        clearInterval(fadeInterval);
-                    }
-                });
-                
-                audio.addEventListener('ended', () => {
-                    pauseIcon.style.display = 'none';
-                    playIcon.style.display = 'block';
-                });
             }
         });
     </script>
