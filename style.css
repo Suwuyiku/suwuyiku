@@ -315,11 +315,6 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
    05. PAGE: ABOUT (Reserved Room)
    ========================================= */
 
-.page-hero {
-    padding: 9rem 5% 4rem; /* No image banner, just clean text spacing */
-    text-align: center;
-}
-
 .bio-text {
     margin-top: 1.5rem;
     font-size: 0.95rem;
