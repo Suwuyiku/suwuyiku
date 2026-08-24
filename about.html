@@ -6,7 +6,7 @@
     <meta name="google-site-verification" content="PBP_jXkzOYsuMUxEpSyD3RMMLK9uf7czmxw5eCV5MUw" />
     <meta name="description" content="Behind the delusion. The visual curation and digital architecture of Suwuyiku.">
 
-    <title>Profile • Suwuyiku</title>
+    <title>About • Suwuyiku</title>
     
     <link rel="icon" type="image/webp" href="/assets/logo.png">
     
@@ -65,13 +65,14 @@
     </div>
     <div class="sidebar-overlay"></div>
     
-    <!-- UNIFIED THEME HEADER (Matches Connections, Library, & Fragments) -->
+    <!-- UNIFIED THEME HEADER (Now identical to Library & Connections) -->
     <main class="contact-page-wrapper">
         
-        <div class="connections-header-wrapper" style="border-bottom: 1px solid var(--border-color); padding-bottom: 2rem; margin-bottom: 2.5rem;">
+        <!-- Stripped all inline styles so it perfectly inherits your native style.css line -->
+        <div class="connections-header-wrapper">
             <div class="connections-header-left">
-                <h1>Profile</h1>
-                <p>The central node of the delusion.</p>
+                <h1>Behind the delusion</h1>
+                <p>visual curation and digital architecture by <span class="name-glow">suwuyiku</span>.</p>
             </div>
         </div>
         
@@ -98,7 +99,7 @@
                     <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--hover-gray); margin: 0 0 0.3rem 0; font-weight: 700;">Now Playing</p>
                     <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--kodansha-black);">Your Lie in April OST</h3>
                 </div>
-                <!-- AUDIO SOURCE: You must add this mp3 file to your assets folder! -->
+                <!-- AUDIO SOURCE -->
                 <audio id="bg-audio" src="assets/audio/ylia.mp3"></audio> 
             </div>
 
@@ -191,7 +192,7 @@
         </div>
     </footer>
 
-    <!-- COMBINED SCRIPT ENGINE (Sidebar + Spotify logic) -->
+    <!-- COMBINED SCRIPT ENGINE -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -212,7 +213,7 @@
                 overlay.addEventListener('click', toggleMenu);
             }
 
-            // 2. SPOTIFY PLAYER LOGIC (With cinematic fade-in)
+            // 2. SPOTIFY PLAYER LOGIC
             const playBtn = document.getElementById('spotify-play-btn');
             const audio = document.getElementById('bg-audio');
             const playIcon = document.getElementById('play-icon');
@@ -223,34 +224,29 @@
 
                 playBtn.addEventListener('click', () => {
                     if (audio.paused) {
-                        // Swap Icons
                         playIcon.style.display = 'none';
                         pauseIcon.style.display = 'block';
                         
-                        // Cinematic Fade In
                         audio.volume = 0;
                         audio.play();
                         clearInterval(fadeInterval);
                         fadeInterval = setInterval(() => {
                             if (audio.volume < 0.95) {
-                                audio.volume += 0.05; // Fades in smoothly over ~1 second
+                                audio.volume += 0.05; 
                             } else {
                                 audio.volume = 1;
                                 clearInterval(fadeInterval);
                             }
                         }, 50);
                     } else {
-                        // Swap Icons
                         pauseIcon.style.display = 'none';
                         playIcon.style.display = 'block';
                         
-                        // Pause instantly
                         audio.pause();
                         clearInterval(fadeInterval);
                     }
                 });
                 
-                // Reset to play icon if the song ends naturally
                 audio.addEventListener('ended', () => {
                     pauseIcon.style.display = 'none';
                     playIcon.style.display = 'block';
