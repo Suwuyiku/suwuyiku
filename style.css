@@ -789,26 +789,7 @@ body.is-searching .library-header p { opacity: 0.3; }
    08. PAGE: FRAGMENTS
    ========================================= */
 
-
-
-.fragments-header { margin-bottom: 3rem; border-bottom: 0.125rem solid var(--kodansha-black); padding-bottom: 1.5rem; }
-.fragments-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--kodansha-black); margin-bottom: 0.5rem; }
-.fragments-header p { font-size: 1rem; color: #777777; }
-.fragment-item { padding: 2rem 0; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: transform 0.3s ease, padding-left 0.3s ease; }
-.fragment-item:hover { transform: translateX(4px); padding-left: 0.5rem; }
-.fragment-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #A0A0A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
-.meta-category { font-weight: 700; color: var(--kodansha-black); }
-.fragment-title { font-size: 1.5rem; font-weight: 700; color: var(--kodansha-black); line-height: 1.3; transition: color 0.2s ease; }
-.fragment-item:hover .fragment-title { color: var(--hover-gray); }
-
-#fragments-canvas { display: none; animation: fadeIn 0.5s ease forwards; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.btn-back { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #777777; cursor: pointer; margin-bottom: 3rem; transition: color 0.2s ease; }
-.btn-back:hover { color: var(--kodansha-black); }
-.canvas-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem; }
-.canvas-body { margin-top: 3rem; font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
-.canvas-body p { margin-bottom: 1.75rem; }
-.canvas-body h2, .canvas-body h3 { font-weight: 800; margin: 2.5rem 0 1rem 0; color: var(--kodansha-black); }
+/*sorry*/
 
 /* ====================================================
            CANVAS: SPLIT LAYOUT (Desktop Side-by-Side)
