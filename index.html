@@ -239,26 +239,28 @@
             }
         });
 
-        // Upgraded Fragments Dual-Live Monitor Engine
+       // Upgraded Fragments Dual-Live Monitor Engine (Updated for Clean API)
         async function initFragmentsMonitor() {
             try {
-                const response = await fetch("https://api.suwuyiku.workers.dev/posts");
+                // Add nocache to ensure the homepage always pulls the freshest titles
+                const response = await fetch("https://api.suwuyiku.workers.dev/posts?nocache=" + new Date().getTime());
                 const data = await response.json();
                 
                 if (data.results && data.results.length > 0) {
-                    // Inject Latest Post
-                    const title1 = data.results[0].properties.Title.title[0]?.plain_text || "Untitled Document";
+                    // Inject Latest Post (Using the newly cleaned 'title' from the Worker)
+                    const title1 = data.results[0].title || "Untitled Document";
                     document.getElementById('monitor-text-1').textContent = title1;
                     
                     // Inject Previous Post (if it exists)
                     if (data.results.length > 1) {
-                        const title2 = data.results[1].properties.Title.title[0]?.plain_text || "Untitled Document";
+                        const title2 = data.results[1].title || "Untitled Document";
                         document.getElementById('monitor-text-2').textContent = title2;
                     } else {
                         document.getElementById('monitor-text-2').textContent = "No earlier records.";
                     }
                 }
             } catch (error) {
+                console.error("Monitor Sync Error:", error);
                 document.getElementById('monitor-text-1').textContent = "System offline.";
                 document.getElementById('monitor-text-2').textContent = "";
             }
