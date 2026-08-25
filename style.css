@@ -809,8 +809,63 @@ body.is-searching .library-header p { opacity: 0.3; }
 .canvas-body { margin-top: 3rem; font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
 .canvas-body p { margin-bottom: 1.75rem; }
 .canvas-body h2, .canvas-body h3 { font-weight: 800; margin: 2.5rem 0 1rem 0; color: var(--kodansha-black); }
-.image-skeleton { background: #f4f4f4; border-radius: 6px; margin: 2.5rem auto; text-align: center; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-.canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; }
+
+/* ====================================================
+           CANVAS: SPLIT LAYOUT (Desktop Side-by-Side)
+   ==================================================== */
+        .canvas-split-layout {
+            display: flex;
+            gap: 3.5rem;
+            align-items: flex-start;
+        }
+        
+        .canvas-visuals {
+            flex: 0 0 45%; /* Restricts the image to 45% of the screen on desktop */
+            max-width: 480px; 
+        }
+        
+        .canvas-text {
+            flex: 1; /* Lets the text take up the rest of the right side */
+        }
+
+        /* The "Library" Style Grey Frame */
+        .image-skeleton { 
+            background-color: #EBEBEB; 
+            padding: 1.25rem; 
+            border-radius: 4px; 
+            text-align: center; 
+            overflow: hidden; 
+            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12), -1px -1px 3px rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+        }
+        
+        .canvas-image { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            opacity: 0; 
+            transition: opacity 0.5s ease-in; 
+            margin: 0; 
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* STRICT MOBILE PROTECTION: Stacks them vertically on phones */
+        @media (max-width: 48rem) {
+            .canvas-split-layout {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .canvas-visuals {
+                flex: 1 1 auto;
+                max-width: 100%;
+                width: 100%;
+            }
+            .image-skeleton {
+                padding: 1rem; /* Slightly smaller frame on mobile */
+                margin-bottom: 1rem;
+            }
+        }
 
 .spark-container { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; }
 .spark-intro { font-size: 0.85rem; color: #A0A0A0; font-style: italic; margin-top: 1rem; letter-spacing: 0.02em; text-align: center; }
