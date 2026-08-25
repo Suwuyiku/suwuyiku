@@ -19,7 +19,7 @@
         .fragments-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--kodansha-black); margin-bottom: 0.5rem; }
         .fragments-header p { font-size: 1rem; color: #777777; }
 
-        /* THE IMAGE & TEXT LAYOUT FIX */
+        /* TEXT-ONLY FRAGMENT LIST */
         .fragment-item { 
             display: flex; 
             justify-content: space-between; 
@@ -32,16 +32,6 @@
         }
         .fragment-item:hover { transform: translateX(4px); padding-left: 0.5rem; }
         .fragment-content-wrapper { flex: 1; }
-        .fragment-cover-wrapper {
-            flex-shrink: 0;
-            width: 160px;
-            height: 100px;
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: #f4f4f4;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .fragment-cover { width: 100%; height: 100%; object-fit: cover; }
         
         .fragment-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: #A0A0A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
         .meta-category { font-weight: 700; color: var(--kodansha-black); }
@@ -49,6 +39,25 @@
         .fragment-title { font-size: 1.6rem; font-weight: 700; color: var(--kodansha-black); line-height: 1.3; transition: color 0.2s ease; }
         .fragment-item:hover .fragment-title { color: var(--hover-gray); }
 
+        /* SKELETON LOADER ANIMATIONS */
+        @keyframes skeletonPulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+        .fragment-skeleton {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            animation: skeletonPulse 1.5s ease-in-out infinite;
+        }
+        .skeleton-line { background-color: #E5E5E5; border-radius: 4px; }
+        .skeleton-meta { width: 30%; height: 0.75rem; }
+        .skeleton-title { width: 60%; height: 1.6rem; }
+
+        /* CANVAS VIEW */
         #fragments-canvas { display: none; animation: fadeIn 0.5s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -63,6 +72,7 @@
         .image-skeleton { background: #f4f4f4; border-radius: 6px; margin: 2.5rem auto; text-align: center; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
         .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; }
 
+        /* SPARK ENGINE */
         .spark-container { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; }
         .spark-intro { font-size: 0.85rem; color: #A0A0A0; font-style: italic; margin-top: 1rem; letter-spacing: 0.02em; text-align: center; }
         
@@ -91,44 +101,45 @@
             .fragments-header h1 { font-size: 2rem; }
             .canvas-title { font-size: 1.8rem; }
             .canvas-body { font-size: 1.05rem; margin-top: 2rem; }
-            .fragment-item { flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; padding: 2rem 0; }
+            .fragment-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
             .fragment-item:hover { transform: none; padding-left: 0; }
-            .fragment-cover-wrapper { width: 100%; height: 200px; }
+            .fragment-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .fragment-title { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
     <nav class="top-nav">
-        <div class="nav-left"><a href="index.html" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a></div>
+        <div class="nav-left"><a href="/" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a></div>
         <div class="nav-right">
             <ul class="nav-links">
-                <li><a href="about.html">About</a></li>
-                <li><a href="connections.html">Connections</a></li>
-                <li><a href="library.html">Library</a></li>
-                <li><a href="fragments.html">Fragments</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/connections">Connections</a></li>
+                <li><a href="/library">Library</a></li>
+                <li><a href="/fragments" class="active">Fragments</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
-                <a href="contact.html" class="btn-action">CONTACT</a>
+                <a href="/contact" class="btn-action">CONTACT</a>
             </div>
             <button class="hamburger-btn" aria-label="Open Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
         </div>
     </nav>
 
     <div class="mobile-sidebar">
-        <div class="sidebar-header"><a href="index.html" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a><button class="close-sidebar-btn">&times;</button></div>
+        <div class="sidebar-header"><a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a><button class="close-sidebar-btn">&times;</button></div>
         <div class="sidebar-menu-container">
             <ul class="sidebar-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="connections.html">Connections</a></li>
-                <li><a href="library.html">Library</a></li>
-                <li><a href="fragments.html">Fragments</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/connections">Connections</a></li>
+                <li><a href="/library">Library</a></li>
+                <li><a href="/fragments">Fragments</a></li>
             </ul>
             <div class="sidebar-actions">
                 <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
-                <a href="contact.html" class="sidebar-btn-action">CONTACT</a>
+                <a href="/contact" class="sidebar-btn-action">CONTACT</a>
             </div>
         </div>
         <div class="sidebar-footer"><span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span></div>
@@ -137,16 +148,30 @@
 
     <main class="contact-page-wrapper">
         
+        <!-- INDEX VIEW -->
         <div id="fragments-index">
             <div class="fragments-header">
                 <h1>Fragments</h1>
                 <p>Scattered thoughts, ecosystem updates, and deep-dive reviews.</p>
             </div>
             <div id="index-container">
-                <p style="color: #A0A0A0; font-size: 0.9rem; padding: 2rem 0;">Synchronizing with ecosystem...</p>
+                <!-- SKELETON LOADERS (Replaces the text sync message) -->
+                <div class="fragment-skeleton">
+                    <div class="skeleton-line skeleton-meta"></div>
+                    <div class="skeleton-line skeleton-title"></div>
+                </div>
+                <div class="fragment-skeleton">
+                    <div class="skeleton-line skeleton-meta"></div>
+                    <div class="skeleton-line skeleton-title"></div>
+                </div>
+                <div class="fragment-skeleton">
+                    <div class="skeleton-line skeleton-meta"></div>
+                    <div class="skeleton-line skeleton-title"></div>
+                </div>
             </div>
         </div>
 
+        <!-- CANVAS VIEW -->
         <div id="fragments-canvas">
             <button class="btn-back" onclick="closeCanvas()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -173,23 +198,22 @@
 
     </main>
 
-  <footer class="site-footer">
+    <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-brand">
-    <span class="logo-text footer-logo">Suwuyiku</span>
-    <h2>Visual curation and digital architecture</h2>
-    <p>Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.</p>
-    
-    <!-- ADD THIS NEW BLOCK HERE -->
-    <div class="footer-social-icons">
-        <a href="https://instagram.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <a href="https://x.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-        </a>
-    </div>
-</div>
+                <span class="logo-text footer-logo">Suwuyiku</span>
+                <h2>Visual curation and digital architecture</h2>
+                <p>Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.</p>
+                
+                <div class="footer-social-icons">
+                    <a href="https://instagram.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://x.com/Suwuyiku" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                    </a>
+                </div>
+            </div>
             <div class="footer-links">
                 <div class="link-column">
                     <h3>Ecosystem</h3>
@@ -246,7 +270,6 @@
 
         async function fetchIndex() {
             try {
-                // Force a fresh request from Cloudflare
                 const response = await fetch(`${API_URL}/posts?nocache=` + new Date().getTime());
                 const data = await response.json();
                 
@@ -256,13 +279,13 @@
                     return;
                 }
 
+                // Wipes the Skeleton Loaders the millisecond data is ready
                 indexContainer.innerHTML = ''; 
 
                 data.results.forEach(post => {
                     const title = post.title;
                     const category = post.category;
                     const rawDate = post.date;
-                    const coverImage = post.coverImage;
                     
                     let formattedDate = "Unknown Time";
                     if (rawDate) {
@@ -276,17 +299,7 @@
                     item.className = 'fragment-item';
                     item.onclick = () => openCanvas(post.id, title, category, formattedDate);
                     
-                   // Conditionally load the image if the Worker found one!
-                    let imageHtml = "";
-                    if (coverImage) {
-                        imageHtml = `
-                            <div class="fragment-cover-wrapper">
-                                <img src="${coverImage}" class="fragment-cover" alt="${title}" loading="lazy" draggable="false" oncontextmenu="return false;">
-                            </div>
-                        `;
-                    }
-
-                   // Index view stays strictly text-only
+                    // Pure text-only layout without images
                     item.innerHTML = `
                         <div class="fragment-content-wrapper" style="width: 100%;">
                             <div class="fragment-meta">
