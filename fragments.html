@@ -31,9 +31,20 @@
             transition: transform 0.3s ease, padding-left 0.3s ease; 
         }
         .fragment-item:hover { transform: translateX(4px); padding-left: 0.5rem; }
-        .fragment-content-wrapper { flex: 1; }
+        .fragment-content-wrapper { flex: 1; width: 100%; }
         
-        .fragment-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: #A0A0A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+        /* FIX: DATE ALIGNED TO FAR RIGHT */
+        .fragment-meta { 
+            display: flex; 
+            justify-content: space-between; /* Pushes the date to the right edge */
+            align-items: center; 
+            width: 100%;
+            font-size: 0.75rem; 
+            color: #A0A0A0; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            margin-bottom: 0.75rem; 
+        }
         .meta-category { font-weight: 700; color: var(--kodansha-black); }
         
         .fragment-title { font-size: 1.6rem; font-weight: 700; color: var(--kodansha-black); line-height: 1.3; transition: color 0.2s ease; }
@@ -54,7 +65,7 @@
             animation: skeletonPulse 1.5s ease-in-out infinite;
         }
         .skeleton-line { background-color: #E5E5E5; border-radius: 4px; }
-        .skeleton-meta { width: 30%; height: 0.75rem; }
+        .skeleton-meta { width: 100%; height: 0.75rem; }
         .skeleton-title { width: 60%; height: 1.6rem; }
 
         /* ====================================================
@@ -63,10 +74,8 @@
         #fragments-canvas { display: none; animation: fadeIn 0.4s ease forwards; padding-bottom: 4rem; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 1. Gap Closer (Triggers when canvas is open) */
         .contact-page-wrapper.canvas-active { padding-top: 1.25rem !important; }
 
-        /* 2. The Breadcrumb Area (Matches Library exactly) */
         .canvas-breadcrumbs {
             width: 100%;
             margin-bottom: 2.5rem;
@@ -75,7 +84,6 @@
             display: block; 
         }
 
-        /* 3. The Boxed Back Button (Matches Library exactly) */
         .btn-back { 
             padding: 0.4rem 1.25rem;
             border: 1px solid #000000;
@@ -94,7 +102,6 @@
         }
         .btn-back:hover { background-color: #f4f4f4; }
         
-        /* 4. The Title Section & The Second Elegant Line */
         .canvas-title-section {
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 2rem;
@@ -102,29 +109,18 @@
         }
         .canvas-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
         
-        .canvas-body { font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
-        .canvas-body p { margin-bottom: 1.75rem; }
-        .canvas-body h2, .canvas-body h3 { font-weight: 800; margin: 2.5rem 0 1rem 0; color: var(--kodansha-black); }
-        
-        /* ====================================================
-           CANVAS: SPLIT LAYOUT (Desktop Side-by-Side)
-           ==================================================== */
         .canvas-split-layout {
             display: flex;
             gap: 3.5rem;
             align-items: flex-start;
         }
-        
-        .canvas-visuals {
-            flex: 0 0 45%; /* Restricts the image to 45% of the screen on desktop */
-            max-width: 480px; 
-        }
-        
-        .canvas-text {
-            flex: 1; /* Lets the text take up the rest of the right side */
-        }
+        .canvas-visuals { flex: 0 0 45%; max-width: 480px; }
+        .canvas-text { flex: 1; }
 
-        /* The "Library" Style Grey Frame */
+        .canvas-body { font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
+        .canvas-body p { margin-bottom: 1.75rem; }
+        .canvas-body h2, .canvas-body h3 { font-weight: 800; margin: 2.5rem 0 1rem 0; color: var(--kodansha-black); }
+        
         .image-skeleton { 
             background-color: #EBEBEB; 
             padding: 1.25rem; 
@@ -134,17 +130,57 @@
             box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12), -1px -1px 3px rgba(255,255,255,0.6);
             margin-bottom: 2rem;
         }
-        
-        .canvas-image { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            opacity: 0; 
-            transition: opacity 0.5s ease-in; 
-            margin: 0; 
-            border-radius: 2px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        /* ADDED: cursor: zoom-in to indicate it's clickable */
+        .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: zoom-in; }
+
+        /* ====================================================
+           INSTAGRAM-STYLE LIGHTBOX ENGINE
+           ==================================================== */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.92); /* Deep dark overlay, no blur */
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .lightbox.active .lightbox-img { transform: scale(1); }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 10001;
+            line-height: 1;
+            padding: 0;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+        }
+        .lightbox-close:hover { opacity: 1; }
+        
+        /* FREEZES BACKGROUND SCROLLING */
+        body.lightbox-open { overflow: hidden; }
 
         /* SPARK ENGINE */
         .spark-container { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; }
@@ -178,23 +214,17 @@
             .canvas-body { font-size: 1.05rem; }
             .fragment-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
             .fragment-item:hover { transform: none; padding-left: 0; }
-            .fragment-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            
+            /* Keeps date perfectly locked to the right side on mobile too */
+            .fragment-meta { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; }
             .fragment-title { font-size: 1.3rem; }
             
-            /* STRICT MOBILE PROTECTION: Stacks them vertically on phones */
-            .canvas-split-layout {
-                flex-direction: column;
-                gap: 2rem;
-            }
-            .canvas-visuals {
-                flex: 1 1 auto;
-                max-width: 100%;
-                width: 100%;
-            }
-            .image-skeleton {
-                padding: 1rem; /* Slightly smaller frame on mobile */
-                margin-bottom: 1rem;
-            }
+            .canvas-split-layout { flex-direction: column; gap: 2rem; }
+            .canvas-visuals { flex: 1 1 auto; max-width: 100%; width: 100%; }
+            .image-skeleton { padding: 1rem; margin-bottom: 1rem; }
+            
+            /* Adjust lightbox close button for phones */
+            .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -263,14 +293,12 @@
         <!-- CANVAS VIEW -->
         <div id="fragments-canvas">
             
-            <!-- Elegant Breadcrumb Line & Boxed Button -->
             <div class="canvas-breadcrumbs">
                 <button class="btn-back" onclick="closeCanvas()">
                     ← Return to Fragments
                 </button>
             </div>
 
-            <!-- Title Section with Elegant Bottom Line -->
             <div class="canvas-title-section">
                 <div class="fragment-meta" style="margin-bottom: 1rem;">
                     <span class="meta-category" id="canvas-category">...</span>
@@ -279,7 +307,6 @@
                 <h1 class="canvas-title" id="canvas-title">...</h1>
             </div>
             
-            <!-- Split Layout Body -->
             <div class="canvas-body" id="canvas-body">
                 <p>Loading content...</p>
             </div>
@@ -292,6 +319,12 @@
         </div>
 
     </main>
+
+    <!-- LIGHTBOX OVERLAY -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Fullscreen Fragment Image" draggable="false" oncontextmenu="return false;">
+    </div>
 
     <footer class="site-footer">
         <div class="footer-top">
@@ -410,7 +443,6 @@
         async function openCanvas(pageId, title, category, date) {
             currentPostId = pageId; 
             
-            // THE FIX: Closes the gap at the top when viewing a fragment
             document.querySelector('.contact-page-wrapper').classList.add('canvas-active');
 
             indexView.style.display = 'none';
@@ -432,7 +464,6 @@
                 let textContent = '';
                 let hasImage = false;
 
-                // Sort the Notion blocks into Images vs Text
                 data.results.forEach(block => {
                     if (block.type === 'paragraph') {
                         const text = block.paragraph.rich_text.map(t => t.plain_text).join("");
@@ -448,13 +479,13 @@
                         const imageUrl = block.image.type === 'external' ? block.image.external.url : block.image.file.url;
                         imageContent += `
                             <div class="image-skeleton">
-                                <img src="${imageUrl}" class="canvas-image" loading="lazy" decoding="async" onload="this.style.opacity=1" draggable="false" oncontextmenu="return false;">
+                                <!-- LIGHTBOX TRIGGER ADDED HERE -->
+                                <img src="${imageUrl}" class="canvas-image" loading="lazy" decoding="async" onload="this.style.opacity=1" onclick="openLightbox('${imageUrl}')" draggable="false" oncontextmenu="return false;">
                             </div>
                         `;
                     }
                 });
 
-                // Inject the Split Layout if an image exists
                 if (hasImage) {
                     canvasBody.innerHTML = `
                         <div class="canvas-split-layout">
@@ -463,7 +494,6 @@
                         </div>
                     `;
                 } else {
-                    // Fallback to normal text-only layout if there are no images
                     canvasBody.innerHTML = textContent;
                 }
 
@@ -473,13 +503,38 @@
         }
 
         function closeCanvas() {
-            // THE FIX: Restores the gap at the top when going back to the index
             document.querySelector('.contact-page-wrapper').classList.remove('canvas-active');
-
             canvasView.style.display = 'none';
             indexView.style.display = 'block';
             currentPostId = null;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ====================================================
+           LIGHTBOX LOGIC
+           ==================================================== */
+        function openLightbox(imgSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.classList.add('lightbox-open');
+        }
+
+        function closeLightbox(e) {
+            // Close if clicking the background OR the close button
+            if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+                
+                // Clear the image source after the fade animation completes
+                setTimeout(() => {
+                    if (!lightbox.classList.contains('active')) {
+                        document.getElementById('lightbox-img').src = '';
+                    }
+                }, 300);
+            }
         }
 
         async function setupSparks(pageId) {
