@@ -33,10 +33,10 @@
         .fragment-item:hover { transform: translateX(4px); padding-left: 0.5rem; }
         .fragment-content-wrapper { flex: 1; width: 100%; }
         
-        /* FIX: DATE ALIGNED TO FAR RIGHT */
+        /* FIX: DATE LOCKED TO FAR RIGHT */
         .fragment-meta { 
             display: flex; 
-            justify-content: space-between; /* Pushes the date to the right edge */
+            justify-content: space-between; 
             align-items: center; 
             width: 100%;
             font-size: 0.75rem; 
@@ -106,6 +106,7 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 2rem;
             margin-bottom: 3rem;
+            width: 100%;
         }
         .canvas-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
         
@@ -130,41 +131,52 @@
             box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12), -1px -1px 3px rgba(255,255,255,0.6);
             margin-bottom: 2rem;
         }
-        /* ADDED: cursor: zoom-in to indicate it's clickable */
         .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: zoom-in; }
 
         /* ====================================================
-           INSTAGRAM-STYLE LIGHTBOX ENGINE
+           DYNAMIC LIGHTBOX ENGINE (Auto Light/Dark Mode)
            ==================================================== */
         .lightbox {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.92); /* Deep dark overlay, no blur */
+            background-color: rgba(0, 0, 0, 0.94); /* Deep dark default */
             z-index: 10000;
             display: none;
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: background-color 0.6s ease, opacity 0.3s ease;
         }
+        
+        /* Auto-detected Light Mode */
+        .lightbox.light-mode {
+            background-color: rgba(244, 244, 244, 0.95);
+        }
+
         .lightbox.active {
             display: flex;
             opacity: 1;
         }
+        
+        /* SHRUNK IMAGE SIZE FOR ELEGANCE */
         .lightbox-img {
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 65vw;  /* Limits size so it doesn't blow up */
+            max-height: 75vh;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
             transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.6s ease;
+        }
+        .lightbox.light-mode .lightbox-img {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* Softer shadow for light mode */
         }
         .lightbox.active .lightbox-img { transform: scale(1); }
+
         .lightbox-close {
             position: absolute;
             top: 1.5rem;
-            right: 2rem;
+            right: 2.5rem;
             background: none;
             border: none;
             color: #ffffff;
@@ -175,17 +187,16 @@
             line-height: 1;
             padding: 0;
             opacity: 0.6;
-            transition: opacity 0.2s ease;
+            transition: color 0.6s ease, opacity 0.2s ease;
         }
+        .lightbox.light-mode .lightbox-close { color: #000000; }
         .lightbox-close:hover { opacity: 1; }
         
-        /* FREEZES BACKGROUND SCROLLING */
         body.lightbox-open { overflow: hidden; }
 
         /* SPARK ENGINE */
         .spark-container { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; }
         .spark-intro { font-size: 0.85rem; color: #A0A0A0; font-style: italic; margin-top: 1rem; letter-spacing: 0.02em; text-align: center; }
-        
         .btn-spark { background: none; border: none; font-size: 2rem; color: #DDDDDD; cursor: pointer; transition: color 0.3s ease; position: relative; z-index: 10; }
         .btn-spark:hover:not(:disabled) { color: var(--hover-gray); }
         .btn-spark.active { color: var(--kodansha-black); }
@@ -197,14 +208,9 @@
             100% { transform: scale(1.1); text-shadow: 0 0 5px rgba(0,0,0,0.1); color: var(--kodansha-black); }
         }
         .btn-spark.animating { animation: sparkBurst 0.5s ease forwards; }
-
         .spark-count { font-size: 0.85rem; font-weight: 600; color: #A0A0A0; letter-spacing: 0.05em; }
-
         .particle { position: fixed; pointer-events: none; width: 5px; height: 5px; background-color: var(--kodansha-black); border-radius: 50%; z-index: 9999; animation: shoot 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
-        @keyframes shoot {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-        }
+        @keyframes shoot { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
 
         /* RESPONSIVE DESIGN */
         @media (max-width: 48rem) {
@@ -214,16 +220,14 @@
             .canvas-body { font-size: 1.05rem; }
             .fragment-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
             .fragment-item:hover { transform: none; padding-left: 0; }
-            
-            /* Keeps date perfectly locked to the right side on mobile too */
-            .fragment-meta { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; }
             .fragment-title { font-size: 1.3rem; }
             
             .canvas-split-layout { flex-direction: column; gap: 2rem; }
             .canvas-visuals { flex: 1 1 auto; max-width: 100%; width: 100%; }
             .image-skeleton { padding: 1rem; margin-bottom: 1rem; }
             
-            /* Adjust lightbox close button for phones */
+            /* Responsive Lightbox for Mobile */
+            .lightbox-img { max-width: 90vw; max-height: 80vh; }
             .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2.5rem; }
         }
     </style>
@@ -300,6 +304,7 @@
             </div>
 
             <div class="canvas-title-section">
+                <!-- Date naturally locked to the right side -->
                 <div class="fragment-meta" style="margin-bottom: 1rem;">
                     <span class="meta-category" id="canvas-category">...</span>
                     <span id="canvas-date">...</span>
@@ -320,7 +325,7 @@
 
     </main>
 
-    <!-- LIGHTBOX OVERLAY -->
+    <!-- DYNAMIC LIGHTBOX OVERLAY -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
         <img id="lightbox-img" class="lightbox-img" src="" alt="Fullscreen Fragment Image" draggable="false" oncontextmenu="return false;">
@@ -479,7 +484,6 @@
                         const imageUrl = block.image.type === 'external' ? block.image.external.url : block.image.file.url;
                         imageContent += `
                             <div class="image-skeleton">
-                                <!-- LIGHTBOX TRIGGER ADDED HERE -->
                                 <img src="${imageUrl}" class="canvas-image" loading="lazy" decoding="async" onload="this.style.opacity=1" onclick="openLightbox('${imageUrl}')" draggable="false" oncontextmenu="return false;">
                             </div>
                         `;
@@ -511,24 +515,63 @@
         }
 
         /* ====================================================
-           LIGHTBOX LOGIC
+           DYNAMIC LIGHTBOX ENGINE (AUTO LIGHT/DARK DETECTION)
            ==================================================== */
         function openLightbox(imgSrc) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            
+            // 1. Reset to Dark Mode instantly
+            lightbox.classList.remove('light-mode');
             lightboxImg.src = imgSrc;
+            
+            // 2. Scan the pixels to detect Light or Dark Mode
+            const img = new Image();
+            img.crossOrigin = "Anonymous"; // Crucial for pixel reading
+            img.src = imgSrc;
+            
+            img.onload = function() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+                    let colorSum = 0;
+                    
+                    // Sample pixels to find average perceived brightness
+                    for(let x = 0, len = data.length; x < len; x += 4) {
+                        const r = data[x];
+                        const g = data[x+1];
+                        const b = data[x+2];
+                        const avg = Math.sqrt(0.299 * (r ** 2) + 0.587 * (g ** 2) + 0.114 * (b ** 2));
+                        colorSum += avg;
+                    }
+                    
+                    const brightness = Math.floor(colorSum / (img.width * img.height));
+                    
+                    // 3. Shift to Light Mode if the image is bright
+                    if (brightness > 130) {
+                        lightbox.classList.add('light-mode');
+                    }
+                } catch(e) {
+                    console.warn("Cross-Origin security blocked pixel scan. Defaulting to Dark Mode safely.");
+                }
+            };
+
             lightbox.classList.add('active');
             document.body.classList.add('lightbox-open');
         }
 
         function closeLightbox(e) {
-            // Close if clicking the background OR the close button
             if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
                 const lightbox = document.getElementById('lightbox');
                 lightbox.classList.remove('active');
                 document.body.classList.remove('lightbox-open');
                 
-                // Clear the image source after the fade animation completes
                 setTimeout(() => {
                     if (!lightbox.classList.contains('active')) {
                         document.getElementById('lightbox-img').src = '';
