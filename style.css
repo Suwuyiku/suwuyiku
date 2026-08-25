@@ -989,7 +989,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: rgba(0, 0, 0, 0.4); /* Slightly darkened so the white box pops */
+    background: rgba(0, 0, 0, 0.4); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -997,6 +997,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    overscroll-behavior: contain; /* THE FIX: Traps the mouse wheel inside the modal */
 }
 
 .modal-overlay.active {
@@ -1004,25 +1005,22 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     pointer-events: auto;
 }
 
-/* SCROLL LOCK ENGINE: Freezes the background completely */
-html.modal-open, body.modal-open {
+/* SCROLL LOCK ENGINE: Flawless background freeze */
+body.modal-open {
     overflow: hidden !important;
-    width: 100%;
-    height: 100%;
-    touch-action: none;
 }
 
 .email-modal {
     background: var(--bg-color);
-    border: 2px solid var(--kodansha-black); /* Thicker, sharper border */
-    border-radius: 0 !important; /* ROUGH EDGES: Removes all softness */
+    border: 2px solid var(--kodansha-black);
+    border-radius: 0 !important; 
     padding: 2.5rem;
     width: 90%;
     max-width: 28rem;
     position: relative;
     transform: translateY(20px);
     transition: transform 0.3s ease;
-    box-shadow: 6px 6px 0px rgba(0,0,0,0.15); /* Brutalist hard shadow */
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.15); 
 }
 
 .modal-overlay.active .email-modal {
@@ -1067,8 +1065,8 @@ html.modal-open, body.modal-open {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid var(--kodansha-black); /* Sharp inner border */
-    border-radius: 0 !important; /* ROUGH EDGES */
+    border: 1px solid var(--kodansha-black); 
+    border-radius: 0 !important; 
     padding: 0.5rem 0.5rem 0.5rem 1rem;
     background: #FAFAFA;
 }
@@ -1084,7 +1082,7 @@ html.modal-open, body.modal-open {
     background: transparent;
     color: var(--kodansha-black);
     border: none;
-    border-radius: 0 !important; /* ROUGH EDGES */
+    border-radius: 0 !important; 
     padding: 0.4rem;
     cursor: pointer;
     display: flex;
