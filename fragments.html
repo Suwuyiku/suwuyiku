@@ -57,20 +57,94 @@
         .skeleton-meta { width: 30%; height: 0.75rem; }
         .skeleton-title { width: 60%; height: 1.6rem; }
 
-        /* CANVAS VIEW */
-        #fragments-canvas { display: none; animation: fadeIn 0.5s ease forwards; }
+        /* ====================================================
+           CANVAS VIEW (The Detailed Fragment)
+           ==================================================== */
+        #fragments-canvas { display: none; animation: fadeIn 0.4s ease forwards; padding-bottom: 4rem; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .btn-back { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #777777; cursor: pointer; margin-bottom: 3rem; transition: color 0.2s ease; }
-        .btn-back:hover { color: var(--kodansha-black); }
+        /* 1. Gap Closer (Triggers when canvas is open) */
+        .contact-page-wrapper.canvas-active { padding-top: 1.25rem !important; }
+
+        /* 2. The Breadcrumb Area (Matches Library exactly) */
+        .canvas-breadcrumbs {
+            width: 100%;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: block; 
+        }
+
+        /* 3. The Boxed Back Button (Matches Library exactly) */
+        .btn-back { 
+            padding: 0.4rem 1.25rem;
+            border: 1px solid #000000;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 800; 
+            letter-spacing: 0.05em;
+            background: #ffffff;
+            color: #000000;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-back:hover { background-color: #f4f4f4; }
         
-        .canvas-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem; }
-        .canvas-body { margin-top: 3rem; font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
+        /* 4. The Title Section & The Second Elegant Line */
+        .canvas-title-section {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .canvas-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
+        
+        .canvas-body { font-size: 1.1rem; line-height: 1.8; color: #222222; min-height: 30vh; overflow-wrap: break-word; word-wrap: break-word; }
         .canvas-body p { margin-bottom: 1.75rem; }
         .canvas-body h2, .canvas-body h3 { font-weight: 800; margin: 2.5rem 0 1rem 0; color: var(--kodansha-black); }
         
-        .image-skeleton { background: #f4f4f4; border-radius: 6px; margin: 2.5rem auto; text-align: center; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-        .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; }
+        /* ====================================================
+           CANVAS: SPLIT LAYOUT (Desktop Side-by-Side)
+           ==================================================== */
+        .canvas-split-layout {
+            display: flex;
+            gap: 3.5rem;
+            align-items: flex-start;
+        }
+        
+        .canvas-visuals {
+            flex: 0 0 45%; /* Restricts the image to 45% of the screen on desktop */
+            max-width: 480px; 
+        }
+        
+        .canvas-text {
+            flex: 1; /* Lets the text take up the rest of the right side */
+        }
+
+        /* The "Library" Style Grey Frame */
+        .image-skeleton { 
+            background-color: #EBEBEB; 
+            padding: 1.25rem; 
+            border-radius: 4px; 
+            text-align: center; 
+            overflow: hidden; 
+            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12), -1px -1px 3px rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+        }
+        
+        .canvas-image { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            opacity: 0; 
+            transition: opacity 0.5s ease-in; 
+            margin: 0; 
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
 
         /* SPARK ENGINE */
         .spark-container { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; }
@@ -96,15 +170,31 @@
             100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
         }
 
+        /* RESPONSIVE DESIGN */
         @media (max-width: 48rem) {
             .fragments-header { margin-bottom: 2rem; padding-bottom: 1.25rem; }
             .fragments-header h1 { font-size: 2rem; }
             .canvas-title { font-size: 1.8rem; }
-            .canvas-body { font-size: 1.05rem; margin-top: 2rem; }
+            .canvas-body { font-size: 1.05rem; }
             .fragment-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
             .fragment-item:hover { transform: none; padding-left: 0; }
             .fragment-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
             .fragment-title { font-size: 1.3rem; }
+            
+            /* STRICT MOBILE PROTECTION: Stacks them vertically on phones */
+            .canvas-split-layout {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .canvas-visuals {
+                flex: 1 1 auto;
+                max-width: 100%;
+                width: 100%;
+            }
+            .image-skeleton {
+                padding: 1rem; /* Slightly smaller frame on mobile */
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -155,7 +245,6 @@
                 <p>Scattered thoughts, ecosystem updates, and deep-dive reviews.</p>
             </div>
             <div id="index-container">
-                <!-- SKELETON LOADERS (Replaces the text sync message) -->
                 <div class="fragment-skeleton">
                     <div class="skeleton-line skeleton-meta"></div>
                     <div class="skeleton-line skeleton-title"></div>
@@ -173,20 +262,26 @@
 
         <!-- CANVAS VIEW -->
         <div id="fragments-canvas">
-            <button class="btn-back" onclick="closeCanvas()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Return to Fragments
-            </button>
+            
+            <!-- Elegant Breadcrumb Line & Boxed Button -->
+            <div class="canvas-breadcrumbs">
+                <button class="btn-back" onclick="closeCanvas()">
+                    ← Return to Fragments
+                </button>
+            </div>
 
-            <div class="fragment-meta" style="margin-bottom: 1.5rem;">
-                <span class="meta-category" id="canvas-category">...</span>
-                <span id="canvas-date">...</span>
+            <!-- Title Section with Elegant Bottom Line -->
+            <div class="canvas-title-section">
+                <div class="fragment-meta" style="margin-bottom: 1rem;">
+                    <span class="meta-category" id="canvas-category">...</span>
+                    <span id="canvas-date">...</span>
+                </div>
+                <h1 class="canvas-title" id="canvas-title">...</h1>
             </div>
             
-            <h1 class="canvas-title" id="canvas-title">...</h1>
-            
+            <!-- Split Layout Body -->
             <div class="canvas-body" id="canvas-body">
-                <p>Loading text...</p>
+                <p>Loading content...</p>
             </div>
 
             <div class="spark-container">
@@ -253,7 +348,6 @@
 
     <script>
         const API_URL = "https://api.suwuyiku.workers.dev";
-
         const indexView = document.getElementById('fragments-index');
         const canvasView = document.getElementById('fragments-canvas');
         const indexContainer = document.getElementById('index-container');
@@ -263,7 +357,6 @@
         const canvasBody = document.getElementById('canvas-body');
         const sparkCounter = document.getElementById('spark-counter');
         const sparkBtn = document.getElementById('spark-btn');
-
         let isSparked = false;
         let isProcessing = false;
         let currentPostId = null; 
@@ -278,8 +371,6 @@
                     indexContainer.innerHTML = '<p style="color: #A0A0A0; font-size: 0.9rem; padding: 2rem 0;">No published fragments found.</p>';
                     return;
                 }
-
-                // Wipes the Skeleton Loaders the millisecond data is ready
                 indexContainer.innerHTML = ''; 
 
                 data.results.forEach(post => {
@@ -299,7 +390,6 @@
                     item.className = 'fragment-item';
                     item.onclick = () => openCanvas(post.id, title, category, formattedDate);
                     
-                    // Pure text-only layout without images
                     item.innerHTML = `
                         <div class="fragment-content-wrapper" style="width: 100%;">
                             <div class="fragment-meta">
@@ -317,9 +407,12 @@
             }
         }
 
-            async function openCanvas(pageId, title, category, date) {
+        async function openCanvas(pageId, title, category, date) {
             currentPostId = pageId; 
             
+            // THE FIX: Closes the gap at the top when viewing a fragment
+            document.querySelector('.contact-page-wrapper').classList.add('canvas-active');
+
             indexView.style.display = 'none';
             canvasView.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -380,6 +473,9 @@
         }
 
         function closeCanvas() {
+            // THE FIX: Restores the gap at the top when going back to the index
+            document.querySelector('.contact-page-wrapper').classList.remove('canvas-active');
+
             canvasView.style.display = 'none';
             indexView.style.display = 'block';
             currentPostId = null;
