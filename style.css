@@ -980,7 +980,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
 .legal-content a:hover { color: var(--hover-gray) !important; }
 
 /* =========================================
-   EMAIL FALLBACK MODAL
+   EMAIL FALLBACK MODAL (Brutalist & Scroll-Locked)
    ========================================= */
 .modal-overlay {
     position: fixed;
@@ -989,7 +989,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: rgba(0, 0, 0, 0.15); /* Drastically lightened the dark overlay */
+    background: rgba(0, 0, 0, 0.4); /* Slightly darkened so the white box pops */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1004,16 +1004,25 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     pointer-events: auto;
 }
 
+/* SCROLL LOCK ENGINE: Freezes the background completely */
+html.modal-open, body.modal-open {
+    overflow: hidden !important;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
 .email-modal {
     background: var(--bg-color);
-    border: 1px solid var(--kodansha-black); /* Thinned out the thick border */
+    border: 2px solid var(--kodansha-black); /* Thicker, sharper border */
+    border-radius: 0 !important; /* ROUGH EDGES: Removes all softness */
     padding: 2.5rem;
     width: 90%;
     max-width: 28rem;
     position: relative;
     transform: translateY(20px);
     transition: transform 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.15); /* Brutalist hard shadow */
 }
 
 .modal-overlay.active .email-modal {
@@ -1043,7 +1052,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     margin-bottom: 0.5rem;
     color: var(--kodansha-black);
     letter-spacing: -0.02em;
-    text-align: center; /* Center the title */
+    text-align: center;
 }
 
 .modal-text {
@@ -1051,16 +1060,16 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     color: #666666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
-    text-align: center; /* Center the description */
+    text-align: center;
 }
 
 .modal-copy-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--kodansha-black); /* Sharp inner border */
+    border-radius: 0 !important; /* ROUGH EDGES */
     padding: 0.5rem 0.5rem 0.5rem 1rem;
-    border-radius: 4px;
     background: #FAFAFA;
 }
 
@@ -1071,23 +1080,21 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
     letter-spacing: 0.02em;
 }
 
-/* Updated Icon Button Styles - Removed the movement */
 .btn-copy-icon {
     background: transparent;
     color: var(--kodansha-black);
     border: none;
+    border-radius: 0 !important; /* ROUGH EDGES */
     padding: 0.4rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease; /* Only transition the background now */
-    border-radius: 4px;
+    transition: background 0.2s ease;
 }
 
 .btn-copy-icon:hover {
     background: #EAEAEA;
-    /* transform removed completely to keep it static */
 }
 
 /* =========================================
