@@ -33,7 +33,6 @@
         .fragment-item:hover { transform: translateX(4px); padding-left: 0.5rem; }
         .fragment-content-wrapper { flex: 1; width: 100%; }
         
-        /* FIX: DATE LOCKED TO FAR RIGHT */
         .fragment-meta { 
             display: flex; 
             justify-content: space-between; 
@@ -131,26 +130,27 @@
             box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12), -1px -1px 3px rgba(255,255,255,0.6);
             margin-bottom: 2rem;
         }
-        .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: zoom-in; }
+        /* FIX: Removed the annoying plus sign, restored standard pointer */
+        .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
 
         /* ====================================================
-           DYNAMIC LIGHTBOX ENGINE (Auto Light/Dark Mode)
+           DYNAMIC LIGHTBOX ENGINE (Optimized & Glitch-Free)
            ==================================================== */
         .lightbox {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.94); /* Deep dark default */
+            top: 0; left: 0;
+            width: 100%; height: 100%; /* FIX: Prevents browser zoom glitch */
+            background-color: rgba(0, 0, 0, 0.75); /* FIX: Breathable dark mode */
             z-index: 10000;
             display: none;
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: background-color 0.6s ease, opacity 0.3s ease;
+            transition: background-color 0.4s ease, opacity 0.3s ease;
         }
         
-        /* Auto-detected Light Mode */
         .lightbox.light-mode {
-            background-color: rgba(244, 244, 244, 0.95);
+            background-color: rgba(244, 244, 244, 0.85); /* FIX: Breathable light mode */
         }
 
         .lightbox.active {
@@ -158,36 +158,37 @@
             opacity: 1;
         }
         
-        /* SHRUNK IMAGE SIZE FOR ELEGANCE */
         .lightbox-img {
-            max-width: 65vw;  /* Limits size so it doesn't blow up */
-            max-height: 75vh;
+            max-width: 80%; /* Safely constrained to screen */
+            max-height: 85%;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
-            transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.6s ease;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            transform: scale(0.96);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
         }
+        
         .lightbox.light-mode .lightbox-img {
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* Softer shadow for light mode */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
         }
+        
         .lightbox.active .lightbox-img { transform: scale(1); }
 
         .lightbox-close {
             position: absolute;
-            top: 1.5rem;
+            top: 2rem;
             right: 2.5rem;
             background: none;
             border: none;
             color: #ffffff;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 300;
             cursor: pointer;
             z-index: 10001;
             line-height: 1;
             padding: 0;
-            opacity: 0.6;
-            transition: color 0.6s ease, opacity 0.2s ease;
+            opacity: 0.7;
+            transition: color 0.4s ease, opacity 0.2s ease;
         }
         .lightbox.light-mode .lightbox-close { color: #000000; }
         .lightbox-close:hover { opacity: 1; }
@@ -226,9 +227,8 @@
             .canvas-visuals { flex: 1 1 auto; max-width: 100%; width: 100%; }
             .image-skeleton { padding: 1rem; margin-bottom: 1rem; }
             
-            /* Responsive Lightbox for Mobile */
-            .lightbox-img { max-width: 90vw; max-height: 80vh; }
-            .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2.5rem; }
+            .lightbox-img { max-width: 95%; max-height: 85%; }
+            .lightbox-close { top: 1.25rem; right: 1.5rem; font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -304,7 +304,6 @@
             </div>
 
             <div class="canvas-title-section">
-                <!-- Date naturally locked to the right side -->
                 <div class="fragment-meta" style="margin-bottom: 1rem;">
                     <span class="meta-category" id="canvas-category">...</span>
                     <span id="canvas-date">...</span>
@@ -325,7 +324,7 @@
 
     </main>
 
-    <!-- DYNAMIC LIGHTBOX OVERLAY -->
+    <!-- DYNAMIC LIGHTBOX OVERLAY (Glitch-Free) -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
         <img id="lightbox-img" class="lightbox-img" src="" alt="Fullscreen Fragment Image" draggable="false" oncontextmenu="return false;">
@@ -515,7 +514,7 @@
         }
 
         /* ====================================================
-           DYNAMIC LIGHTBOX ENGINE (AUTO LIGHT/DARK DETECTION)
+           DYNAMIC LIGHTBOX ENGINE (Lightning Fast Auto-Detection)
            ==================================================== */
         function openLightbox(imgSrc) {
             const lightbox = document.getElementById('lightbox');
@@ -525,24 +524,24 @@
             lightbox.classList.remove('light-mode');
             lightboxImg.src = imgSrc;
             
-            // 2. Scan the pixels to detect Light or Dark Mode
+            // 2. Ultra-Fast Pixel Scanner
             const img = new Image();
-            img.crossOrigin = "Anonymous"; // Crucial for pixel reading
+            img.crossOrigin = "Anonymous"; 
             img.src = imgSrc;
             
             img.onload = function() {
                 try {
                     const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
+                    // FIX: Draw a tiny 50x50 version so scanning takes 1 millisecond instead of 2 seconds
+                    canvas.width = 50;
+                    canvas.height = 50;
                     const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
+                    ctx.drawImage(img, 0, 0, 50, 50);
                     
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const imageData = ctx.getImageData(0, 0, 50, 50);
                     const data = imageData.data;
                     let colorSum = 0;
                     
-                    // Sample pixels to find average perceived brightness
                     for(let x = 0, len = data.length; x < len; x += 4) {
                         const r = data[x];
                         const g = data[x+1];
@@ -551,14 +550,13 @@
                         colorSum += avg;
                     }
                     
-                    const brightness = Math.floor(colorSum / (img.width * img.height));
+                    const brightness = Math.floor(colorSum / 2500);
                     
-                    // 3. Shift to Light Mode if the image is bright
                     if (brightness > 130) {
                         lightbox.classList.add('light-mode');
                     }
                 } catch(e) {
-                    console.warn("Cross-Origin security blocked pixel scan. Defaulting to Dark Mode safely.");
+                    console.warn("Security blocked pixel scan. Defaulting to Dark Mode.");
                 }
             };
 
