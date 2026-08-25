@@ -169,23 +169,37 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     position: absolute;
     left: 0; 
     z-index: 4; 
-    font-family: 'Inter', sans-serif;
-    font-size: 1.15rem; 
-    font-weight: 800; 
-    letter-spacing: -0.02em;
-    color: var(--kodansha-black); 
     opacity: 0; 
     pointer-events: none; 
     transform: translateX(0); 
-    
-    /* The Ghost Hitbox for easy interaction */
-    padding: 2rem 2rem 2rem 3rem; 
-    margin: -2rem -2rem -2rem -3rem; 
     white-space: nowrap; 
+
+    /* The "Minecraft / Library Genre" Tag Aesthetics */
+    background-color: #f4f4f4;
+    color: #777777;
+    padding: 0.35rem 0.8rem;
+    border-radius: 2rem; /* Perfectly rounded pill shape */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     
     /* ULTRA-FAST EXIT: 0.1s hard snap the millisecond you leave the grid */
     transition: opacity 0.1s ease-out, transform 0.15s ease-out; 
     transition-delay: 0s; 
+}
+
+/* The Ghost Hitbox (Moved to an invisible pseudo-element so it doesn't break the pill shape!) */
+.about-logo-text::after {
+    content: '';
+    position: absolute;
+    top: -2rem;
+    bottom: -2rem;
+    left: -3rem;
+    right: -2rem;
 }
 
 /* Card Hover for Text: Zips back beautifully if you drop off the logo but stay in the grid */
@@ -199,7 +213,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .about-logo-wrapper:hover .about-logo-text {
     opacity: 1; 
     pointer-events: auto; 
-    transform: translateX(3.7rem); 
+    transform: translateX(4.2rem); /* Perfectly pushed out past the 3.5rem avatar */
     transition-delay: 2.5s; 
 }
 
