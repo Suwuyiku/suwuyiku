@@ -174,16 +174,15 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     transform: translateX(0); 
     white-space: nowrap; 
 
-    /* The "Minecraft / Library Genre" Tag Aesthetics */
+    /* The Refined Tag Aesthetics */
     background-color: #f4f4f4;
     color: #777777;
     padding: 0.35rem 0.8rem;
-    border-radius: 2rem; /* Perfectly rounded pill shape */
+    border-radius: 6px; /* Sharper, cleaner box instead of a massive pill */
     font-family: 'Inter', sans-serif;
-    font-size: 0.75rem; 
+    font-size: 0.85rem; /* Bumped up slightly since it's no longer all-caps */
     font-weight: 700; 
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em; /* Softened spacing for normal text */
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     
@@ -192,7 +191,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     transition-delay: 0s; 
 }
 
-/* The Ghost Hitbox (Moved to an invisible pseudo-element so it doesn't break the pill shape!) */
+/* The Ghost Hitbox */
 .about-logo-text::after {
     content: '';
     position: absolute;
