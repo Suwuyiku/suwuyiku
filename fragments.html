@@ -317,7 +317,7 @@
             }
         }
 
-        async function openCanvas(pageId, title, category, date) {
+            async function openCanvas(pageId, title, category, date) {
             currentPostId = pageId; 
             
             indexView.style.display = 'none';
@@ -334,27 +334,46 @@
             try {
                 const response = await fetch(`${API_URL}/content?id=${pageId}`);
                 const data = await response.json();
-                canvasBody.innerHTML = ''; 
+                
+                let imageContent = '';
+                let textContent = '';
+                let hasImage = false;
 
+                // Sort the Notion blocks into Images vs Text
                 data.results.forEach(block => {
                     if (block.type === 'paragraph') {
                         const text = block.paragraph.rich_text.map(t => t.plain_text).join("");
-                        if(text) canvasBody.innerHTML += `<p>${text}</p>`;
-                        else canvasBody.innerHTML += `<br>`;
+                        if(text) textContent += `<p>${text}</p>`;
+                        else textContent += `<br>`;
                     } 
                     else if (block.type === 'heading_2' || block.type === 'heading_3') {
                         const text = block[block.type].rich_text.map(t => t.plain_text).join("");
-                        canvasBody.innerHTML += `<h3>${text}</h3>`;
+                        textContent += `<h3>${text}</h3>`;
                     }
                     else if (block.type === 'image') {
+                        hasImage = true;
                         const imageUrl = block.image.type === 'external' ? block.image.external.url : block.image.file.url;
-                        canvasBody.innerHTML += `
+                        imageContent += `
                             <div class="image-skeleton">
                                 <img src="${imageUrl}" class="canvas-image" loading="lazy" decoding="async" onload="this.style.opacity=1" draggable="false" oncontextmenu="return false;">
                             </div>
                         `;
                     }
                 });
+
+                // Inject the Split Layout if an image exists
+                if (hasImage) {
+                    canvasBody.innerHTML = `
+                        <div class="canvas-split-layout">
+                            <div class="canvas-visuals">${imageContent}</div>
+                            <div class="canvas-text">${textContent}</div>
+                        </div>
+                    `;
+                } else {
+                    // Fallback to normal text-only layout if there are no images
+                    canvasBody.innerHTML = textContent;
+                }
+
             } catch (error) {
                 canvasBody.innerHTML = '<p style="color: red;">Failed to load content.</p>';
             }
