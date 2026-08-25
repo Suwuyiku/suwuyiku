@@ -3,21 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO & Google Site Verification -->
     <meta name="google-site-verification" content="PBP_jXkzOYsuMUxEpSyD3RMMLK9uf7czmxw5eCV5MUw" />
     <meta name="description" content="Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.">
+    
+    <!-- 1. CANONICAL URL (Search Preferences) -->
+    <link rel="canonical" href="https://suwuyiku.pages.dev/" />
 
     <title>Suwuyiku • Visual Diary</title>
     
-    <link rel="icon" type="image/webp" href="assets/logo.png">
-    <meta property="og:title" content="livíńg ìn délusión. ݁₊ ⊹ . ݁˖ . ݁">
-    <meta property="og:description" content="Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku. Founder of echoes under the april aozora. Built to last a thousand years.">
-    <meta property="og:image" content="https://suwuyiku.pages.dev/assets/logo.webp">
-    <meta property="og:url" content="https://suwuyiku.pages.dev">
-    <meta name="theme-color" content="#4a90e2">
+    <!-- FIX 2: Explicit Icons (Helps Google drop the Cloudflare icon) -->
+    <link rel="icon" type="image/png" href="https://suwuyiku.pages.dev/assets/logo.png">
+    <link rel="apple-touch-icon" href="https://suwuyiku.pages.dev/assets/logo.png">
+
+    <!-- FIX 3: OPEN GRAPH (The Discord / WhatsApp Thumbnail Generator) -->
+    <meta property="og:site_name" content="Suwuyiku">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Suwuyiku • Visual Diary">
+    <meta property="og:description" content="Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku.">
+    <!-- Absolute URL required for social media previews -->
+    <meta property="og:image" content="https://suwuyiku.pages.dev/assets/logo.png"> 
+    <meta property="og:url" content="https://suwuyiku.pages.dev/">
+    <meta name="theme-color" content="#000000">
+
+    <!-- FIX 4: TWITTER CARDS (Ensures massive, cinematic image previews on X and Discord) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Suwuyiku • Visual Diary">
+    <meta name="twitter:description" content="Building timeless structures without restrictions. A visual diary, manga collection, and scattered thoughts by Suwuyiku.">
+    <meta name="twitter:image" content="https://suwuyiku.pages.dev/assets/logo.png">
+
+    <!-- FIX 5: JSON-LD STRUCTURED DATA (Forces Google to use your name, not Cloudflare's) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Suwuyiku",
+      "alternateName": "Suwuyiku Visual Diary",
+      "url": "https://suwuyiku.pages.dev/"
+    }
+    </script>
 
     <!-- Strict External Stylesheet Link -->
     <link rel="stylesheet" href="style.css">
     
+    <!-- Ecosystem Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Fredoka:wght@600&family=Sniglet&family=Teko:wght@600&display=swap" rel="stylesheet">
 </head>
