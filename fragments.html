@@ -117,10 +117,9 @@
         .canvas-visuals { flex: 0 0 45%; max-width: 480px; }
         .canvas-text { flex: 1; }
 
-        /* FIX: Pure Text-Only Layout */
         .canvas-text-only {
             width: 100%;
-            max-width: 800px; /* Keeps text readable and elegant */
+            max-width: 800px;
             margin: 0;
         }
 
@@ -140,14 +139,14 @@
         .canvas-image { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 0.5s ease-in; margin: 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
 
         /* ====================================================
-           DYNAMIC LIGHTBOX ENGINE (ZOOM GLITCH FIXED)
+           DYNAMIC LIGHTBOX ENGINE
            ==================================================== */
         .lightbox {
             position: fixed !important; 
             top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
             width: 100vw !important; height: 100vh !important;
-            background-color: rgba(244, 244, 244, 0.85); /* FIX: DEFAULT LIGHT MODE */
-            z-index: 999999 !important; /* FIX: Above Navigation Bar */
+            background-color: rgba(244, 244, 244, 0.85); 
+            z-index: 999999 !important;
             display: none;
             justify-content: center;
             align-items: center;
@@ -156,7 +155,6 @@
             margin: 0; padding: 0;
         }
         
-        /* Dynamic Dark Mode Trigger */
         .lightbox.dark-mode { background-color: rgba(0, 0, 0, 0.85); }
         .lightbox.active { display: flex; opacity: 1; }
         
@@ -165,7 +163,7 @@
             max-height: 85%;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* Light mode shadow */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
             transform: scale(0.96);
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
         }
@@ -173,12 +171,12 @@
         .lightbox.active .lightbox-img { transform: scale(1); }
 
         .lightbox-close {
-            position: fixed !important; /* Locks to window, ignoring zoom */
+            position: fixed !important; 
             top: 25px !important;
             right: 35px !important;
             background: none;
             border: none;
-            color: #000000; /* FIX: Default Black X for White Background */
+            color: #000000; 
             font-size: 3.5rem;
             font-weight: 300;
             cursor: pointer;
@@ -188,10 +186,9 @@
             opacity: 0.6;
             transition: color 0.4s ease, opacity 0.2s ease;
         }
-        .lightbox.dark-mode .lightbox-close { color: #ffffff; } /* White X for dark mode */
+        .lightbox.dark-mode .lightbox-close { color: #ffffff; } 
         .lightbox-close:hover { opacity: 1; }
         
-        /* FIX: Prevents scrolling & glitching behind the lightbox */
         html.lightbox-open, body.lightbox-open { 
             overflow: hidden !important; 
             width: 100%; 
@@ -217,15 +214,24 @@
         .particle { position: fixed; pointer-events: none; width: 5px; height: 5px; background-color: var(--kodansha-black); border-radius: 50%; z-index: 9999; animation: shoot 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
         @keyframes shoot { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
 
-        /* RESPONSIVE DESIGN */
+        /* ====================================================
+           RESPONSIVE MOBILE CENTERING FIX
+           ==================================================== */
         @media (max-width: 48rem) {
             .fragments-header { margin-bottom: 2rem; padding-bottom: 1.25rem; }
             .fragments-header h1 { font-size: 2rem; }
-            .canvas-title { font-size: 1.8rem; }
             .canvas-body { font-size: 1.05rem; }
-            .fragment-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
+            
+            /* CENTERING THE INDEX LIST */
+            .fragment-item { flex-direction: column; align-items: center; text-align: center; gap: 1rem; padding: 2.5rem 0; }
             .fragment-item:hover { transform: none; padding-left: 0; }
-            .fragment-title { font-size: 1.3rem; }
+            .fragment-meta { justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+            .fragment-title { font-size: 1.5rem; }
+            
+            /* CENTERING THE CANVAS VIEW TITLE SECTION */
+            .canvas-title-section { text-align: center; }
+            .canvas-title-section .fragment-meta { justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+            .canvas-title { font-size: 1.8rem; }
             
             .canvas-split-layout { flex-direction: column; gap: 2rem; }
             .canvas-visuals { flex: 1 1 auto; max-width: 100%; width: 100%; }
@@ -328,7 +334,7 @@
 
     </main>
 
-    <!-- DYNAMIC LIGHTBOX OVERLAY (Glitch-Free) -->
+    <!-- DYNAMIC LIGHTBOX OVERLAY -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
         <img id="lightbox-img" class="lightbox-img" src="" alt="Fullscreen Fragment Image" draggable="false" oncontextmenu="return false;">
@@ -402,6 +408,48 @@
         let isProcessing = false;
         let currentPostId = null; 
 
+        // ====================================================
+        // NATIVE BROWSER HISTORY ENGINE (Prevents getting kicked out of site)
+        // ====================================================
+        window.addEventListener('popstate', (e) => {
+            const state = e.state ? e.state.layer : null;
+            
+            // If user hits "Back" while Lightbox is open
+            if (state === 'canvas') {
+                forceCloseLightbox();
+            } 
+            // If user hits "Back" while Canvas is open
+            else if (!state) {
+                forceCloseLightbox();
+                forceCloseCanvas();
+            }
+        });
+
+        function forceCloseCanvas() {
+            document.querySelector('.contact-page-wrapper').classList.remove('canvas-active');
+            canvasView.style.display = 'none';
+            indexView.style.display = 'block';
+            currentPostId = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Clean up the URL hash safely
+            if(window.location.hash === '#read') {
+                history.replaceState(null, '', window.location.pathname);
+            }
+        }
+
+        function forceCloseLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.documentElement.classList.remove('lightbox-open');
+            document.body.classList.remove('lightbox-open');
+            setTimeout(() => {
+                if (!lightbox.classList.contains('active')) {
+                    document.getElementById('lightbox-img').src = '';
+                }
+            }, 300);
+        }
+
         async function fetchIndex() {
             try {
                 const response = await fetch(`${API_URL}/posts?nocache=` + new Date().getTime());
@@ -450,6 +498,9 @@
 
         async function openCanvas(pageId, title, category, date) {
             currentPostId = pageId; 
+            
+            // Push browser history state for Back Button support
+            history.pushState({ layer: 'canvas' }, '', '#read');
             
             document.querySelector('.contact-page-wrapper').classList.add('canvas-active');
 
@@ -501,7 +552,6 @@
                         </div>
                     `;
                 } else {
-                    // FIX: Beautiful text-only fallback format
                     canvasBody.innerHTML = `
                         <div class="canvas-text-only">
                             ${textContent}
@@ -514,29 +564,28 @@
             }
         }
 
+        // Custom UI button respects browser history
         function closeCanvas() {
-            document.querySelector('.contact-page-wrapper').classList.remove('canvas-active');
-            canvasView.style.display = 'none';
-            indexView.style.display = 'block';
-            currentPostId = null;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.location.hash === '#read') {
+                history.back(); // Triggers popstate safely
+            } else {
+                forceCloseCanvas();
+            }
         }
 
-        /* ====================================================
-           DYNAMIC LIGHTBOX ENGINE (Lightning Fast Auto-Detection)
-           ==================================================== */
         function openLightbox(imgSrc) {
+            // Push state for lightbox Back Button handling
+            history.pushState({ layer: 'lightbox' }, '', '#zoom');
+            
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             
-            // 1. Instantly open in Light Mode (White)
             lightbox.classList.remove('dark-mode');
             lightboxImg.src = imgSrc;
             lightbox.classList.add('active');
             document.documentElement.classList.add('lightbox-open');
             document.body.classList.add('lightbox-open');
             
-            // 2. Ultra-Fast Background Pixel Scanner
             const img = new Image();
             img.crossOrigin = "Anonymous"; 
             img.src = imgSrc;
@@ -552,14 +601,10 @@
                     const data = ctx.getImageData(0, 0, 50, 50).data;
                     let colorSum = 0;
                     
-                    // Simple perceived brightness calculation
                     for(let i = 0; i < data.length; i += 4) {
                         colorSum += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
                     }
-                    
                     const brightness = Math.floor(colorSum / 2500);
-                    
-                    // If image is dark, smoothly transition background to Dark Mode
                     if (brightness < 130) {
                         lightbox.classList.add('dark-mode');
                     }
@@ -571,16 +616,11 @@
 
         function closeLightbox(e) {
             if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
-                const lightbox = document.getElementById('lightbox');
-                lightbox.classList.remove('active');
-                document.documentElement.classList.remove('lightbox-open');
-                document.body.classList.remove('lightbox-open');
-                
-                setTimeout(() => {
-                    if (!lightbox.classList.contains('active')) {
-                        document.getElementById('lightbox-img').src = '';
-                    }
-                }, 300);
+                if (window.location.hash === '#zoom') {
+                    history.back(); // Triggers popstate safely
+                } else {
+                    forceCloseLightbox();
+                }
             }
         }
 
