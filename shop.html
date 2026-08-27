@@ -18,6 +18,19 @@
     <meta name="theme-color" content="#4a90e2">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Store Specific UI Styles -->
+    <style>
+        .shop-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
+        .shop-filters { display: flex; gap: 1.5rem; overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem; -webkit-overflow-scrolling: touch; }
+        .filter-btn { background: none; border: none; padding: 0; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: #777777; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.05em; }
+        .filter-btn:hover { color: #000000; }
+        .filter-btn.active { color: #000000; font-weight: 800; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+        @media (max-width: 700px) {
+            .shop-controls { flex-direction: column-reverse; align-items: flex-start; }
+            .shop-controls .search-container { max-width: 100% !important; }
+        }
+    </style>
 </head>
 <body>
 
@@ -77,22 +90,28 @@
         </div>
 
         <!-- ==============================================
-             STORE OVERVIEW (Search + Bookshelf Grid)
+             STORE OVERVIEW (Controls + Bookshelf Grid)
              ============================================== -->
         <div id="store-overview">
-            
-            <!-- SECTION 1: The Dark Green Divider Line -->
-            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 2rem 0 3rem 0;">
 
-            <!-- SECTION 2: The Search Bar -->
-            <div class="search-container" style="max-width: 600px; margin-bottom: 3rem;">
-                <input type="text" id="shopSearch" class="search-input" placeholder="Search products, creators, or categories...">
-                <svg class="search-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
+            <!-- SECTION 1: Shop Controls (Filters Left, Search Right) -->
+            <div class="shop-controls">
+                
+                <div class="shop-filters" id="shop-filters">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <!-- Categories will auto-populate here from Notion -->
+                </div>
+
+                <div class="search-container" style="max-width: 280px; margin: 0; width: 100%;">
+                    <input type="text" id="shopSearch" class="search-input" placeholder="Search products...">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </div>
+
             </div>
 
-            <!-- SECTION 3: The Product Grid (Bookshelf) -->
+            <!-- SECTION 2: The Product Grid (Bookshelf) -->
             <div id="shop-grid" class="shop-grid">
                 <!-- SKELETON LOADERS -->
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
@@ -102,7 +121,7 @@
             </div>
 
             <div id="noResultsMsg" style="display: none; text-align: left; width: 100%; padding: 2rem 0; color: #777777; font-weight: 500;">
-                No products match your search criteria.
+                No products match your criteria.
             </div>
 
         </div> <!-- END STORE OVERVIEW -->
@@ -211,6 +230,7 @@
     <!-- Interaction Scripts -->
     <script>
         let shopInventory = [];
+        let currentCategoryFilter = 'all';
 
         // History API for Deep Linking
         window.addEventListener('popstate', (e) => {
@@ -223,7 +243,7 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-            // --- 1. Mobile Sidebar Engine ---
+            // --- Mobile Sidebar Engine ---
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -240,34 +260,13 @@
                 overlay.addEventListener('click', toggleMenu);
             }
 
-            // --- 2. Shop Search Engine ---
+            // --- Search Input Listener ---
             const searchInput = document.getElementById('shopSearch');
-            const noResultsMsg = document.getElementById('noResultsMsg');
-
             if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase().trim();
-                    const cards = document.querySelectorAll('.shop-card'); 
-                    let visible = 0;
-
-                    if (query !== '') document.body.classList.add('is-searching');
-                    else document.body.classList.remove('is-searching');
-
-                    cards.forEach(card => {
-                        const searchData = card.getAttribute('data-search');
-                        if (searchData.includes(query)) {
-                            card.style.display = 'flex';
-                            visible++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    noResultsMsg.style.display = (visible === 0 && query !== '') ? 'block' : 'none';
-                });
+                searchInput.addEventListener('input', applyFilters);
             }
 
-            // --- 3. Boot up the Cloudflare API ---
+            // Boot up the Cloudflare API
             loadShop();
         });
 
@@ -288,12 +287,17 @@
                     return;
                 }
 
+                // Dynamically build the category filter buttons
+                populateCategoryFilters();
+
+                // Render the cards
                 shopInventory.forEach(product => {
                     const searchData = `${product.productName} ${product.category} ${product.creatorName}`.toLowerCase();
                     
                     const card = document.createElement('div');
                     card.className = 'shop-card';
                     card.setAttribute('data-search', searchData);
+                    card.setAttribute('data-category', (product.category || 'other').toLowerCase());
                     card.onclick = () => openProductView(product.itemId);
 
                     let displayPrice = `₹${product.finalPrice}`;
@@ -318,6 +322,59 @@
                 console.error("Shop Sync Failed:", error);
                 grid.innerHTML = `<p style="color: #FF0000; grid-column: 1 / -1;"><strong>API Connection Error:</strong><br>${error.message}</p>`;
             }
+        }
+
+        // --- FILTER ENGINE ---
+        function populateCategoryFilters() {
+            const filterContainer = document.getElementById('shop-filters');
+            
+            // Extract unique categories from Notion data
+            const uniqueCategories = [...new Set(shopInventory.map(item => item.category))].filter(c => c && c !== "Uncategorized");
+            
+            // Reset to just the 'All' button
+            filterContainer.innerHTML = `<button class="filter-btn active" data-category="all">All</button>`;
+            
+            // Generate buttons for every category found
+            uniqueCategories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-category', cat.toLowerCase());
+                btn.textContent = cat;
+                filterContainer.appendChild(btn);
+            });
+
+            // Attach click listeners to all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentCategoryFilter = e.target.getAttribute('data-category');
+                    applyFilters();
+                });
+            });
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('shopSearch').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.shop-card'); 
+            let visible = 0;
+
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search');
+                const cardCat = card.getAttribute('data-category');
+                
+                const matchesSearch = searchData.includes(query);
+                const matchesCategory = (currentCategoryFilter === 'all' || cardCat === currentCategoryFilter);
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'flex';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noResultsMsg').style.display = (visible === 0) ? 'block' : 'none';
         }
         
         function openProductView(itemId) {
