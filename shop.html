@@ -18,19 +18,6 @@
     <meta name="theme-color" content="#4a90e2">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Store Specific UI Styles -->
-    <style>
-        .shop-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
-        .shop-filters { display: flex; gap: 1.5rem; overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem; -webkit-overflow-scrolling: touch; }
-        .filter-btn { background: none; border: none; padding: 0; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: #777777; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.05em; }
-        .filter-btn:hover { color: #000000; }
-        .filter-btn.active { color: #000000; font-weight: 800; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
-        @media (max-width: 700px) {
-            .shop-controls { flex-direction: column-reverse; align-items: flex-start; }
-            .shop-controls .search-container { max-width: 100% !important; }
-        }
-    </style>
 </head>
 <body>
 
@@ -90,16 +77,19 @@
         </div>
 
         <!-- ==============================================
-             STORE OVERVIEW (Controls + Bookshelf Grid)
+             STORE OVERVIEW (Filters + Bookshelf Grid)
              ============================================== -->
         <div id="store-overview">
 
-            <!-- SECTION 1: Shop Controls (Filters Left, Search Right) -->
+            <!-- SECTION 1: The Dark Green Divider Line -->
+            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 2rem 0 0 0;">
+
+            <!-- SECTION 2: Shop Controls (Filters Left, Search Right) -->
             <div class="shop-controls">
                 
                 <div class="shop-filters" id="shop-filters">
                     <button class="filter-btn active" data-category="all">All</button>
-                    <!-- Categories will auto-populate here from Notion -->
+                    <!-- Categories auto-populate here from Notion -->
                 </div>
 
                 <div class="search-container" style="max-width: 280px; margin: 0; width: 100%;">
@@ -111,7 +101,7 @@
 
             </div>
 
-            <!-- SECTION 2: The Product Grid (Bookshelf) -->
+            <!-- SECTION 3: The Product Grid (Bookshelf) -->
             <div id="shop-grid" class="shop-grid">
                 <!-- SKELETON LOADERS -->
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
@@ -121,7 +111,7 @@
             </div>
 
             <div id="noResultsMsg" style="display: none; text-align: left; width: 100%; padding: 2rem 0; color: #777777; font-weight: 500;">
-                No products match your criteria.
+                No products match your search criteria.
             </div>
 
         </div> <!-- END STORE OVERVIEW -->
