@@ -334,6 +334,18 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
    06. PAGE: SHOP (INDEPENDENT E-COMMERCE ENGINE)
    ========================================= */
 
+/* Shop Controls & Filters */
+.shop-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
+.shop-filters { display: flex; gap: 1.5rem; overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem; -webkit-overflow-scrolling: touch; }
+.filter-btn { background: none; border: none; padding: 0; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: #777777; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.05em; }
+.filter-btn:hover { color: #000000; }
+.filter-btn.active { color: #000000; font-weight: 800; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+
+@media (max-width: 700px) {
+    .shop-controls { flex-direction: column-reverse; align-items: flex-start; }
+    .shop-controls .search-container { max-width: 100% !important; }
+}
+
 /* The Main Brutalist Grid */
 .shop-grid { 
     display: grid; 
@@ -360,7 +372,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     box-sizing: border-box;
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1.45; /* Can be safely changed without breaking the library! */
+    aspect-ratio: 1 / 1.45; 
     overflow: hidden;
     display: flex;
     align-items: center;
