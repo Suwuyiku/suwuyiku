@@ -34,7 +34,7 @@
                 <li><a href="/fragments">Fragments</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="https://suwuyiku.pages.dev/shop" class="btn-action" style="background: var(--kodansha-black); color: #fff;">SHOP</a>
+                <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
                 <a href="/contact" class="btn-action">CONTACT</a>
             </div>
             <button class="hamburger-btn" aria-label="Open Menu">
@@ -77,55 +77,14 @@
         </div>
 
         <!-- ==============================================
-             STORE OVERVIEW (Bento + Search + Bookshelf Grid)
+             STORE OVERVIEW (Search + Bookshelf Grid)
              ============================================== -->
         <div id="store-overview">
             
-            <!-- SECTION 1: The Connections Bento Layout -->
-            <div class="contact-layout">
-                <div class="contact-routes-column">
-                    <div class="bento-card route-card">
-                        <div class="route-divider">
-                            <div class="route-header">
-                                <span class="route-title">Physical Archive</span>
-                                <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
-                            </div>
-                            <p class="route-desc">High-quality prints, physical manga volumes, and limited edition art books.</p>
-                        </div>
-                        <div>
-                            <div class="route-header">
-                                <span class="route-title">Digital Fragments</span>
-                                <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
-                            </div>
-                            <p class="route-desc">High-resolution digital downloads, Notion templates, and architectural assets.</p>
-                        </div>
-                    </div>
+            <!-- SECTION 1: The Dark Green Divider Line -->
+            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 2rem 0 3rem 0;">
 
-                    <div class="bento-card route-card">
-                        <div class="route-header">
-                            <span class="route-title">Apparel & Goods</span>
-                            <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
-                        </div>
-                        <p class="route-desc">Curated physical pieces designed to last a thousand years.</p>
-                    </div>
-                </div>
-
-                <div class="bento-card anonymous-card">
-                    <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.25rem; color: var(--kodansha-black);">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                    </svg>
-                    <h2>I think you'd like this.</h2>
-                    <p>The storefront is currently being curated behind closed doors. Everything is being designed from the ground up.</p>
-                    <a href="/" class="btn-soft-blue">Return to Ecosystem ↗</a>
-                </div>
-            </div>
-
-            <!-- SECTION 2: The Dark Green Divider Line -->
-            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 4rem 0 3rem 0;">
-
-            <!-- SECTION 3: The Search Bar -->
+            <!-- SECTION 2: The Search Bar -->
             <div class="search-container" style="max-width: 600px; margin-bottom: 3rem;">
                 <input type="text" id="shopSearch" class="search-input" placeholder="Search products, creators, or categories...">
                 <svg class="search-icon" viewBox="0 0 24 24">
@@ -133,7 +92,7 @@
                 </svg>
             </div>
 
-            <!-- SECTION 4: The Product Grid (Bookshelf) -->
+            <!-- SECTION 3: The Product Grid (Bookshelf) -->
             <div id="shop-grid" class="shop-grid">
                 <!-- SKELETON LOADERS -->
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
@@ -372,7 +331,7 @@
 
             document.querySelector('.contact-page-wrapper').classList.add('dossier-active');
 
-            // Hide the Bento Layout and Grid, show the Dossier
+            // Hide the Store Overview, show the Dossier
             document.getElementById('store-overview').style.display = 'none';
             document.getElementById('detail-view').style.display = 'flex';
             window.scrollTo(0, 0); 
@@ -430,7 +389,7 @@
         function forceCloseDetailView() {
             document.querySelector('.contact-page-wrapper').classList.remove('dossier-active');
             
-            // Hide the Dossier, bring back the Bento Layout and Grid
+            // Hide the Dossier, bring back the Store Overview
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('store-overview').style.display = 'block';
             window.scrollTo(0, 0);
