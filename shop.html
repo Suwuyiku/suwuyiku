@@ -33,16 +33,12 @@
                 <li><a href="/library">Library</a></li>
                 <li><a href="/fragments">Fragments</a></li>
             </ul>
-            
             <div class="nav-actions">
                 <a href="https://suwuyiku.pages.dev/shop" class="btn-action" style="background: var(--kodansha-black); color: #fff;">SHOP</a>
                 <a href="/contact" class="btn-action">CONTACT</a>
             </div>
-
             <button class="hamburger-btn" aria-label="Open Menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </button>
         </div>
     </nav>
@@ -53,7 +49,6 @@
             <a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a>
             <button class="close-sidebar-btn" aria-label="Close Menu">&times;</button>
         </div>
-        
         <div class="sidebar-menu-container">
             <ul class="sidebar-links">
                 <li><a href="/">Home</a></li>
@@ -62,20 +57,18 @@
                 <li><a href="/library">Library</a></li>
                 <li><a href="/fragments">Fragments</a></li>
             </ul>
-            
             <div class="sidebar-actions">
                 <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
                 <a href="/contact" class="sidebar-btn-action">CONTACT</a>
             </div>
         </div>
-
         <div class="sidebar-footer">
             <span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span>
         </div>
     </div>
     <div class="sidebar-overlay"></div>
 
-    <!-- 3. MAIN SHOP CANVAS (Connections Layout) -->
+    <!-- 3. MAIN SHOP CANVAS -->
     <main class="contact-page-wrapper">
         
         <div class="legal-header contact-page-header">
@@ -83,56 +76,121 @@
             <p>Curated community works and physical archives.</p>
         </div>
 
-        <div class="contact-layout">
+        <!-- ==============================================
+             STORE OVERVIEW (Bento + Search + Bookshelf Grid)
+             ============================================== -->
+        <div id="store-overview">
             
-            <!-- SECTION 1: Product Categories (Left Column) -->
-            <div class="contact-routes-column">
-                
-                <div class="bento-card route-card">
-                    <div class="route-divider">
-                        <div class="route-header">
-                            <span class="route-title">Physical Archive</span>
-                            <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
+            <!-- SECTION 1: The Connections Bento Layout -->
+            <div class="contact-layout">
+                <div class="contact-routes-column">
+                    <div class="bento-card route-card">
+                        <div class="route-divider">
+                            <div class="route-header">
+                                <span class="route-title">Physical Archive</span>
+                                <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
+                            </div>
+                            <p class="route-desc">High-quality prints, physical manga volumes, and limited edition art books.</p>
                         </div>
-                        <p class="route-desc">High-quality prints, physical manga volumes, and limited edition art books.</p>
+                        <div>
+                            <div class="route-header">
+                                <span class="route-title">Digital Fragments</span>
+                                <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
+                            </div>
+                            <p class="route-desc">High-resolution digital downloads, Notion templates, and architectural assets.</p>
+                        </div>
                     </div>
-                    <div>
+
+                    <div class="bento-card route-card">
                         <div class="route-header">
-                            <span class="route-title">Digital Fragments</span>
+                            <span class="route-title">Apparel & Goods</span>
                             <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
                         </div>
-                        <p class="route-desc">High-resolution digital downloads, Notion templates, and architectural assets.</p>
+                        <p class="route-desc">Curated physical pieces designed to last a thousand years.</p>
                     </div>
                 </div>
 
-                <div class="bento-card route-card">
-                    <div class="route-header">
-                        <span class="route-title">Apparel & Goods</span>
-                        <span class="btn-connect" style="border-color: transparent; background: transparent; cursor: default;">Coming Soon</span>
-                    </div>
-                    <p class="route-desc">Curated physical pieces designed to last a thousand years.</p>
+                <div class="bento-card anonymous-card">
+                    <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.25rem; color: var(--kodansha-black);">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <h2>I think you'd like this.</h2>
+                    <p>The storefront is currently being curated behind closed doors. Everything is being designed from the ground up.</p>
+                    <a href="/" class="btn-soft-blue">Return to Ecosystem ↗</a>
                 </div>
-
             </div>
 
-            <!-- SECTION 2: The Highlight Box (Right Column) -->
-            <div class="bento-card anonymous-card" id="shop-data-container">
-                
-                <!-- Sleek Minimalist Shopping Bag Icon -->
-                <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.25rem; color: var(--kodansha-black);">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+            <!-- SECTION 2: The Dark Green Divider Line -->
+            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 4rem 0 3rem 0;">
+
+            <!-- SECTION 3: The Search Bar -->
+            <div class="search-container" style="max-width: 600px; margin-bottom: 3rem;">
+                <input type="text" id="shopSearch" class="search-input" placeholder="Search products, creators, or categories...">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                 </svg>
-
-                <h2>I think you'd like this.</h2>
-                <p>The storefront is currently being curated behind closed doors. Everything is being designed from the ground up.</p>
-                <a href="/" class="btn-soft-blue">
-                    Return to Ecosystem ↗
-                </a>
             </div>
 
+            <!-- SECTION 4: The Product Grid (Bookshelf) -->
+            <div id="shop-grid" class="shop-grid">
+                <!-- SKELETON LOADERS -->
+                <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
+                <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
+                <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
+                <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
+            </div>
+
+            <div id="noResultsMsg" style="display: none; text-align: left; width: 100%; padding: 2rem 0; color: #777777; font-weight: 500;">
+                No products match your search criteria.
+            </div>
+
+        </div> <!-- END STORE OVERVIEW -->
+
+
+        <!-- ==============================================
+             DETAIL DOSSIER VIEW (Hidden until product click)
+             ============================================== -->
+        <div id="detail-view" class="shop-detail-view">
+                    
+            <div class="breadcrumbs">
+                <button class="btn-breadcrumb" onclick="closeDetailView()">← Back to Storefront</button>
+            </div>
+
+            <div class="shop-detail-top">
+                <div class="shop-detail-cover-wrapper">
+                    <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                </div>
+                <div class="shop-detail-info">
+                    <h2 id="det-title" class="shop-detail-title">Product Name</h2>
+                    <p id="det-author" class="shop-detail-author">By Creator</p>
+                    
+                    <div id="det-price-container" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                        <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
+                    </div>
+                            
+                    <div id="det-review" class="shop-detail-desc" style="margin-bottom: 2rem;">Authentic curated physical archive.</div>
+                            
+                    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
+                </div>
+            </div>
+
+            <div class="volume-info-section">
+                <h2 class="volume-info-heading">Item<br>Info</h2>
+                <div class="volume-info-board">
+                    <div class="info-grid">
+                        <div class="info-cell"><span class="info-label">Category</span><span id="det-category" class="info-value">-</span></div>
+                        <div class="info-cell"><span class="info-label">Stock Status</span><span id="det-stock" class="info-value">-</span></div>
+                        <div class="info-cell">
+                            <span class="info-label">Creator</span>
+                            <a id="det-creator-link" href="#" target="_blank" class="info-value" style="color: inherit; transition: opacity 0.2s;">-</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
 
     <!-- 4. UNIFIED FOOTER -->
@@ -190,29 +248,23 @@
             <div class="copyright">&copy; 2026 Suwuyiku. All Rights Reserved.</div>
         </div>
     </footer>
-
-    <!-- Email Fallback Modal -->
-    <div id="email-modal-overlay" class="modal-overlay">
-        <div class="email-modal">
-            <button class="close-modal-btn" aria-label="Close Modal">&times;</button>
-            <h3 class="modal-title">Opening Mail...</h3>
-            <p class="modal-text">If your app doesn't open automatically, you can copy the address below.</p>
-            <div class="modal-copy-box">
-                <span id="modal-email-text">email@example.com</span>
-                <button id="modal-copy-btn" class="btn-copy-icon" aria-label="Copy Email">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
     
     <!-- Interaction Scripts -->
     <script>
+        let shopInventory = [];
+
+        // History API for Deep Linking
+        window.addEventListener('popstate', (e) => {
+            const state = e.state;
+            if (state && state.layer === 'product') {
+                renderProductDossier(state.productId);
+            } else {
+                forceCloseDetailView();
+            }
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
-            // --- Mobile Sidebar Engine ---
+            // --- 1. Mobile Sidebar Engine ---
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -229,65 +281,160 @@
                 overlay.addEventListener('click', toggleMenu);
             }
 
-            // --- Scroll-Locked Email Fallback Modal Engine ---
-            const connectBtns = document.querySelectorAll('.btn-connect');
-            const modalOverlay = document.getElementById('email-modal-overlay');
-            const closeModalBtn = document.querySelector('.close-modal-btn');
-            const emailText = document.getElementById('modal-email-text');
-            const copyBtn = document.getElementById('modal-copy-btn');
-            
-            let modalTimeout;
-            const defaultCopyIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-            const successCheckIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            // --- 2. Shop Search Engine ---
+            const searchInput = document.getElementById('shopSearch');
+            const noResultsMsg = document.getElementById('noResultsMsg');
 
-            if (connectBtns.length > 0 && modalOverlay) {
-                connectBtns.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const href = btn.getAttribute('href');
-                        if(href && href.startsWith('mailto:')) {
-                            clearTimeout(modalTimeout);
-                            
-                            const email = href.replace('mailto:', '');
-                            emailText.textContent = email;
-                            
-                            copyBtn.innerHTML = defaultCopyIcon;
-                            copyBtn.style.color = "var(--kodansha-black)";
-                            
-                            modalTimeout = setTimeout(() => {
-                                modalOverlay.classList.add('active');
-                                document.body.classList.add('modal-open');
-                            }, 2500);
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase().trim();
+                    const cards = document.querySelectorAll('.shop-card'); 
+                    let visible = 0;
+
+                    if (query !== '') document.body.classList.add('is-searching');
+                    else document.body.classList.remove('is-searching');
+
+                    cards.forEach(card => {
+                        const searchData = card.getAttribute('data-search');
+                        if (searchData.includes(query)) {
+                            card.style.display = 'flex';
+                            visible++;
+                        } else {
+                            card.style.display = 'none';
                         }
                     });
-                });
 
-                const closeModal = () => {
-                    modalOverlay.classList.remove('active');
-                    document.body.classList.remove('modal-open');
-                    clearTimeout(modalTimeout); 
-                };
-
-                closeModalBtn.addEventListener('click', closeModal);
-                modalOverlay.addEventListener('click', (e) => {
-                    if (e.target === modalOverlay) closeModal();
-                });
-
-                // Copy to Clipboard logic
-                copyBtn.addEventListener('click', () => {
-                    navigator.clipboard.writeText(emailText.textContent).then(() => {
-                        copyBtn.innerHTML = successCheckIcon;
-                        copyBtn.style.color = "#107C10";
-                        
-                        setTimeout(() => {
-                            copyBtn.innerHTML = defaultCopyIcon;
-                            copyBtn.style.color = "var(--kodansha-black)";
-                        }, 2000);
-                    }).catch(err => {
-                        console.error('Failed to copy text: ', err);
-                    });
+                    noResultsMsg.style.display = (visible === 0 && query !== '') ? 'block' : 'none';
                 });
             }
+
+            // --- 3. Boot up the Cloudflare API ---
+            loadShop();
         });
+
+        async function loadShop() {
+            const grid = document.getElementById('shop-grid');
+            
+            try {
+                const response = await fetch('https://shopapi.suwuyiku.workers.dev/inventory?nocache=' + new Date().getTime());
+                const data = await response.json();
+
+                if (!data.success) throw new Error(data.error);
+
+                shopInventory = data.products;
+                grid.innerHTML = ""; 
+
+                if (shopInventory.length === 0) {
+                    grid.innerHTML = `<p style="color: #777777; grid-column: 1 / -1;">The storefront is currently being curated.</p>`;
+                    return;
+                }
+
+                shopInventory.forEach(product => {
+                    const searchData = `${product.productName} ${product.category} ${product.creatorName}`.toLowerCase();
+                    
+                    const card = document.createElement('div');
+                    card.className = 'shop-card';
+                    card.setAttribute('data-search', searchData);
+                    card.onclick = () => openProductView(product.itemId);
+
+                    let displayPrice = `₹${product.finalPrice}`;
+                    if (product.discountPercent > 0) {
+                        displayPrice = `<span style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-right: 6px;">₹${product.basePrice}</span>₹${product.finalPrice}`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="shop-cover-wrapper">
+                            <img src="${product.image}" class="shop-image" alt="Product" draggable="false" oncontextmenu="return false;">
+                        </div>
+                        <div class="shop-card-text">
+                            <h3 class="shop-title">${product.productName}</h3>
+                            <p class="shop-category">${product.category}</p>
+                            <h3 class="shop-price">${displayPrice}</h3>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Shop Sync Failed:", error);
+                grid.innerHTML = `<p style="color: #FF0000; grid-column: 1 / -1;"><strong>API Connection Error:</strong><br>${error.message}</p>`;
+            }
+        }
+        
+        function openProductView(itemId) {
+            history.pushState({ layer: 'product', productId: itemId }, '', '#item-' + itemId);
+            renderProductDossier(itemId);
+        }
+
+        function renderProductDossier(itemId) {
+            const product = shopInventory.find(p => p.itemId === itemId);
+            if (!product) return forceCloseDetailView();
+
+            document.querySelector('.contact-page-wrapper').classList.add('dossier-active');
+
+            // Hide the Bento Layout and Grid, show the Dossier
+            document.getElementById('store-overview').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'flex';
+            window.scrollTo(0, 0); 
+            
+            document.getElementById('det-cover').src = product.image;
+            document.getElementById('det-title').textContent = product.productName; 
+            document.getElementById('det-author').textContent = product.creatorName ? `By ${product.creatorName}` : 'Suwuyiku Original';
+            
+            let dossierPrice = `₹${product.finalPrice}`;
+            if (product.discountPercent > 0) {
+                dossierPrice = `<span style="text-decoration: line-through; color: #999999; font-size: 0.65em; margin-right: 8px;">₹${product.basePrice}</span>₹${product.finalPrice} <span style="font-size: 0.5em; color: #d93025; vertical-align: middle; margin-left: 5px; font-weight: 800;">(${product.discountPercent}% OFF)</span>`;
+            }
+            document.getElementById('det-price').innerHTML = dossierPrice;
+            
+            document.getElementById('det-category').textContent = product.category || "-";
+            
+            const creatorLink = document.getElementById('det-creator-link');
+            if (product.creatorPortfolio && product.creatorPortfolio !== "") {
+                creatorLink.href = product.creatorPortfolio;
+                creatorLink.textContent = product.creatorName;
+                creatorLink.style.pointerEvents = "auto";
+                creatorLink.style.textDecoration = "underline";
+            } else {
+                creatorLink.removeAttribute('href');
+                creatorLink.textContent = product.creatorName || "-";
+                creatorLink.style.pointerEvents = "none";
+                creatorLink.style.textDecoration = "none";
+            }
+
+            const stockElem = document.getElementById('det-stock');
+            const buyBtn = document.getElementById('det-buy-btn');
+
+            if (product.stockCount > 0) {
+                stockElem.textContent = `${product.stockCount} in stock`;
+                stockElem.style.color = "#000000";
+                
+                buyBtn.textContent = "Purchase Now ↗";
+                buyBtn.disabled = false;
+                buyBtn.onclick = () => alert("Secure Checkout & Special Notes Modal Coming Soon!");
+            } else {
+                stockElem.textContent = "Out of Stock";
+                stockElem.style.color = "#d93025";
+                
+                buyBtn.textContent = "Sold Out";
+                buyBtn.disabled = true;
+                buyBtn.onclick = null;
+            }
+        }
+        
+        function closeDetailView() {
+            history.pushState(null, '', window.location.pathname);
+            forceCloseDetailView();
+        }
+
+        function forceCloseDetailView() {
+            document.querySelector('.contact-page-wrapper').classList.remove('dossier-active');
+            
+            // Hide the Dossier, bring back the Bento Layout and Grid
+            document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('store-overview').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
