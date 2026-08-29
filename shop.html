@@ -273,9 +273,13 @@
             }
 
             // 3. Boot up the APIs and Gallery Engine
-            loadShop();
-            initGalleryDragEngine(); 
-        });
+        loadShop();
+        initGalleryDragEngine(); 
+        
+        // Add the scroll listeners right here:
+        document.getElementById('shop-thumbnails').addEventListener('scroll', updateThumbScrollArrows);
+        window.addEventListener('resize', updateThumbScrollArrows);
+    });
 
         async function loadShop() {
             const grid = document.getElementById('shop-grid');
@@ -562,6 +566,9 @@
                     activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
             }
+
+            // --- NEW: Calculate arrow visibility after a tiny delay so images load ---
+            setTimeout(updateThumbScrollArrows, 50); 
         }
         
         function closeDetailView() {
@@ -575,6 +582,43 @@
             document.getElementById('store-overview').style.display = 'block';
             window.scrollTo(0, 0);
         }
+
+        // --- SMART THUMBNAIL ARROWS ---
+        function updateThumbScrollArrows() {
+            const container = document.getElementById('shop-thumbnails');
+            const prevThumbBtn = document.querySelector('.thumb-nav.prev');
+            const nextThumbBtn = document.querySelector('.thumb-nav.next');
+
+            if (!container || !prevThumbBtn || !nextThumbBtn) return;
+
+            // Hide both if there's no overflow at all
+            if (container.scrollWidth <= container.clientWidth) {
+                prevThumbBtn.style.opacity = '0';
+                prevThumbBtn.style.pointerEvents = 'none';
+                nextThumbBtn.style.opacity = '0';
+                nextThumbBtn.style.pointerEvents = 'none';
+                return;
+            }
+
+            // Check Left Arrow
+            if (container.scrollLeft <= 0) {
+                prevThumbBtn.style.opacity = '0';
+                prevThumbBtn.style.pointerEvents = 'none';
+            } else {
+                prevThumbBtn.style.opacity = '1';
+                prevThumbBtn.style.pointerEvents = 'auto';
+            }
+
+            // Check Right Arrow
+            if (Math.ceil(container.scrollLeft + container.clientWidth) >= container.scrollWidth) {
+                nextThumbBtn.style.opacity = '0';
+                nextThumbBtn.style.pointerEvents = 'none';
+            } else {
+                nextThumbBtn.style.opacity = '1';
+                nextThumbBtn.style.pointerEvents = 'auto';
+            }
+        }
+        
     </script>
 </body>
 </html>
