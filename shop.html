@@ -81,9 +81,6 @@
              ============================================== -->
         <div id="store-overview">
 
-            <!-- SECTION 1: The Dark Green Divider Line -->
-            <hr style="border: 0; height: 2px; background-color: #0B3B24; margin: 2rem 0 0 0;">
-
             <!-- SECTION 2: Shop Controls (Filters Left, Search Right) -->
             <div class="shop-controls">
                 
@@ -152,7 +149,7 @@
                         <div class="info-cell"><span class="info-label">Stock Status</span><span id="det-stock" class="info-value">-</span></div>
                         <div class="info-cell">
                             <span class="info-label">Creator</span>
-                            <a id="det-creator-link" href="#" target="_blank" class="info-value" style="color: inherit; transition: opacity 0.2s;">-</a>
+                            <span id="det-creator-link" class="info-value">-</span>
                         </div>
                     </div>
                 </div>
@@ -295,9 +292,12 @@
                         displayPrice = `<span style="text-decoration: line-through; color: #999999; font-size: 0.8em; margin-right: 6px;">₹${product.basePrice}</span>₹${product.finalPrice}`;
                     }
 
+                    // FIX: Targets the first index of the images array
+                    const displayImage = (product.images && product.images.length > 0) ? product.images[0] : "https://suwuyiku.pages.dev/assets/placeholder.png";
+
                     card.innerHTML = `
                         <div class="shop-cover-wrapper">
-                            <img src="${product.image}" class="shop-image" alt="Product" draggable="false" oncontextmenu="return false;">
+                            <img src="${displayImage}" class="shop-image" alt="${product.productName}" draggable="false" oncontextmenu="return false;">
                         </div>
                         <div class="shop-card-text">
                             <h3 class="shop-title">${product.productName}</h3>
@@ -383,9 +383,41 @@
             document.getElementById('detail-view').style.display = 'flex';
             window.scrollTo(0, 0); 
             
-            document.getElementById('det-cover').src = product.image;
+            // FIX: Target first index of the images array
+            document.getElementById('det-cover').src = (product.images && product.images.length > 0) ? product.images[0] : "https://suwuyiku.pages.dev/assets/placeholder.png";
             document.getElementById('det-title').textContent = product.productName; 
-            document.getElementById('det-author').textContent = product.creatorName ? `By ${product.creatorName}` : 'Suwuyiku Original';
+            
+            // FIX: Load the Notion page text blocks into the review element
+            document.getElementById('det-review').innerText = product.description || 'Authentic curated physical archive.';
+            
+            // FIX: Multi-Creator Link Logic
+            const creatorLink = document.getElementById('det-creator-link');
+            if (product.creatorName) {
+                let creatorHTML = '';
+                
+                // Base Creator
+                if (product.creatorPortfolio) {
+                    creatorHTML += `<a href="${product.creatorPortfolio}" target="_blank" style="color: inherit; text-decoration: underline;">${product.creatorName}</a>`;
+                } else {
+                    creatorHTML += `<span>${product.creatorName}</span>`;
+                }
+
+                // Co-Creator Appended
+                if (product.creatorName1) {
+                    creatorHTML += ` & `;
+                    if (product.creatorPortfolio1) {
+                        creatorHTML += `<a href="${product.creatorPortfolio1}" target="_blank" style="color: inherit; text-decoration: underline;">${product.creatorName1}</a>`;
+                    } else {
+                        creatorHTML += `<span>${product.creatorName1}</span>`;
+                    }
+                }
+                
+                creatorLink.innerHTML = creatorHTML;
+                document.getElementById('det-author').innerHTML = `By ${creatorHTML}`;
+            } else {
+                creatorLink.textContent = "-";
+                document.getElementById('det-author').textContent = 'Suwuyiku Original';
+            }
             
             let dossierPrice = `₹${product.finalPrice}`;
             if (product.discountPercent > 0) {
@@ -395,19 +427,6 @@
             
             document.getElementById('det-category').textContent = product.category || "-";
             
-            const creatorLink = document.getElementById('det-creator-link');
-            if (product.creatorPortfolio && product.creatorPortfolio !== "") {
-                creatorLink.href = product.creatorPortfolio;
-                creatorLink.textContent = product.creatorName;
-                creatorLink.style.pointerEvents = "auto";
-                creatorLink.style.textDecoration = "underline";
-            } else {
-                creatorLink.removeAttribute('href');
-                creatorLink.textContent = product.creatorName || "-";
-                creatorLink.style.pointerEvents = "none";
-                creatorLink.style.textDecoration = "none";
-            }
-
             const stockElem = document.getElementById('det-stock');
             const buyBtn = document.getElementById('det-buy-btn');
 
