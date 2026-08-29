@@ -111,20 +111,38 @@
 
             <div class="shop-detail-top">
                 <div class="shop-gallery-container">
+                    
+                    <!-- Main Image Area (Drag/Hover Zones) -->
                     <div class="shop-detail-cover-wrapper" id="main-image-container">
-                        <button class="gallery-nav prev" id="gallery-prev" onclick="changeGalleryImage('prev')" aria-label="Previous image">
+                        <!-- Left Hover Zone -->
+                        <div class="gallery-hitbox left" id="hitbox-left">
+                            <div class="gallery-nav prev">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                            </div>
+                        </div>
+                        <!-- Right Hover Zone -->
+                        <div class="gallery-hitbox right" id="hitbox-right">
+                            <div class="gallery-nav next">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            </div>
+                        </div>
+                        
+                        <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                    </div>
+                    
+                    <!-- Thumbnails Area (With Scrollers) -->
+                    <div class="thumbnail-slider-wrapper" id="thumbnail-slider-wrapper" style="display: none;">
+                        <button class="thumb-nav prev" onclick="scrollThumbnails(-1)" aria-label="Scroll left">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                         </button>
                         
-                        <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                        <div class="shop-thumbnails" id="shop-thumbnails">
+                            <!-- Thumbnails injected via JS -->
+                        </div>
                         
-                        <button class="gallery-nav next" id="gallery-next" onclick="changeGalleryImage('next')" aria-label="Next image">
+                        <button class="thumb-nav next" onclick="scrollThumbnails(1)" aria-label="Scroll right">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                         </button>
-                    </div>
-                    
-                    <div class="shop-thumbnails" id="shop-thumbnails">
-                        <!-- Thumbnails injected via JS -->
                     </div>
                 </div>
 
@@ -231,6 +249,7 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
+            // 1. Mobile Sidebar Engine
             const hamburger = document.querySelector('.hamburger-btn');
             const sidebar = document.querySelector('.mobile-sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -247,12 +266,15 @@
                 overlay.addEventListener('click', toggleMenu);
             }
 
+            // 2. Search Input Listener
             const searchInput = document.getElementById('shopSearch');
             if (searchInput) {
                 searchInput.addEventListener('input', applyFilters);
             }
 
+            // 3. Boot up the APIs and Gallery Engine
             loadShop();
+            initGalleryDragEngine(); 
         });
 
         async function loadShop() {
@@ -427,6 +449,61 @@
             }
         }
 
+        // --- NATIVE SWIPE & CLICK ENGINE ---
+        function initGalleryDragEngine() {
+            const container = document.getElementById('main-image-container');
+            let startX = 0;
+            let isDragging = false;
+            
+            // Mouse Swipe
+            container.addEventListener('mousedown', (e) => {
+                if (currentGalleryImages.length <= 1) return;
+                startX = e.pageX;
+                isDragging = true;
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diff = e.pageX - startX;
+                
+                // If dragged more than 30px, treat as swipe
+                if (Math.abs(diff) > 30) {
+                    if (diff < 0) changeGalleryImage('next'); // Swiped left -> Next
+                    else changeGalleryImage('prev');          // Swiped right -> Prev
+                } else {
+                    // Treated as a click. Find which half of the box was clicked.
+                    const rect = container.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    if (clickX > rect.width / 2) changeGalleryImage('next');
+                    else changeGalleryImage('prev');
+                }
+            });
+
+            // Mobile Touch Swipe
+            container.addEventListener('touchstart', (e) => {
+                if (currentGalleryImages.length <= 1) return;
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            }, {passive: true});
+
+            window.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diff = e.changedTouches[0].clientX - startX;
+                
+                if (Math.abs(diff) > 30) {
+                    if (diff < 0) changeGalleryImage('next');
+                    else changeGalleryImage('prev');
+                } else {
+                    const rect = container.getBoundingClientRect();
+                    const clickX = e.changedTouches[0].clientX - rect.left;
+                    if (clickX > rect.width / 2) changeGalleryImage('next');
+                    else changeGalleryImage('prev');
+                }
+            });
+        }
+
         function changeGalleryImage(directionOrIndex) {
             if (directionOrIndex === 'prev') {
                 currentGalleryIndex = (currentGalleryIndex === 0) ? currentGalleryImages.length - 1 : currentGalleryIndex - 1;
@@ -438,21 +515,29 @@
             updateGalleryUI();
         }
 
+        // --- THUMBNAIL OVERFLOW SCROLLER ---
+        function scrollThumbnails(direction) {
+            const container = document.getElementById('shop-thumbnails');
+            // Scrolls roughly 2 thumbnails at a time
+            container.scrollBy({ left: direction * 150, behavior: 'smooth' });
+        }
+
         function updateGalleryUI() {
             document.getElementById('det-cover').src = currentGalleryImages[currentGalleryIndex];
             
-            const prevBtn = document.getElementById('gallery-prev');
-            const nextBtn = document.getElementById('gallery-next');
+            const thumbWrapper = document.getElementById('thumbnail-slider-wrapper');
+            const hitLeft = document.getElementById('hitbox-left');
+            const hitRight = document.getElementById('hitbox-right');
             const thumbContainer = document.getElementById('shop-thumbnails');
             
             if (currentGalleryImages.length > 1) {
-                prevBtn.classList.remove('hidden');
-                nextBtn.classList.remove('hidden');
-                thumbContainer.style.display = 'flex';
+                hitLeft.style.display = 'flex';
+                hitRight.style.display = 'flex';
+                thumbWrapper.style.display = 'flex';
             } else {
-                prevBtn.classList.add('hidden');
-                nextBtn.classList.add('hidden');
-                thumbContainer.style.display = 'none'; 
+                hitLeft.style.display = 'none';
+                hitRight.style.display = 'none';
+                thumbWrapper.style.display = 'none'; 
             }
             
             thumbContainer.innerHTML = '';
@@ -465,11 +550,17 @@
                     const img = document.createElement('img');
                     img.src = imgUrl;
                     img.className = 'thumbnail-img';
-                    img.draggable = false;
+                    img.draggable = false; // Prevent ghost drag image
                     
                     thumb.appendChild(img);
                     thumbContainer.appendChild(thumb);
                 });
+                
+                // Auto-centers the active thumbnail if there are 50+ images
+                const activeThumb = thumbContainer.children[currentGalleryIndex];
+                if (activeThumb) {
+                    activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
             }
         }
         
