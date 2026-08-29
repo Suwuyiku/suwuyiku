@@ -18,84 +18,9 @@
     <meta name="theme-color" content="#4a90e2">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- SHOP SPECIFIC LAYOUT OVERRIDES -->
-    <style>
-        /* 1. Lowers the distance below the main title line */
-        .contact-page-header {
-            margin-bottom: 1.5rem !important; 
-        }
-
-        /* 2. Locks the filters and search bar to the exact same Y-axis baseline */
-        .shop-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* The magic alignment property */
-            margin-bottom: 3rem;
-            width: 100%;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .shop-filters {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        /* Clean box for the search input */
-        .search-container {
-            position: relative;
-            max-width: 280px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            margin: 0 !important;
-        }
-
-        .search-input {
-            width: 100%;
-            height: 2.6rem; /* Solidifies the clean box height */
-            padding: 0 1rem 0 2.25rem;
-            border: 1px solid #EAEAEA;
-            border-radius: 4px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            background-color: #FAFAFA;
-            outline: none;
-            transition: all 0.2s ease;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        .search-input:focus {
-            border-color: #111111;
-            background-color: #FFFFFF;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            width: 1rem;
-            height: 1rem;
-            fill: #888888;
-            pointer-events: none;
-        }
-
-        /* 3. Fixes the "Back to Storefront" button sticking to the ceiling */
-        .breadcrumbs {
-            margin-top: 1.5rem; /* Adds breathing room below the line */
-            margin-bottom: 2.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #EAEAEA;
-            width: 100%;
-            display: block;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- 1. UNIFIED NAVIGATION -->
     <nav class="top-nav">
         <div class="nav-left">
             <a href="/" style="text-decoration: none;"><span class="logo-text">Suwuyiku</span></a>
@@ -117,7 +42,6 @@
         </div>
     </nav>
 
-    <!-- 2. MOBILE SIDEBAR -->
     <div class="mobile-sidebar">
         <div class="sidebar-header">
             <a href="/" class="sidebar-logo" style="text-decoration: none;">Suwuyiku</a>
@@ -142,28 +66,20 @@
     </div>
     <div class="sidebar-overlay"></div>
 
-    <!-- 3. MAIN SHOP CANVAS -->
     <main class="contact-page-wrapper">
 
-        <!-- ==============================================
-             STORE OVERVIEW (Filters + Bookshelf Grid)
-             ============================================== -->
         <div id="store-overview">
             
-            <!-- THE FIX: Moved the header inside store-overview so it vanishes in detail view -->
             <div class="legal-header contact-page-header">
                 <h1>Shop</h1>
                 <p>Curated community works and physical archives.</p>
             </div>
 
-            <!-- SECTION 2: Shop Controls (Filters Left, Search Right) -->
             <div class="shop-controls">
                 
                 <div class="shop-filters" id="shop-filters">
                     <button class="filter-btn active" data-category="all">All</button>
-                    <!-- Categories auto-populate here from Notion -->
-                </div>
-                <!-- ... rest of your shop controls ... -->
+                    </div>
 
                 <div class="search-container">
                     <input type="text" id="shopSearch" class="search-input" placeholder="Search products...">
@@ -174,9 +90,7 @@
 
             </div>
 
-            <!-- The Product Grid (Bookshelf) -->
             <div id="shop-grid" class="shop-grid">
-                <!-- SKELETON LOADERS -->
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
                 <div class="shop-skeleton-card"><div class="shop-skeleton-cover"></div><div class="shop-skeleton-text title"></div><div class="shop-skeleton-text category"></div></div>
@@ -187,22 +101,30 @@
                 No products match your search criteria.
             </div>
 
-        </div> <!-- END STORE OVERVIEW -->
-
-
-        <!-- ==============================================
-             DETAIL DOSSIER VIEW (Hidden until product click)
-             ============================================== -->
-        <div id="detail-view" class="shop-detail-view">
+        </div> <div id="detail-view" class="shop-detail-view">
                     
             <div class="breadcrumbs">
                 <button class="btn-breadcrumb" onclick="closeDetailView()">← Back to Storefront</button>
             </div>
 
             <div class="shop-detail-top">
-                <div class="shop-detail-cover-wrapper">
-                    <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                <div class="shop-gallery-container">
+                    <div class="shop-detail-cover-wrapper" id="main-image-container">
+                        <button class="gallery-nav prev" id="gallery-prev" onclick="changeGalleryImage('prev')" aria-label="Previous image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        
+                        <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                        
+                        <button class="gallery-nav next" id="gallery-next" onclick="changeGalleryImage('next')" aria-label="Next image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="shop-thumbnails" id="shop-thumbnails">
+                        </div>
                 </div>
+
                 <div class="shop-detail-info">
                     <h2 id="det-title" class="shop-detail-title">Product Name</h2>
                     <p id="det-author" class="shop-detail-author">By Creator</p>
@@ -234,7 +156,6 @@
 
     </main>
 
-    <!-- 4. UNIFIED FOOTER -->
     <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-brand">
@@ -290,10 +211,13 @@
         </div>
     </footer>
     
-    <!-- Interaction Scripts -->
     <script>
         let shopInventory = [];
         let currentCategoryFilter = 'all';
+        
+        // --- Added Variables for New Gallery Engine ---
+        let currentGalleryImages = [];
+        let currentGalleryIndex = 0;
 
         // History API for Deep Linking
         window.addEventListener('popstate', (e) => {
@@ -444,32 +368,33 @@
             renderProductDossier(itemId);
         }
 
+        // --- UPDATED RENDER DOSSIER FUNCTION ---
         function renderProductDossier(itemId) {
             const product = shopInventory.find(p => p.itemId === itemId);
             if (!product) return forceCloseDetailView();
 
             document.querySelector('.contact-page-wrapper').classList.add('dossier-active');
-
             document.getElementById('store-overview').style.display = 'none';
             document.getElementById('detail-view').style.display = 'flex';
             window.scrollTo(0, 0); 
             
-            document.getElementById('det-cover').src = (product.images && product.images.length > 0) ? product.images[0] : "https://suwuyiku.pages.dev/assets/placeholder.png";
-            document.getElementById('det-title').textContent = product.productName; 
+            // --- NEW GALLERY INIT ---
+            currentGalleryImages = (product.images && product.images.length > 0) ? product.images : ["https://suwuyiku.pages.dev/assets/placeholder.png"];
+            currentGalleryIndex = 0;
+            updateGalleryUI();
             
+            document.getElementById('det-title').textContent = product.productName; 
             document.getElementById('det-review').innerText = product.description || 'Authentic curated physical archive.';
             
-            // Multi-Creator Linking Logic
+            // Multi-Creator Link Logic
             const creatorLink = document.getElementById('det-creator-link');
             if (product.creatorName) {
                 let creatorHTML = '';
-                
                 if (product.creatorPortfolio) {
                     creatorHTML += `<a href="${product.creatorPortfolio}" target="_blank" style="color: inherit; text-decoration: underline;">${product.creatorName}</a>`;
                 } else {
                     creatorHTML += `<span>${product.creatorName}</span>`;
                 }
-
                 if (product.creatorName1) {
                     creatorHTML += ` & `;
                     if (product.creatorPortfolio1) {
@@ -478,7 +403,6 @@
                         creatorHTML += `<span>${product.creatorName1}</span>`;
                     }
                 }
-                
                 creatorLink.innerHTML = creatorHTML;
                 document.getElementById('det-author').innerHTML = `By ${creatorHTML}`;
             } else {
@@ -491,7 +415,6 @@
                 dossierPrice = `<span style="text-decoration: line-through; color: #999999; font-size: 0.65em; margin-right: 8px;">₹${product.basePrice}</span>₹${product.finalPrice} <span style="font-size: 0.5em; color: #d93025; vertical-align: middle; margin-left: 5px; font-weight: 800;">(${product.discountPercent}% OFF)</span>`;
             }
             document.getElementById('det-price').innerHTML = dossierPrice;
-            
             document.getElementById('det-category').textContent = product.category || "-";
             
             const stockElem = document.getElementById('det-stock');
@@ -500,17 +423,65 @@
             if (product.stockCount > 0) {
                 stockElem.textContent = `${product.stockCount} in stock`;
                 stockElem.style.color = "#000000";
-                
                 buyBtn.textContent = "Purchase Now ↗";
                 buyBtn.disabled = false;
                 buyBtn.onclick = () => alert("Secure Checkout & Special Notes Modal Coming Soon!");
             } else {
                 stockElem.textContent = "Out of Stock";
                 stockElem.style.color = "#d93025";
-                
                 buyBtn.textContent = "Sold Out";
                 buyBtn.disabled = true;
                 buyBtn.onclick = null;
+            }
+        }
+
+        // --- NEW GALLERY CONTROL FUNCTIONS ---
+        function changeGalleryImage(directionOrIndex) {
+            if (directionOrIndex === 'prev') {
+                currentGalleryIndex = (currentGalleryIndex === 0) ? currentGalleryImages.length - 1 : currentGalleryIndex - 1;
+            } else if (directionOrIndex === 'next') {
+                currentGalleryIndex = (currentGalleryIndex === currentGalleryImages.length - 1) ? 0 : currentGalleryIndex + 1;
+            } else {
+                currentGalleryIndex = directionOrIndex; // Direct index click from thumbnail
+            }
+            updateGalleryUI();
+        }
+
+        function updateGalleryUI() {
+            // Update Main Image
+            document.getElementById('det-cover').src = currentGalleryImages[currentGalleryIndex];
+            
+            // Toggle Arrow Visibility
+            const prevBtn = document.getElementById('gallery-prev');
+            const nextBtn = document.getElementById('gallery-next');
+            const thumbContainer = document.getElementById('shop-thumbnails');
+            
+            if (currentGalleryImages.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                thumbContainer.style.display = 'flex';
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                thumbContainer.style.display = 'none'; // Hide strip entirely if only 1 image
+            }
+            
+            // Rebuild Thumbnails with Active State
+            thumbContainer.innerHTML = '';
+            if (currentGalleryImages.length > 1) {
+                currentGalleryImages.forEach((imgUrl, index) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = `thumbnail-box ${index === currentGalleryIndex ? 'active' : ''}`;
+                    thumb.onclick = () => changeGalleryImage(index);
+                    
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    img.className = 'thumbnail-img';
+                    img.draggable = false;
+                    
+                    thumb.appendChild(img);
+                    thumbContainer.appendChild(thumb);
+                });
             }
         }
         
