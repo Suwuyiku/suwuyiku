@@ -144,24 +144,26 @@
 
     <!-- 3. MAIN SHOP CANVAS -->
     <main class="contact-page-wrapper">
-        
-        <div class="legal-header contact-page-header">
-            <h1>Shop</h1>
-            <p>Curated community works and physical archives.</p>
-        </div>
 
         <!-- ==============================================
              STORE OVERVIEW (Filters + Bookshelf Grid)
              ============================================== -->
         <div id="store-overview">
+            
+            <!-- THE FIX: Moved the header inside store-overview so it vanishes in detail view -->
+            <div class="legal-header contact-page-header">
+                <h1>Shop</h1>
+                <p>Curated community works and physical archives.</p>
+            </div>
 
-            <!-- Shop Controls (Filters Left, Search Right) -->
+            <!-- SECTION 2: Shop Controls (Filters Left, Search Right) -->
             <div class="shop-controls">
                 
                 <div class="shop-filters" id="shop-filters">
                     <button class="filter-btn active" data-category="all">All</button>
                     <!-- Categories auto-populate here from Notion -->
                 </div>
+                <!-- ... rest of your shop controls ... -->
 
                 <div class="search-container">
                     <input type="text" id="shopSearch" class="search-input" placeholder="Search products...">
