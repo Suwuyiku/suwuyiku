@@ -490,11 +490,22 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 /* =========================================
    SHOP DOSSIER (PRODUCT DETAIL VIEW)
    ========================================= */
-.shop-detail-view { display: none; flex-direction: column; width: 100%; animation: fadeIn 0.4s ease; padding-bottom: 4rem; }
+.shop-detail-view { 
+    display: none; 
+    flex-direction: column; 
+    width: 100%; 
+    animation: fadeIn 0.4s ease; 
+    padding-bottom: 4rem; 
+}
 
-/* Fixes the "sticking" Breadcrumbs by adding top margin */
+/* THE FIX: margin-top: 0 locks the gap perfectly to the Nav Bar */
 .shop-detail-view .breadcrumbs {
-    margin-top: 1.5rem;
+    margin-top: 0; 
+    width: 100%;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: block; 
 }
 
 .shop-detail-top { 
