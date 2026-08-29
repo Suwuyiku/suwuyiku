@@ -593,6 +593,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     width: 100%;
 }
 
+/* Base Image Container */
 .shop-detail-cover-wrapper {
     background-color: #EBEBEB; 
     box-sizing: border-box;
@@ -604,7 +605,11 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     align-items: center;
     justify-content: center;
     padding: 1.5rem; 
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab; /* Shows it can be swiped */
 }
+.shop-detail-cover-wrapper:active { cursor: grabbing; }
 
 .shop-detail-image { 
     max-width: 100%;
@@ -615,11 +620,21 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     pointer-events: none;
 }
 
-/* Hover Arrows */
-.gallery-nav {
+/* Transparent Hover Zones over the image */
+.gallery-hitbox {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+.gallery-hitbox.left { left: 0; justify-content: flex-start; padding-left: 1rem; }
+.gallery-hitbox.right { right: 0; justify-content: flex-end; padding-right: 1rem; }
+
+/* The Hover Arrows */
+.gallery-nav {
     background: rgba(255, 255, 255, 0.95);
     border: 2px solid #000000;
     width: 2.5rem;
@@ -627,34 +642,49 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
     opacity: 0; 
-    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
     color: #000000;
+    pointer-events: none; /* Passes clicks directly to the swipe engine */
 }
-
-.shop-detail-cover-wrapper:hover .gallery-nav { opacity: 1; }
-
-.gallery-nav:hover {
+.gallery-hitbox:hover .gallery-nav {
+    opacity: 1;
+    transform: scale(1.05);
     background: #000000;
     color: #ffffff;
-    transform: translateY(-50%) scale(1.05);
 }
-
-.gallery-nav.prev { left: 0.75rem; }
-.gallery-nav.next { right: 0.75rem; }
 .gallery-nav svg { width: 1.25rem; height: 1.25rem; stroke-linecap: round; stroke-linejoin: round; }
-.gallery-nav.hidden { display: none !important; }
 
-/* Thumbnail Strip */
+/* Thumbnail Slider Engine */
+.thumbnail-slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+}
+.thumb-nav {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    color: #888;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+.thumb-nav:hover { color: #000; }
+.thumb-nav svg { width: 1.5rem; height: 1.5rem; }
+
 .shop-thumbnails {
     display: flex;
     gap: 0.75rem;
     overflow-x: auto;
-    padding-bottom: 0.5rem;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem 0;
+    scroll-behavior: smooth;
     scrollbar-width: none; 
+    flex: 1; /* Fills space between arrows */
 }
 .shop-thumbnails::-webkit-scrollbar { display: none; }
 
@@ -672,7 +702,6 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     transition: border-color 0.2s ease, opacity 0.2s ease;
     opacity: 0.5;
 }
-
 .thumbnail-box:hover { opacity: 1; }
 .thumbnail-box.active { border-color: #000000; opacity: 1; }
 
@@ -683,6 +712,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     pointer-events: none;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
 }
+
 
 /* =========================================
    07. PAGE: LIBRARY (KODANSHA EDITORIAL ENGINE)
