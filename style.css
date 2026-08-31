@@ -718,6 +718,33 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
     box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
 }
 
+/* Shop Header Anchored Button */
+.shop-header-container {
+    position: relative;
+}
+
+.shop-sign-in-btn {
+    position: absolute;
+    right: 0;
+    bottom: 1.5rem; /* Sits exactly on top of the black border */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.25rem;
+    border: 1px solid var(--kodansha-black);
+    background: var(--bg-color);
+    color: var(--kodansha-black);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.shop-sign-in-btn:hover {
+    background: #f4f4f4;
+}
 
 /* =========================================
    07. PAGE: LIBRARY (KODANSHA EDITORIAL ENGINE)
@@ -1573,6 +1600,10 @@ body.modal-open {
     .footer-bottom-links { flex-direction: column; gap: 0.85rem; }
     .footer-bottom-links .divider { display: none; }
     .site-footer { padding: 4rem 1rem 2rem 1rem; }
+
+ /* Hides redundant Shop header login button on mobile */
+    .shop-sign-in-btn { display: none !important; }
+   
 }
 
 /* =========================================
