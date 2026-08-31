@@ -727,7 +727,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .contact-page-wrapper {
     max-width: 1200px;
     margin: 0 auto; 
-    padding: 3rem 20px 6rem 20px;
+    padding: 1.50rem 20px 6rem 20px;
 }
 
 /* Header Typography */
