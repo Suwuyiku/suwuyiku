@@ -727,7 +727,7 @@ a:focus-visible, button:focus-visible { outline: 0.125rem solid var(--hover-gray
 .contact-page-wrapper {
     max-width: 1200px;
     margin: 0 auto; 
-    padding: 1.50rem 20px 6rem 20px;
+    padding: 1.25rem 20px 6rem 20px;
 }
 
 /* Header Typography */
@@ -1333,7 +1333,7 @@ body.is-searching .card-category { opacity: 0.3; transition: opacity 0.3s ease; 
 /* =========================================
    10. PAGE: CONTACT & LEGAL
    ========================================= */
-.contact-page-wrapper { display: block; width: 100%; max-width: 65rem; margin: 0 auto; padding: 1.50rem 1.5rem 6rem 1.5rem; text-align: left; }
+.contact-page-wrapper { display: block; width: 100%; max-width: 65rem; margin: 0 auto; padding: 1.25rem 1.5rem 6rem 1.5rem; text-align: left; }
 .contact-page-header { text-align: left; margin-bottom: 3rem; border-bottom: 0.125rem solid var(--kodansha-black); padding-bottom: 1.5rem; }
 .contact-page-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--kodansha-black); margin-bottom: 0.5rem; }
 .contact-page-header p { font-size: 1rem; color: #777777; }
