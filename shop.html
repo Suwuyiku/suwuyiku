@@ -32,10 +32,18 @@
                 <li><a href="/library">Library</a></li>
                 <li><a href="/fragments">Fragments</a></li>
             </ul>
-            <div class="nav-actions">
-            <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
-            <a href="/contact" class="btn-action">CONTACT</a>
-            </div>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 1.25rem;">
+    <a href="https://suwuyiku.pages.dev/shop" class="btn-action">SHOP</a>
+    <a href="/contact" class="btn-action">CONTACT</a>
+    
+    <button onclick="openAuthModal()" class="auth-trigger-btn" aria-label="Sign In">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span id="nav-user-name">SIGN IN</span>
+    </button>
+    </div>
             <button class="hamburger-btn" aria-label="Open Menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </button>
@@ -55,10 +63,12 @@
                 <li><a href="/library">Library</a></li>
                 <li><a href="/fragments">Fragments</a></li>
             </ul>
-            <div class="sidebar-actions">
-            <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
-            <a href="/contact" class="sidebar-btn-action">CONTACT</a>
-            </div>
+    <div class="sidebar-actions">
+    <a href="https://suwuyiku.pages.dev/shop" class="sidebar-btn-action">SHOP</a>
+    <a href="/contact" class="sidebar-btn-action">CONTACT</a>
+    
+    <button onclick="openAuthModal()" class="sidebar-btn-action" style="cursor: pointer; background: transparent; justify-content: center; border-top: none;">SIGN IN</button>
+    </div>
         </div>
         <div class="sidebar-footer">
             <span class="copyright">&copy; 2026 SUWUYIKU. ALL RIGHTS RESERVED.</span>
