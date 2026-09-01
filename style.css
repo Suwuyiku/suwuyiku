@@ -2399,12 +2399,12 @@ body.modal-open {
 .shop-sign-in-btn {
     position: absolute;
     right: 1.5rem; 
-    bottom: 1.5rem; 
+    bottom: 0.75rem; /* LOWERED: Sits perfectly above the line */
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 1rem 0.25rem 0.25rem;
-    border: 1px solid var(--kodansha-black);
+    gap: 0.5rem; 
+    padding: 0.25rem 1rem 0.25rem 0.25rem; 
+    border: 1px solid var(--kodansha-black); 
     background: var(--bg-color);
     color: var(--kodansha-black);
     font-size: 0.75rem;
