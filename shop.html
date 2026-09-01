@@ -147,8 +147,7 @@
                             </div>
                         </div>
                         
-                        <img id="det-cover" src="" class="shop-detail-image" alt="Product Image" draggable="false" oncontextmenu="return false;">
-                    </div>
+                <img id="det-cover" src="" class="shop-detail-image protected-img" alt="Product Image" draggable="false" oncontextmenu="return false;">                    </div>
                     
                     <!-- Thumbnails Area (With Scrollers) -->
                     <div class="thumbnail-slider-wrapper" id="thumbnail-slider-wrapper" style="display: none;">
@@ -166,20 +165,20 @@
                     </div>
                 </div>
 
-                <div class="shop-detail-info">
-                    <h2 id="det-title" class="shop-detail-title">Product Name</h2>
-                    <p id="det-author" class="shop-detail-author">By Creator</p>
-                    
-                    <div id="det-price-container" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
-                        <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
-                    </div>
-                            
-                    <div id="det-review" class="shop-detail-desc" style="margin-bottom: 2rem;">Authentic curated physical archive.</div>
-                            
-                    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
-                </div>
-            </div>
-
+<div class="shop-detail-info">
+    <h2 id="det-title" class="shop-detail-title">Product Name</h2>
+    <p id="det-author" class="shop-detail-author">Creator</p>
+    
+    <!-- Description moved ABOVE the price -->
+    <div id="det-review" class="shop-detail-desc" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">Authentic curated physical archive.</div>
+    
+    <!-- Price moved BELOW the description -->
+    <div id="det-price-container" style="margin-bottom: 2rem;">
+        <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
+    </div>
+            
+    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
+</div>
             <div class="volume-info-section">
                 <h2 class="volume-info-heading">Item<br>Info</h2>
                 <div class="volume-info-board">
@@ -357,7 +356,7 @@
         window.addEventListener('resize', updateThumbScrollArrows);
     });
 
-async function loadShop() {
+           async function loadShop() {
             const grid = document.getElementById('shop-grid');
             
             try {
@@ -497,20 +496,20 @@ async function loadShop() {
             if (product.creatorName) {
                 let creatorHTML = '';
                 if (product.creatorPortfolio) {
-                    creatorHTML += `<a href="${product.creatorPortfolio}" target="_blank" style="color: inherit; text-decoration: underline;">${product.creatorName}</a>`;
+                    creatorHTML += `<a href="${product.creatorPortfolio}" target="_blank" style="color: inherit; text-decoration: none;">${product.creatorName}</a>`;
                 } else {
                     creatorHTML += `<span>${product.creatorName}</span>`;
                 }
                 if (product.creatorName1) {
                     creatorHTML += ` & `;
                     if (product.creatorPortfolio1) {
-                        creatorHTML += `<a href="${product.creatorPortfolio1}" target="_blank" style="color: inherit; text-decoration: underline;">${product.creatorName1}</a>`;
+                        creatorHTML += `<a href="${product.creatorPortfolio1}" target="_blank" style="color: inherit; text-decoration: none;">${product.creatorName1}</a>`;
                     } else {
                         creatorHTML += `<span>${product.creatorName1}</span>`;
                     }
                 }
                 creatorLink.innerHTML = creatorHTML;
-                document.getElementById('det-author').innerHTML = `By ${creatorHTML}`;
+                document.getElementById('det-author').innerHTML = creatorHTML; // "By " removed
             } else {
                 creatorLink.textContent = "-";
                 document.getElementById('det-author').textContent = 'Suwuyiku Original';
@@ -641,7 +640,7 @@ async function loadShop() {
                     
                     const img = document.createElement('img');
                     img.src = imgUrl;
-                    img.className = 'thumbnail-img';
+                    img.className = 'thumbnail-img protected-img';
                     img.draggable = false; // Prevent ghost drag image
                     
                     thumb.appendChild(img);
