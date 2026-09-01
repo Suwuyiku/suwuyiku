@@ -357,7 +357,7 @@
         window.addEventListener('resize', updateThumbScrollArrows);
     });
 
-        async function loadShop() {
+async function loadShop() {
             const grid = document.getElementById('shop-grid');
             
             try {
@@ -405,9 +405,21 @@
                     grid.appendChild(card);
                 });
 
+                // NEW ENGINE: Check the URL for deep-links after loading the grid
+                checkURLHashForProduct();
+
             } catch (error) {
                 console.error("Shop Sync Failed:", error);
                 grid.innerHTML = `<p style="color: #FF0000; grid-column: 1 / -1;"><strong>API Connection Error:</strong><br>${error.message}</p>`;
+            }
+        }
+
+        // NEW FUNCTION: Reads the URL and opens the dossier if needed
+        function checkURLHashForProduct() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#item-')) {
+                const itemId = hash.replace('#item-', '');
+                renderProductDossier(itemId);
             }
         }
 
