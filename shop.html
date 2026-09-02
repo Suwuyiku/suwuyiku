@@ -308,8 +308,8 @@
     </div>
     
     <script>
-        
-let shopInventory = [];
+    
+    let shopInventory = [];
     let currentCategoryFilter = 'all';
     
     let currentGalleryImages = [];
@@ -326,17 +326,19 @@ let shopInventory = [];
 
     // --- SESSION & AUTHENTICATION ENGINE ---
     let currentUser = null;
+    const API_BASE = "https://shopapi.suwuyiku.workers.dev";
 
-    window.onload = function () {
-        // 1. Restore saved session on load
-        const savedUser = localStorage.getItem('suwuyiku_user');
-        if (savedUser) {
-            try {
-                currentUser = JSON.parse(savedUser);
+    window.onload = async function () {
+        // 1. Check secure session via API (No more localStorage)
+        try {
+            const res = await fetch(`${API_BASE}/auth/me`, { credentials: "include" });
+            const data = await res.json();
+            if (data.success) {
+                currentUser = data.user;
                 renderAuthenticatedUI(currentUser);
-            } catch (e) {
-                localStorage.removeItem('suwuyiku_user');
             }
+        } catch (e) {
+            console.log("No active session found.");
         }
 
         // 2. Initialize Google Identity Services
@@ -366,10 +368,14 @@ let shopInventory = [];
         }
     }
 
-    // Log out and clear state
-    function signOutUser() {
+    // Log out and clear state securely via API
+    async function signOutUser() {
         currentUser = null;
-        localStorage.removeItem('suwuyiku_user');
+        try {
+            await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
+        } catch (e) {
+            console.log("Logout ping failed");
+        }
         
         // Reset UI back to default
         document.getElementById('shop-user-name').textContent = "LOGIN";
@@ -386,29 +392,29 @@ let shopInventory = [];
         document.getElementById('shop-user-name').textContent = (user.firstName || user.name).toUpperCase();
         
         if (user.picture) {
-            // Explicitly sized to perfectly match the 14x14 SVG icon
+            // Strict 14x14 formatting with a bypass for Google's strict image CORS blocking
             document.getElementById('shop-user-avatar').innerHTML = `
-                <img src="${user.picture}" alt="${user.name}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover; display: block;" referrerpolicy="no-referrer">
+                <img src="${user.picture}" alt="${user.name}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover; display: block;" referrerpolicy="no-referrer" crossorigin="anonymous">
             `;
         }
     }
 
-    // Handle Google Response from Worker
+    // Handle Google Response from Worker securely
     async function handleGoogleResponse(response) {
         const googleToken = response.credential;
 
         try {
-            const res = await fetch("https://shopapi.suwuyiku.workers.dev/auth", {
+            const res = await fetch(`${API_BASE}/auth`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ credential: googleToken })
+                body: JSON.stringify({ credential: googleToken }),
+                credentials: "include" // CRITICAL: This allows the browser to accept the secure HTTP-Only cookie
             });
 
             const data = await res.json();
 
             if (data.success) {
                 currentUser = data.user;
-                localStorage.setItem('suwuyiku_user', JSON.stringify(currentUser));
                 renderAuthenticatedUI(currentUser);
                 closeAuthModal();
             } else {
@@ -457,7 +463,7 @@ let shopInventory = [];
         const grid = document.getElementById('shop-grid');
         
         try {
-            const response = await fetch('https://shopapi.suwuyiku.workers.dev/inventory?nocache=' + new Date().getTime());
+            const response = await fetch(`${API_BASE}/inventory?nocache=` + new Date().getTime());
             const data = await response.json();
 
             if (!data.success) throw new Error(data.error);
@@ -842,7 +848,6 @@ let shopInventory = [];
             if (e.key === 'Backspace' && !box.value && index > 0) inputs[index - 1].focus();
         });
     });
-        
     </script>
     
 </body>
