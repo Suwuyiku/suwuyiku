@@ -80,15 +80,15 @@
     <h1 style="margin-bottom: 0.5rem;">Shop</h1>
     <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
     
-    <button onclick="openAuthModal()" class="shop-sign-in-btn">
-        <span class="btn-icon-circle">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-        </span>
-        <span id="shop-user-name">LOGIN</span>
-    </button>
+    <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn">
+    <span class="btn-icon-circle" id="shop-user-avatar">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    </span>
+    <span id="shop-user-name">LOGIN</span>
+</button>
 </div>
             
             <div class="shop-controls">
@@ -324,20 +324,100 @@
             }
         });
 
-        // --- GOOGLE AUTHENTICATION ENGINE ---
-        window.onload = function () {
-            // 1. Initialize Google Identity Services
-            google.accounts.id.initialize({
-                client_id: "667968394492-jrl073vsbh34b8sv08s7lm50vfka4rqq.apps.googleusercontent.com", 
-                callback: handleGoogleResponse
-            });
+        // --- SESSION & AUTHENTICATION ENGINE ---
+let currentUser = null;
 
-            // 2. Render the official, secure Google button
-            google.accounts.id.renderButton(
-                document.getElementById("google-login-container"),
-                { theme: "outline", size: "large", text: "continue_with", width: "300" }
-            );
-        };
+window.onload = function () {
+    // 1. Restore saved session on load
+    const savedUser = localStorage.getItem('suwuyiku_user');
+    if (savedUser) {
+        try {
+            currentUser = JSON.parse(savedUser);
+            renderAuthenticatedUI(currentUser);
+        } catch (e) {
+            localStorage.removeItem('suwuyiku_user');
+        }
+    }
+
+    // 2. Initialize Google Identity Services
+    if (window.google) {
+        google.accounts.id.initialize({
+            client_id: "667968394492-jrl073vsbh34b8sv08s7lm50vfka4rqq.apps.googleusercontent.com", 
+            callback: handleGoogleResponse
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("google-login-container"),
+            { theme: "outline", size: "large", text: "continue_with", width: "300" }
+        );
+    }
+};
+
+// Handle Header Button Click
+function handleUserBtnClick() {
+    if (currentUser) {
+        // If logged in, prompt user options or logout
+        const logout = confirm(`Signed in as ${currentUser.name} (${currentUser.email})\n\nWould you like to log out?`);
+        if (logout) {
+            signOutUser();
+        }
+    } else {
+        openAuthModal();
+    }
+}
+
+// Log out and clear state
+function signOutUser() {
+    currentUser = null;
+    localStorage.removeItem('suwuyiku_user');
+    
+    // Reset UI back to default
+    document.getElementById('shop-user-name').textContent = "LOGIN";
+    document.getElementById('shop-user-avatar').innerHTML = `
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    `;
+}
+
+// Apply logged-in UI (Name + Avatar)
+function renderAuthenticatedUI(user) {
+    document.getElementById('shop-user-name').textContent = (user.firstName || user.name).toUpperCase();
+    
+    if (user.picture) {
+        document.getElementById('shop-user-avatar').innerHTML = `
+            <img src="${user.picture}" alt="${user.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;" referrerpolicy="no-referrer">
+        `;
+    }
+}
+
+// Handle Google Response from Worker
+async function handleGoogleResponse(response) {
+    const googleToken = response.credential;
+
+    try {
+        const res = await fetch("https://shopapi.suwuyiku.workers.dev/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credential: googleToken })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            currentUser = data.user;
+            localStorage.setItem('suwuyiku_user', JSON.stringify(currentUser));
+            renderAuthenticatedUI(currentUser);
+            closeAuthModal();
+        } else {
+            alert("Authentication failed: " + data.error);
+        }
+    } catch (err) {
+        console.error("Login Error:", err);
+        alert("An error occurred during secure login. Please try again.");
+    }
+}
 
         // 3. Catch the secure token and send it to your Cloudflare Worker
         async function handleGoogleResponse(response) {
