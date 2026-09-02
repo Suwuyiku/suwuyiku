@@ -1117,10 +1117,21 @@ button:focus-visible {
 }
 
 .shop-detail-author { 
-    font-family: 'Georgia', serif; 
-    font-size: 1.15rem; 
-    color: #333333; 
-    margin: 0; 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    color: #777777; 
+    margin: 0.5rem 0 0 0; 
+}
+
+.shop-detail-author a {
+    transition: color 0.2s ease;
+}
+
+.shop-detail-author a:hover {
+    color: #000000;
 }
 
 .shop-detail-desc { 
