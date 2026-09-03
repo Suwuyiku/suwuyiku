@@ -338,28 +338,36 @@
         </div>
     </div>
 
-    <!-- Custom User Dashboard Modal (Privacy & Eye Icon) -->
+    <!-- Custom User Dashboard Modal (Strict Privacy & Left Title) -->
     <div class="auth-overlay" id="user-menu-overlay">
-        <div class="auth-modal" style="max-width: 420px; text-align: center; padding: 2.5rem 2rem 1.5rem 2rem;">
-            <button class="close-modal-btn" onclick="closeUserMenuModal()" aria-label="Close">×</button>
+        <div class="auth-modal" style="max-width: 420px; text-align: center; padding: 3rem 2rem 1.5rem 2rem; position: relative;">
             
-            <!-- User Profile Section (No Brand Name) -->
-            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; margin-top: 1rem;">
-                <img id="menu-user-avatar" src="" alt="Profile" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 1px solid #eaeaea;" referrerpolicy="no-referrer" crossorigin="anonymous">
+            <!-- 'My Profile' Title (Top Left) -->
+            <div style="position: absolute; top: 1.5rem; left: 2rem;">
+                <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: #000; letter-spacing: -0.02em;">My Profile</h3>
+            </div>
+            
+            <button class="close-modal-btn" onclick="closeUserMenuModal()" aria-label="Close" style="top: 1.25rem; right: 1.5rem;">×</button>
+            
+            <!-- User Profile Section -->
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2.5rem; margin-top: 1rem;">
+                <img id="menu-user-avatar" src="" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" referrerpolicy="no-referrer" crossorigin="anonymous">
                 
-                <!-- Name & Toggle Icon -->
-                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; user-select: none;" onclick="toggleEmailVisibility()">
-                    <h2 class="auth-title" id="menu-user-name" style="margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;">USERNAME</h2>
+                <!-- Name -->
+                <h2 class="auth-title" id="menu-user-name" style="margin: 0 0 0.5rem 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em;">USERNAME</h2>
+                
+                <!-- Masked Email & Eye Icon (Side-by-Side) -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <p class="auth-desc" id="menu-user-email-display" style="margin: 0; color: #777; font-size: 0.9rem; font-weight: 500;"></p>
                     
-                    <!-- SVG Eye Icon -->
-                    <svg id="email-eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: stroke 0.2s;">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    <!-- SVG Eye Icon (Clickable Area Restricted) -->
+                    <div onclick="toggleEmailVisibility()" style="cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='transparent'">
+                        <svg id="email-eye-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
                 </div>
-                
-                <!-- Hidden Email -->
-                <p class="auth-desc" id="menu-user-email" style="display: none; margin: 0.5rem 0 0 0; color: #777; font-size: 0.85rem; font-weight: 500;">email@example.com</p>
             </div>
             
             <!-- Dashboard Actions (Side-by-Side) -->
@@ -384,6 +392,9 @@
     
     let currentGalleryImages = [];
     let currentGalleryIndex = 0;
+
+    // Global variable to track email state
+    let isEmailVisible = false;
 
     window.addEventListener('popstate', (e) => {
         const state = e.state;
@@ -438,9 +449,18 @@
     function openUserMenuModal() {
         document.getElementById('menu-user-name').textContent = currentUser.name;
         
-        // Reset email to hidden state
-        document.getElementById('menu-user-email').textContent = currentUser.email;
-        document.getElementById('menu-user-email').style.display = 'none';
+        // Build the masked email string (e.g., su***@gmail.com)
+        isEmailVisible = false;
+        const emailStr = currentUser.email || "";
+        const parts = emailStr.split('@');
+        let masked = emailStr;
+        if (parts.length === 2) {
+            const namePart = parts[0].length > 2 ? parts[0].substring(0, 2) + "***" : parts[0] + "***";
+            masked = namePart + "@" + parts[1];
+        }
+        document.getElementById('menu-user-email-display').textContent = masked;
+        
+        // Reset eye icon
         document.getElementById('email-eye-icon').innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
         
         const avatarImg = document.getElementById('menu-user-avatar');
@@ -450,6 +470,7 @@
         } else {
             avatarImg.style.display = 'none';
         }
+        
         document.getElementById('user-menu-overlay').classList.add('active');
         document.body.classList.add('modal-open');
     }
@@ -461,21 +482,31 @@
 
     // Toggle Eye Icon Logic
     function toggleEmailVisibility() {
-        const emailEl = document.getElementById('menu-user-email');
+        isEmailVisible = !isEmailVisible;
+        const displayEl = document.getElementById('menu-user-email-display');
         const eyeIcon = document.getElementById('email-eye-icon');
         
-        if (emailEl.style.display === 'none') {
-            emailEl.style.display = 'block';
+        if (isEmailVisible) {
+            displayEl.textContent = currentUser.email;
+            // Change to "Eye with slash" icon
             eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
         } else {
-            emailEl.style.display = 'none';
+            const emailStr = currentUser.email || "";
+            const parts = emailStr.split('@');
+            let masked = emailStr;
+            if (parts.length === 2) {
+                const namePart = parts[0].length > 2 ? parts[0].substring(0, 2) + "***" : parts[0] + "***";
+                masked = namePart + "@" + parts[1];
+            }
+            displayEl.textContent = masked;
+            // Change back to normal eye icon
             eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
         }
     }
 
     // Log out and clear state securely via API
     async function signOutUser() {
-        closeUserMenuModal(); 
+        closeUserMenuModal(); // Hide the dashboard modal first
         currentUser = null;
         
         try {
@@ -484,7 +515,7 @@
             console.log("Logout ping failed");
         }
         
-        // Reset Front Page UI
+        // Reset UI back to default
         document.getElementById('shop-user-name').textContent = "LOGIN";
         
         // Reset Detail Page Avatar Box
@@ -499,7 +530,7 @@
         }
     }
 
-    // Apply logged-in UI 
+    // Apply logged-in UI
     function renderAuthenticatedUI(user) {
         // 1. Update Front Page Text
         const mainName = document.getElementById('shop-user-name');
