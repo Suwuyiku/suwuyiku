@@ -181,7 +181,16 @@
                         <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
                     </div>
                             
-                    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
+                    <!-- Action Buttons (Buy & Favorite) -->
+                    <div style="display: flex; gap: 0.5rem; align-items: stretch; margin-top: 0.5rem;">
+                        <button id="det-buy-btn" class="shop-buy-btn" style="flex: 1; padding: 1rem; font-size: 0.95rem;">Buy Now</button>
+                        
+                        <button id="det-fav-btn" onclick="toggleFavorite()" style="background: transparent; border: 1px solid #e0e0e0; width: 56px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'" aria-label="Favorite">
+                            <svg id="fav-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: fill 0.2s;">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="volume-info-section">
@@ -506,7 +515,7 @@
 
     // Log out and clear state securely via API
     async function signOutUser() {
-        closeUserMenuModal(); // Hide the dashboard modal first
+        closeUserMenuModal(); 
         currentUser = null;
         
         try {
@@ -515,7 +524,7 @@
             console.log("Logout ping failed");
         }
         
-        // Reset UI back to default
+        // Reset Front Page UI
         document.getElementById('shop-user-name').textContent = "LOGIN";
         
         // Reset Detail Page Avatar Box
@@ -530,7 +539,7 @@
         }
     }
 
-    // Apply logged-in UI
+    // Apply logged-in UI 
     function renderAuthenticatedUI(user) {
         // 1. Update Front Page Text
         const mainName = document.getElementById('shop-user-name');
@@ -772,7 +781,7 @@
         if (product.stockCount > 0) {
             stockElem.textContent = `${product.stockCount} in stock`;
             stockElem.style.color = "#000000";
-            buyBtn.textContent = "Purchase Now ↗";
+            buyBtn.textContent = "Buy Now"; 
             buyBtn.disabled = false;
             buyBtn.onclick = () => openCheckoutModal(product);
         } else {
@@ -992,6 +1001,24 @@
             if (e.key === 'Backspace' && !box.value && index > 0) inputs[index - 1].focus();
         });
     });
+
+    // --- FAVORITES ENGINE ---
+    function toggleFavorite() {
+        if (!currentUser) {
+            openAuthModal();
+            return;
+        }
+        
+        const favIcon = document.getElementById('fav-icon');
+        // Simple visual toggle for now
+        if (favIcon.getAttribute('fill') === 'none') {
+            favIcon.setAttribute('fill', '#000');
+            console.log(`Saved ${currentGalleryImages[0]} to favorites`);
+            // In the future, this will send a POST request to your Worker to save to D1
+        } else {
+            favIcon.setAttribute('fill', 'none');
+        }
+    }
 
     // --- CHECKOUT & SHIPPING ENGINE ---
     let currentCheckoutItem = null;
