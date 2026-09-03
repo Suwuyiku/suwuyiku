@@ -78,12 +78,14 @@
             
             <div class="legal-header contact-page-header shop-header-container">
                 <h1 style="margin-bottom: 0.5rem;">Shop</h1>
-                <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
                 
-                <!-- Using your original class ensures it correctly hides on mobile -->
-                <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn" style="background: transparent; border: none; font-weight: 600; color: #000; letter-spacing: 0.05em; padding: 0;">
-                    — <span id="shop-user-name">LOGIN</span>
-                </button>
+                <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; min-height: 24px;">
+                    <p style="margin: 0; line-height: 1;">Curated community works and physical archives.</p>
+                    
+                    <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn" style="position: absolute; right: 0; background: transparent; border: none; font-weight: 600; color: #000; letter-spacing: 0.05em; padding: 0; line-height: 1; margin: 0;">
+                        — <span id="shop-user-name">LOGIN</span>
+                    </button>
+                </div>
             </div>
             
             <div class="shop-controls">
@@ -120,7 +122,7 @@
     <button class="btn-breadcrumb" onclick="closeDetailView()">← Back to Storefront</button>
     
     <!-- Icon Only: Matches the exact height of the Back button -->
-    <button onclick="openAuthModal()" class="btn-breadcrumb detail-login-btn" aria-label="Login">
+    <button onclick="handleUserBtnClick()" class="btn-breadcrumb detail-login-btn" aria-label="Login">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -331,9 +333,9 @@
         </div>
     </div>
 
-    <!-- Custom User Dashboard Modal -->
+    <!-- Custom User Dashboard Modal (Premium Layout) -->
     <div class="auth-overlay" id="user-menu-overlay">
-        <div class="auth-modal" style="max-width: 380px; text-align: center; padding: 2.5rem 2rem;">
+        <div class="auth-modal" style="max-width: 420px; text-align: center; padding: 2.5rem 2rem 1.5rem 2rem;">
             <button class="close-modal-btn" onclick="closeUserMenuModal()" aria-label="Close">×</button>
             
             <!-- Brand Logo -->
@@ -341,22 +343,24 @@
                 <span class="logo-text">Suwuyiku</span>
             </div>
             
-            <!-- User Info -->
-            <h2 class="auth-title" id="menu-user-name" style="margin-top: 0; font-size: 1.5rem; letter-spacing: -0.02em;">USERNAME</h2>
-            <p class="auth-desc" id="menu-user-email" style="margin-bottom: 2rem; color: #777;">email@example.com</p>
-            
-            <!-- Dashboard Actions -->
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <button class="btn-auth-primary" style="background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none;" onclick="alert('Bookmarks feature coming soon!')">Bookmarks</button>
-                <button class="btn-auth-primary" style="background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none;" onclick="alert('Order History tracking coming soon!')">My Orders</button>
+            <!-- User Profile Section -->
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem;">
+                <img id="menu-user-avatar" src="" alt="Profile" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 1px solid #eaeaea;" referrerpolicy="no-referrer" crossorigin="anonymous">
+                <h2 class="auth-title" id="menu-user-name" style="margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;">USERNAME</h2>
             </div>
             
-            <div class="auth-divider" style="margin: 2rem 0 1rem 0;"></div>
+            <!-- Dashboard Actions (Side-by-Side) -->
+            <div style="display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2rem;">
+                <button class="btn-auth-primary" style="flex: 1; background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none; font-size: 0.85rem; padding: 0.85rem;" onclick="alert('Favorites feature coming soon!')">Favorites</button>
+                <button class="btn-auth-primary" style="flex: 1; background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none; font-size: 0.85rem; padding: 0.85rem;" onclick="alert('Order History tracking coming soon!')">My Orders</button>
+            </div>
             
-            <!-- Safe Sign Out Button (Tucked at the bottom) -->
-            <button onclick="signOutUser()" style="background: none; border: none; color: #d93025; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 0.5rem;">
-                Sign Out
-            </button>
+            <!-- Safe Sign Out Button (Subtle, no underline, muted color) -->
+            <div style="margin-top: 1rem;">
+                <button onclick="signOutUser()" style="background: none; border: none; color: #999999; font-size: 0.75rem; font-weight: 500; cursor: pointer; padding: 0.5rem; text-decoration: none; outline: none;">
+                    Sign Out
+                </button>
+            </div>
         </div>
     </div>
     
@@ -420,7 +424,13 @@
     // --- USER DASHBOARD MODAL LOGIC ---
     function openUserMenuModal() {
         document.getElementById('menu-user-name').textContent = currentUser.name;
-        document.getElementById('menu-user-email').textContent = currentUser.email;
+        const avatarImg = document.getElementById('menu-user-avatar');
+        if (currentUser.picture) {
+            avatarImg.src = currentUser.picture;
+            avatarImg.style.display = 'block';
+        } else {
+            avatarImg.style.display = 'none';
+        }
         document.getElementById('user-menu-overlay').classList.add('active');
         document.body.classList.add('modal-open');
     }
