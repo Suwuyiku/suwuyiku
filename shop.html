@@ -76,18 +76,15 @@
 
         <div id="store-overview">
             
-<div class="legal-header contact-page-header shop-header-container" style="position: relative; text-align: center;">
-    <h1 style="margin-bottom: 0.5rem;">Shop</h1>
-    
-    <!-- Flex container keeps subtitle centered while pinning the button to the right -->
-    <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%;">
-        <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
-        
-        <button onclick="handleUserBtnClick()" id="shop-auth-btn" style="position: absolute; right: 0; background: transparent; border: none; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: #000; cursor: pointer; padding: 0; margin: 0; letter-spacing: 0.05em; outline: none;">
-            — <span id="shop-user-name">LOGIN</span>
-        </button>
-    </div>
-</div>
+            <div class="legal-header contact-page-header shop-header-container">
+                <h1 style="margin-bottom: 0.5rem;">Shop</h1>
+                <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
+                
+                <!-- Using your original class ensures it correctly hides on mobile -->
+                <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn" style="background: transparent; border: none; font-weight: 600; color: #000; letter-spacing: 0.05em; padding: 0;">
+                    — <span id="shop-user-name">LOGIN</span>
+                </button>
+            </div>
             
             <div class="shop-controls">
                 
@@ -333,6 +330,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Custom User Dashboard Modal -->
+    <div class="auth-overlay" id="user-menu-overlay">
+        <div class="auth-modal" style="max-width: 380px; text-align: center; padding: 2.5rem 2rem;">
+            <button class="close-modal-btn" onclick="closeUserMenuModal()" aria-label="Close">×</button>
+            
+            <!-- Brand Logo -->
+            <div class="auth-brand" style="margin-bottom: 2rem;">
+                <span class="logo-text">Suwuyiku</span>
+            </div>
+            
+            <!-- User Info -->
+            <h2 class="auth-title" id="menu-user-name" style="margin-top: 0; font-size: 1.5rem; letter-spacing: -0.02em;">USERNAME</h2>
+            <p class="auth-desc" id="menu-user-email" style="margin-bottom: 2rem; color: #777;">email@example.com</p>
+            
+            <!-- Dashboard Actions -->
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="btn-auth-primary" style="background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none;" onclick="alert('Bookmarks feature coming soon!')">Bookmarks</button>
+                <button class="btn-auth-primary" style="background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none;" onclick="alert('Order History tracking coming soon!')">My Orders</button>
+            </div>
+            
+            <div class="auth-divider" style="margin: 2rem 0 1rem 0;"></div>
+            
+            <!-- Safe Sign Out Button (Tucked at the bottom) -->
+            <button onclick="signOutUser()" style="background: none; border: none; color: #d93025; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 0.5rem;">
+                Sign Out
+            </button>
+        </div>
+    </div>
     
     <script>
     
@@ -385,19 +411,30 @@
     // Handle Header Button Click
     function handleUserBtnClick() {
         if (currentUser) {
-            // If logged in, prompt user options or logout
-            const logout = confirm(`Signed in as ${currentUser.name} (${currentUser.email})\n\nWould you like to log out?`);
-            if (logout) {
-                signOutUser();
-            }
+            openUserMenuModal();
         } else {
             openAuthModal();
         }
     }
 
+    // --- USER DASHBOARD MODAL LOGIC ---
+    function openUserMenuModal() {
+        document.getElementById('menu-user-name').textContent = currentUser.name;
+        document.getElementById('menu-user-email').textContent = currentUser.email;
+        document.getElementById('user-menu-overlay').classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeUserMenuModal() {
+        document.getElementById('user-menu-overlay').classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
     // Log out and clear state securely via API
     async function signOutUser() {
+        closeUserMenuModal(); // Hide the dashboard modal first
         currentUser = null;
+        
         try {
             await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
         } catch (e) {
