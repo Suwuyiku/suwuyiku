@@ -82,8 +82,8 @@
                 <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; min-height: 24px;">
                     <p style="margin: 0; line-height: 1;">Curated community works and physical archives.</p>
                     
-                    <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn" style="position: absolute; right: 0; background: transparent; border: none; font-weight: 600; color: #000; letter-spacing: 0.05em; padding: 0; line-height: 1; margin: 0;">
-                        — <span id="shop-user-name">LOGIN</span>
+                    <button onclick="handleUserBtnClick()" class="shop-sign-in-btn" id="shop-auth-btn" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-weight: 600; color: #000; letter-spacing: 0.05em; padding: 0; margin: 0; display: flex; align-items: center; outline: none;">
+                        — <span id="shop-user-name" style="margin-left: 4px;">LOGIN</span>
                     </button>
                 </div>
             </div>
@@ -118,17 +118,20 @@
         
         <div id="detail-view" class="shop-detail-view">
                     
-<div class="breadcrumbs">
-    <button class="btn-breadcrumb" onclick="closeDetailView()">← Back to Storefront</button>
-    
-    <!-- Icon Only: Matches the exact height of the Back button -->
-    <button onclick="handleUserBtnClick()" class="btn-breadcrumb detail-login-btn" aria-label="Login">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-    </button>
-</div>
+            <div class="breadcrumbs">
+                <button class="btn-breadcrumb" onclick="closeDetailView()">← Back to Storefront</button>
+                
+                <!-- Profile Avatar Box -->
+                <button onclick="handleUserBtnClick()" class="btn-breadcrumb detail-login-btn" aria-label="Login" style="padding: 0; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center; overflow: hidden; background: transparent;">
+                    <span id="detail-user-avatar" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            
             <div class="shop-detail-top">
                 <div class="shop-gallery-container">
                     
@@ -147,7 +150,8 @@
                             </div>
                         </div>
                         
-                <img id="det-cover" src="" class="shop-detail-image protected-img" alt="Product Image" draggable="false" oncontextmenu="return false;">                   </div>
+                        <img id="det-cover" src="" class="shop-detail-image protected-img" alt="Product Image" draggable="false" oncontextmenu="return false;">
+                    </div>
                     
                     <!-- Thumbnails Area (With Scrollers) -->
                     <div class="thumbnail-slider-wrapper" id="thumbnail-slider-wrapper" style="display: none;">
@@ -165,20 +169,21 @@
                     </div>
                 </div>
 
-<div class="shop-detail-info">
-    <h2 id="det-title" class="shop-detail-title">Product Name</h2>
-    <p id="det-author" class="shop-detail-author">Creator</p>
-    
-    <!-- Description moved ABOVE the price -->
-    <div id="det-review" class="shop-detail-desc" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">Authentic curated physical archive.</div>
-    
-    <!-- Price moved BELOW the description -->
-    <div id="det-price-container" style="margin-bottom: 2rem;">
-        <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
-    </div>
-            
-    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
-</div>
+                <div class="shop-detail-info">
+                    <h2 id="det-title" class="shop-detail-title">Product Name</h2>
+                    <p id="det-author" class="shop-detail-author">Creator</p>
+                    
+                    <!-- Description moved ABOVE the price -->
+                    <div id="det-review" class="shop-detail-desc" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">Authentic curated physical archive.</div>
+                    
+                    <!-- Price moved BELOW the description -->
+                    <div id="det-price-container" style="margin-bottom: 2rem;">
+                        <span id="det-price" style="font-size: 2rem; font-weight: 900; color: #000000; letter-spacing: -0.02em;">₹0</span>
+                    </div>
+                            
+                    <button id="det-buy-btn" class="shop-buy-btn">Purchase Now ↗</button>
+                </div>
+            </div>
             <div class="volume-info-section">
                 <h2 class="volume-info-heading">Item<br>Info</h2>
                 <div class="volume-info-board">
@@ -333,20 +338,28 @@
         </div>
     </div>
 
-    <!-- Custom User Dashboard Modal (Premium Layout) -->
+    <!-- Custom User Dashboard Modal (Privacy & Eye Icon) -->
     <div class="auth-overlay" id="user-menu-overlay">
         <div class="auth-modal" style="max-width: 420px; text-align: center; padding: 2.5rem 2rem 1.5rem 2rem;">
             <button class="close-modal-btn" onclick="closeUserMenuModal()" aria-label="Close">×</button>
             
-            <!-- Brand Logo -->
-            <div class="auth-brand" style="margin-bottom: 2rem;">
-                <span class="logo-text">Suwuyiku</span>
-            </div>
-            
-            <!-- User Profile Section -->
-            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem;">
+            <!-- User Profile Section (No Brand Name) -->
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; margin-top: 1rem;">
                 <img id="menu-user-avatar" src="" alt="Profile" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 1px solid #eaeaea;" referrerpolicy="no-referrer" crossorigin="anonymous">
-                <h2 class="auth-title" id="menu-user-name" style="margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;">USERNAME</h2>
+                
+                <!-- Name & Toggle Icon -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; user-select: none;" onclick="toggleEmailVisibility()">
+                    <h2 class="auth-title" id="menu-user-name" style="margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;">USERNAME</h2>
+                    
+                    <!-- SVG Eye Icon -->
+                    <svg id="email-eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: stroke 0.2s;">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+                
+                <!-- Hidden Email -->
+                <p class="auth-desc" id="menu-user-email" style="display: none; margin: 0.5rem 0 0 0; color: #777; font-size: 0.85rem; font-weight: 500;">email@example.com</p>
             </div>
             
             <!-- Dashboard Actions (Side-by-Side) -->
@@ -355,7 +368,7 @@
                 <button class="btn-auth-primary" style="flex: 1; background: #f5f5f5; color: #000; border: 1px solid #eaeaea; box-shadow: none; font-size: 0.85rem; padding: 0.85rem;" onclick="alert('Order History tracking coming soon!')">My Orders</button>
             </div>
             
-            <!-- Safe Sign Out Button (Subtle, no underline, muted color) -->
+            <!-- Safe Sign Out Button -->
             <div style="margin-top: 1rem;">
                 <button onclick="signOutUser()" style="background: none; border: none; color: #999999; font-size: 0.75rem; font-weight: 500; cursor: pointer; padding: 0.5rem; text-decoration: none; outline: none;">
                     Sign Out
@@ -424,6 +437,12 @@
     // --- USER DASHBOARD MODAL LOGIC ---
     function openUserMenuModal() {
         document.getElementById('menu-user-name').textContent = currentUser.name;
+        
+        // Reset email to hidden state
+        document.getElementById('menu-user-email').textContent = currentUser.email;
+        document.getElementById('menu-user-email').style.display = 'none';
+        document.getElementById('email-eye-icon').innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        
         const avatarImg = document.getElementById('menu-user-avatar');
         if (currentUser.picture) {
             avatarImg.src = currentUser.picture;
@@ -440,9 +459,23 @@
         document.body.classList.remove('modal-open');
     }
 
+    // Toggle Eye Icon Logic
+    function toggleEmailVisibility() {
+        const emailEl = document.getElementById('menu-user-email');
+        const eyeIcon = document.getElementById('email-eye-icon');
+        
+        if (emailEl.style.display === 'none') {
+            emailEl.style.display = 'block';
+            eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+        } else {
+            emailEl.style.display = 'none';
+            eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        }
+    }
+
     // Log out and clear state securely via API
     async function signOutUser() {
-        closeUserMenuModal(); // Hide the dashboard modal first
+        closeUserMenuModal(); 
         currentUser = null;
         
         try {
@@ -451,13 +484,32 @@
             console.log("Logout ping failed");
         }
         
-        // Reset UI back to default
+        // Reset Front Page UI
         document.getElementById('shop-user-name').textContent = "LOGIN";
+        
+        // Reset Detail Page Avatar Box
+        const detailAvatar = document.getElementById('detail-user-avatar');
+        if (detailAvatar) {
+            detailAvatar.innerHTML = `
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            `;
+        }
     }
 
-    // Apply logged-in UI (Name only)
+    // Apply logged-in UI 
     function renderAuthenticatedUI(user) {
-        document.getElementById('shop-user-name').textContent = (user.firstName || user.name).toUpperCase();
+        // 1. Update Front Page Text
+        const mainName = document.getElementById('shop-user-name');
+        if (mainName) mainName.textContent = (user.firstName || user.name).toUpperCase();
+        
+        // 2. Update Detail Page Image Box
+        const detailAvatar = document.getElementById('detail-user-avatar');
+        if (detailAvatar && user.picture) {
+            detailAvatar.innerHTML = `<img src="${user.picture}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block;" referrerpolicy="no-referrer" crossorigin="anonymous">`;
+        }
     }
 
     // Handle Google Response from Worker securely
