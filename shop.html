@@ -306,6 +306,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Checkout & Shipping Modal -->
+    <div class="auth-overlay" id="checkout-modal-overlay">
+        <div class="auth-modal" style="max-width: 500px;">
+            <button class="close-modal-btn" onclick="closeCheckoutModal()" aria-label="Close">×</button>
+            
+            <h2 class="auth-title">Delivery Details</h2>
+            <p class="auth-desc" id="checkout-item-name" style="font-weight: 600; color: #000; margin-top: 0.5rem;">Item Name</p>
+
+            <div style="text-align: left; margin-top: 1.5rem;">
+                <label class="auth-label">Full Delivery Name</label>
+                <input type="text" id="checkout-name" class="auth-input" required>
+
+                <label class="auth-label">Phone Number (Required for Courier)</label>
+                <input type="tel" id="checkout-phone" class="auth-input" placeholder="+91 " required>
+
+                <label class="auth-label">Complete Shipping Address</label>
+                <textarea id="checkout-address" class="auth-input" rows="3" style="resize: vertical; font-family: inherit;" required></textarea>
+
+                <label class="auth-label">Pincode</label>
+                <input type="text" id="checkout-pincode" class="auth-input" required>
+
+                <label class="auth-label">Special Delivery Notes (Optional)</label>
+                <input type="text" id="checkout-notes" class="auth-input" placeholder="Landmarks, gate codes, etc.">
+
+                <button class="btn-auth-primary" onclick="submitOrder()" style="margin-top: 1.5rem;">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
     
     <script>
     
@@ -630,7 +659,7 @@
             stockElem.style.color = "#000000";
             buyBtn.textContent = "Purchase Now ↗";
             buyBtn.disabled = false;
-            buyBtn.onclick = () => alert("Secure Checkout & Special Notes Modal Coming Soon!");
+            buyBtn.onclick = () => openCheckoutModal(product);
         } else {
             stockElem.textContent = "Out of Stock";
             stockElem.style.color = "#d93025";
@@ -848,6 +877,74 @@
             if (e.key === 'Backspace' && !box.value && index > 0) inputs[index - 1].focus();
         });
     });
+
+    // --- CHECKOUT & SHIPPING ENGINE ---
+    let currentCheckoutItem = null;
+
+    function openCheckoutModal(product) {
+        // Gatekeeper: Force login if no active session
+        if (!currentUser) {
+            openAuthModal();
+            return;
+        }
+
+        currentCheckoutItem = product;
+        document.getElementById('checkout-item-name').textContent = `Purchasing: ${product.productName} — ₹${product.finalPrice}`;
+        
+        // Pre-fill their Google name so they don't have to type it, but leave it editable
+        document.getElementById('checkout-name').value = currentUser.name; 
+        
+        document.getElementById('checkout-modal-overlay').classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeCheckoutModal() {
+        document.getElementById('checkout-modal-overlay').classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
+    async function submitOrder() {
+        const name = document.getElementById('checkout-name').value.trim();
+        const phone = document.getElementById('checkout-phone').value.trim();
+        const address = document.getElementById('checkout-address').value.trim();
+        const pincode = document.getElementById('checkout-pincode').value.trim();
+        const notes = document.getElementById('checkout-notes').value.trim();
+
+        if(!name || !phone || !address || !pincode) {
+            alert("Please fill in all required delivery fields.");
+            return;
+        }
+
+        const orderPayload = {
+            itemId: currentCheckoutItem.itemId,
+            itemName: currentCheckoutItem.productName,
+            amountPaid: currentCheckoutItem.finalPrice,
+            customerName: name,
+            customerPhone: phone,
+            shippingAddress: `${address}, Pincode: ${pincode}`,
+            specialNotes: notes
+        };
+
+        // Send to Cloudflare Worker securely
+        try {
+            const res = await fetch(`${API_BASE}/order`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderPayload),
+                credentials: "include" // Passes the secure JWT cookie
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                alert("Shipping details verified! The Razorpay/Cashfree integration is next.");
+                closeCheckoutModal();
+            } else {
+                alert("Error saving order: " + data.error);
+            }
+        } catch(e) {
+            alert("Network error occurred.");
+        }
+    }
     </script>
     
 </body>
