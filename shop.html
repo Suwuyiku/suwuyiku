@@ -76,14 +76,17 @@
 
         <div id="store-overview">
             
-<div class="legal-header contact-page-header shop-header-container" style="position: relative; text-align: center; width: 100%;">
+<div class="legal-header contact-page-header shop-header-container" style="position: relative; text-align: center;">
     <h1 style="margin-bottom: 0.5rem;">Shop</h1>
-    <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
     
-    <!-- Pinned exactly to the right margin, perfectly level with the subtitle -->
-    <button onclick="handleUserBtnClick()" id="shop-auth-btn" style="position: absolute; bottom: 2px; right: 0; background: transparent; border: none; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: #000; cursor: pointer; padding: 0; margin: 0; letter-spacing: 0.05em; outline: none; text-transform: uppercase;">
-        — <span id="shop-user-name">LOGIN</span>
-    </button>
+    <!-- Flex container keeps subtitle centered while pinning the button to the right -->
+    <div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%;">
+        <p style="margin-bottom: 0;">Curated community works and physical archives.</p>
+        
+        <button onclick="handleUserBtnClick()" id="shop-auth-btn" style="position: absolute; right: 0; background: transparent; border: none; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: #000; cursor: pointer; padding: 0; margin: 0; letter-spacing: 0.05em; outline: none;">
+            — <span id="shop-user-name">LOGIN</span>
+        </button>
+    </div>
 </div>
             
             <div class="shop-controls">
@@ -331,28 +334,6 @@
         </div>
     </div>
     
-    <!-- User Profile Modal -->
-    <div class="auth-overlay" id="profile-modal-overlay">
-        <div class="auth-modal" style="text-align: center; max-width: 400px;">
-            <button class="close-modal-btn" onclick="closeProfileModal()" aria-label="Close">×</button>
-            
-            <div class="auth-brand" style="margin-bottom: 1rem;">
-                <span class="logo-text">Suwuyiku</span>
-            </div>
-            
-            <h2 class="auth-title" id="profile-modal-name" style="margin-bottom: 2rem; font-size: 1.25rem;">USER NAME</h2>
-            
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <button class="btn-auth-primary" style="background: #ffffff; color: #000; border: 1px solid #e5e5e5;" onclick="alert('Bookmarks interface coming soon')">Bookmarks</button>
-                <button class="btn-auth-primary" style="background: #ffffff; color: #000; border: 1px solid #e5e5e5;" onclick="alert('Order history coming soon')">My Orders</button>
-                
-                <div class="auth-divider" style="margin: 0.5rem 0;"></div>
-                
-                <button class="btn-auth-primary" style="background: #000; color: #fff; border: 1px solid #000;" onclick="executeSignOut()">Sign Out</button>
-            </div>
-        </div>
-    </div>
-    
     <script>
     
     let shopInventory = [];
@@ -404,24 +385,14 @@
     // Handle Header Button Click
     function handleUserBtnClick() {
         if (currentUser) {
-            // Open custom profile modal
-            document.getElementById('profile-modal-name').textContent = currentUser.name;
-            document.getElementById('profile-modal-overlay').classList.add('active');
-            document.body.classList.add('modal-open');
+            // If logged in, prompt user options or logout
+            const logout = confirm(`Signed in as ${currentUser.name} (${currentUser.email})\n\nWould you like to log out?`);
+            if (logout) {
+                signOutUser();
+            }
         } else {
             openAuthModal();
         }
-    }
-
-    function closeProfileModal() {
-        document.getElementById('profile-modal-overlay').classList.remove('active');
-        document.body.classList.remove('modal-open');
-    }
-
-    // Wrapped sign out logic for the new modal button
-    async function executeSignOut() {
-        closeProfileModal();
-        await signOutUser();
     }
 
     // Log out and clear state securely via API
