@@ -612,6 +612,37 @@
         window.addEventListener('resize', updateThumbScrollArrows);
     });
 
+    // --- SMART DOMAIN AUTO-FILL ---
+    document.addEventListener("DOMContentLoaded", () => {
+        const emailInput = document.getElementById('auth-email');
+        if (!emailInput) return;
+
+        // Auto-complete common domains when the user clicks outside the box (blur)
+        emailInput.addEventListener('blur', () => {
+            let val = emailInput.value.trim().toLowerCase();
+            
+            if (val.includes('@')) {
+                const parts = val.split('@');
+                const namePart = parts[0];
+                const domainPart = parts[1];
+
+                // Only auto-fill if they typed a name and started typing a domain
+                if (namePart && domainPart) {
+                    if ('gmail.com'.startsWith(domainPart)) {
+                        val = namePart + '@gmail.com';
+                    } else if ('hotmail.com'.startsWith(domainPart)) {
+                        val = namePart + '@hotmail.com';
+                    } else if ('yahoo.com'.startsWith(domainPart)) {
+                        val = namePart + '@yahoo.com';
+                    } else if ('outlook.com'.startsWith(domainPart)) {
+                        val = namePart + '@outlook.com';
+                    }
+                }
+            }
+            emailInput.value = val;
+        });
+    });
+
     async function loadShop() {
         const grid = document.getElementById('shop-grid');
         
@@ -960,8 +991,16 @@
 
     async function requestOTP() {
         const emailInput = document.getElementById('auth-email').value.trim();
-        if (!emailInput || !emailInput.includes('@')) {
-            alert("Please enter a valid email address.");
+        
+        // Strict Email Verification Regex (Checks for name, @, domain, and .com/.org/etc)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(emailInput)) {
+            alert("Please enter a fully valid email address (e.g., name@gmail.com).");
+            // Highlight the box in red briefly to show the error
+            const box = document.getElementById('auth-email');
+            box.style.border = "1px solid #d93025";
+            setTimeout(() => box.style.border = "1px solid #eaeaea", 2000);
             return;
         }
         
