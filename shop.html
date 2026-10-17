@@ -957,7 +957,7 @@
         document.body.classList.remove('modal-open');
         setTimeout(resetAuthModal, 300); 
     }
-        
+
     async function requestOTP() {
         const emailInput = document.getElementById('auth-email').value.trim();
         if (!emailInput || !emailInput.includes('@')) {
@@ -1040,11 +1040,39 @@
     }
 
     document.querySelectorAll('.otp-box').forEach((box, index, inputs) => {
+        // Handle normal typing
         box.addEventListener('input', () => {
             if (box.value && index < inputs.length - 1) inputs[index + 1].focus();
         });
+        
+        // Handle backspace
         box.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace' && !box.value && index > 0) inputs[index - 1].focus();
+        });
+
+        // Handle copy-paste
+        box.addEventListener('paste', (e) => {
+            e.preventDefault();
+            
+            // Get the pasted text and strip out any non-numbers (like spaces)
+            const pastedData = e.clipboardData.getData('text').trim().replace(/[^0-9]/g, '');
+            if (!pastedData) return;
+            
+            // Distribute the digits across the boxes starting from the currently focused box
+            inputs.forEach((input, i) => {
+                if (i >= index && pastedData[i - index]) {
+                    input.value = pastedData[i - index];
+                }
+            });
+            
+            // Automatically move the cursor to the last filled box
+            const nextFocusIndex = Math.min(index + pastedData.length, inputs.length - 1);
+            inputs[nextFocusIndex].focus();
+            
+            // Optional: Automatically verify if all 6 digits are filled
+            if (pastedData.length >= 6) {
+                verifyOTP();
+            }
         });
     });
 
