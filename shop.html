@@ -957,33 +957,79 @@
         document.body.classList.remove('modal-open');
         setTimeout(resetAuthModal, 300); 
     }
-
-    function requestOTP() {
-        const emailInput = document.getElementById('auth-email').value;
+        
+    async function requestOTP() {
+        const emailInput = document.getElementById('auth-email').value.trim();
         if (!emailInput || !emailInput.includes('@')) {
             alert("Please enter a valid email address.");
             return;
         }
         
-        document.getElementById('display-email').innerText = emailInput;
-        document.getElementById('auth-step-1').style.display = 'none';
-        document.getElementById('auth-step-2').style.display = 'block';
-        
-        document.querySelector('.otp-box').focus();
-        console.log("Mock: Sending OTP to " + emailInput);
+        // Disable button visually while sending
+        const btn = document.querySelector('#auth-step-1 .btn-auth-primary');
+        btn.textContent = "Sending...";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${API_BASE}/auth/otp/send`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: emailInput })
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                document.getElementById('display-email').innerText = emailInput;
+                document.getElementById('auth-step-1').style.display = 'none';
+                document.getElementById('auth-step-2').style.display = 'block';
+                document.querySelector('.otp-box').focus();
+            } else {
+                alert("Failed to send code: " + data.error);
+            }
+        } catch (e) {
+            alert("Network error.");
+        } finally {
+            btn.textContent = "Continue";
+            btn.disabled = false;
+        }
     }
 
-    function verifyOTP() {
+    async function verifyOTP() {
         let code = "";
         document.querySelectorAll('.otp-box').forEach(box => code += box.value);
+        const emailInput = document.getElementById('auth-email').value.trim();
         
         if (code.length < 6) {
             alert("Please enter the 6-digit code.");
             return;
         }
-        
-        alert("Mock: Verifying code " + code + ". Account access granted.");
-        closeAuthModal();
+
+        const btn = document.querySelector('#auth-step-2 .btn-auth-primary');
+        btn.textContent = "Verifying...";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${API_BASE}/auth/otp/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: emailInput, code: code }),
+                credentials: "include" // Receives the secure JWT cookie
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                currentUser = data.user;
+                renderAuthenticatedUI(currentUser);
+                closeAuthModal();
+            } else {
+                alert("Verification failed: " + data.error);
+            }
+        } catch (e) {
+            alert("Network error.");
+        } finally {
+            btn.textContent = "Access Account";
+            btn.disabled = false;
+        }
     }
 
     function resetAuthModal() {
