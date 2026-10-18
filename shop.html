@@ -823,7 +823,7 @@
             buyBtn.onclick = null;
         }
 
-        // ADD THIS LINE: Dynamically link the current item ID to the favorite button
+        // Dynamically link the current item ID to the favorite button
         document.getElementById('det-fav-btn').onclick = () => toggleFavorite(product.itemId);
     }
 
@@ -1132,11 +1132,11 @@
         favIcon.setAttribute('fill', isCurrentlyFavorited ? 'none' : '#000');
 
         try {
-            // Send the secure request to the Cloudflare Worker
+            // Send the secure request to the Cloudflare Worker with 'productId' matching backend expectation
             const res = await fetch(`${API_BASE}/api/favorites/toggle`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ itemId: itemId }),
+                body: JSON.stringify({ productId: itemId }),
                 credentials: "include" // Passes the secure JWT cookie
             });
 
@@ -1146,7 +1146,7 @@
                 throw new Error(data.error);
             }
             
-            console.log(data.message); // E.g., "Added to favorites" or "Removed from favorites"
+            console.log(data.message);
 
         } catch (err) {
             console.error("Favorite action failed:", err);
@@ -1226,5 +1226,4 @@
     </script>
     
 </body>
-    
 </html>
